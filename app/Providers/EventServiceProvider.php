@@ -4,7 +4,8 @@ namespace App\Providers;
 
 use App\Listeners\TestCommandListener;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use Nwilging\LaravelDiscordBot\Events\MessageComponentInteractionEvent;
+use Illuminate\Support\Facades\Event;
+use Nwilging\LaravelDiscordBot\Events\ApplicationCommandInteractionEvent;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -14,9 +15,7 @@ class EventServiceProvider extends ServiceProvider
      * @var array<class-string, array<int, class-string>>
      */
     protected $listen = [
-        MessageComponentInteractionEvent::class => [
-            TestCommandListener::class,
-        ],
+
     ];
 
     /**
@@ -24,7 +23,10 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Event::listen(
+            ApplicationCommandInteractionEvent::class,
+            TestCommandListener::class,
+        );
     }
 
     /**
