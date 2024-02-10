@@ -3,6 +3,7 @@
 namespace App\Listeners;
 
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Support\Facades\Log;
 use Nwilging\LaravelDiscordBot\Contracts\Listeners\ApplicationCommandInteractionEventListenerContract;
 use Nwilging\LaravelDiscordBot\Events\ApplicationCommandInteractionEvent;
 
@@ -21,11 +22,11 @@ class TestCommandListener implements ShouldQueue, ApplicationCommandInteractionE
 
     public function command(): ?string
     {
-        return null;
+        return 'test-command';
     }
 
     public function handle(ApplicationCommandInteractionEvent $event): void
     {
-
+        Log::info("Handled " . $event->getCommandName());
     }
 }
