@@ -108,10 +108,12 @@ class LootGeneratorService
                         // Set it back to null in case we have multiple rolls on this table
                         $rollHit = null;
                     } else {
-                        Log::warning('No loot hit', [
-                            'source' => $source->name,
-                            'lootType' => $lootType,
-                        ]);
+                        if ($lootType === LootTypeEnum::PRIMARY) {
+                            Log::warning('No loot hit', [
+                                'source' => $source->name,
+                                'lootType' => $lootType,
+                            ]);
+                        }
                     }
                 }
             }
