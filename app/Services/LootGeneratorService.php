@@ -105,6 +105,14 @@ class LootGeneratorService
                 foreach ($rolls as $roll) {
                     $randRoll = rand(0, 100) / 100;
 
+                    Log::info('Loot roll', [
+                        'item_id' => $roll->item_id,
+                        'min' => $roll->min,
+                        'max' => $roll->max,
+                        'chance' => $roll->chance,
+                        'roll' => $randRoll,
+                    ]);
+
                     // Check if we succeeded on the roll
                     if ($randRoll < $roll->chance) {
                         // Check if this roll was for a "Nothing" drop
