@@ -24,7 +24,7 @@ class TestCommandListener implements ApplicationCommandInteractionEventListenerC
         $quantity = $lootResult->getQuantity();
         $lootRollResults = $lootResult->getLootRollResults();
 
-        $replyContent = "Results of killing $quantity $sourceName\\s: " . PHP_EOL;
+        $replyContent = "<b>Results of killing $quantity $sourceName\s: </b>" . PHP_EOL;
 
         /** @var LootRollResult $lootResult */
         foreach ($lootRollResults as $lootResult) {
