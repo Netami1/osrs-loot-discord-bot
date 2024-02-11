@@ -75,18 +75,9 @@ class LootGeneratorService
 
                 /** @var LootTableRoll $roll */
                 foreach ($rolls as $roll) {
-                    if ($lootType === LootTypeEnum::TERTIARY) {
-                        Log::info('Tertiary roll', [
-                            'roll' => $roll->item_name,
-                            'chance' => $roll->chance,
-                            'randRoll' => $randRoll,
-                            'item_name' => $roll->item_name,
-                            'rolls_count' => $rolls->count(),
-                        ]);
-                    }
 
                     // Check if we succeeded on the roll
-                    if ($randRoll <= $roll->chance) {
+                    if ($lootType === LootTypeEnum::ALWAYS || $randRoll <= $roll->chance) {
                         // Check if this roll was for a "Nothing" drop
                         if ($roll->item_id === null) {
                             break;
