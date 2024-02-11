@@ -23,12 +23,10 @@ class LootGeneratorService
         ]);
 
         $loots = $this->processLootTables($source, $quantity);
-        $lootResult = (new LootResult())
+        return (new LootResult())
             ->setSource($source)
             ->setQuantity($quantity)
             ->setLootRollResults($loots);
-
-        return $lootResult;
     }
 
     private function processLootTables(LootSource $source, int $quantity): Collection
@@ -53,35 +51,6 @@ class LootGeneratorService
                 ->setQuantity($totalQuantity);
 
         })->values();
-    }
-
-    private function processAlwaysLootTables(LootSource $source, int $quantity): Collection
-    {
-        $alwaysTables = $source->lootTables()
-            ->where('type', LootTypeEnum::ALWAYS)
-            ->get();
-
-        $toReturn = new Collection();
-        /** @var LootTable $lootTable */
-        foreach ($alwaysTables as $lootTable) {
-            $rolls = $lootTable->lootTableRolls;
-
-            /** @var LootTableRoll $roll */
-            foreach ($rolls as $roll) {
-                for ($i=0; $i < $quantity; $i++) {
-                    $rollQuantity = rand($roll->min, $roll->max);
-
-                    $lootRollResult = (new LootRollResult())
-                        ->setItemId($roll->item_id)
-                        ->setItemName($roll->item_name)
-                        ->setQuantity($rollQuantity);
-
-                    $toReturn->push($lootRollResult);
-                }
-            }
-        }
-
-        return $toReturn;
     }
 
     private function processLootTableType(LootSource $source, int $quantity, LootTypeEnum $lootType): Collection
