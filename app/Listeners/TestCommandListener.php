@@ -4,6 +4,7 @@ namespace App\Listeners;
 
 use App\Services\LootGeneratorService;
 use App\Services\LootRollResult;
+use Illuminate\Support\Facades\Log;
 use Nwilging\LaravelDiscordBot\Contracts\Listeners\ApplicationCommandInteractionEventListenerContract;
 use Nwilging\LaravelDiscordBot\Events\ApplicationCommandInteractionEvent;
 
@@ -32,6 +33,8 @@ class TestCommandListener implements ApplicationCommandInteractionEventListenerC
             $replyContent .=  $lootResult->toString() . PHP_EOL;
         }
         $replyContent .= '```';
+
+        Log::info('Full reply content: ' . PHP_EOL . $replyContent);
 
         return $replyContent;
     }
