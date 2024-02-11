@@ -9,6 +9,9 @@ class LootSources
     //
     public const GENERAL_GRAARDOOR_ID = '399775d6-4c1e-4d6f-b3d6-d841ff95ec26';
     public const GENERAL_GRAARDOOR_NAME = 'General Graardor';
+    //
+    public const KRIL_TSUROTH_ID = '29447f51-cb2b-4d9c-ab4d-fdfc2b60ca49';
+    public const KRIL_TSUROTH_NAME = 'Kril';
 
     public function data(): array
     {
@@ -20,6 +23,10 @@ class LootSources
             [
                 'id' => self::GENERAL_GRAARDOOR_ID,
                 'name' => self::GENERAL_GRAARDOOR_NAME,
+            ],
+            [
+                'id' => self::KRIL_TSUROTH_ID,
+                'name' => self::KRIL_TSUROTH_NAME,
             ],
         ];
     }

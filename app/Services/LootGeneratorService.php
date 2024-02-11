@@ -34,8 +34,9 @@ class LootGeneratorService
     {
         $alwaysLootResults = $this->processLootTableType($source, $quantity, LootTypeEnum::ALWAYS);
         $primaryLootResults = $this->processLootTableType($source, $quantity, LootTypeEnum::PRIMARY);
+        $tertiaryLootResults = $this->processLootTableType($source, $quantity, LootTypeEnum::TERTIARY);
 
-        $allTableLoots = $alwaysLootResults->merge($primaryLootResults);
+        $allTableLoots = $alwaysLootResults->merge($primaryLootResults)->merge($tertiaryLootResults);
 
         return $allTableLoots->groupBy(function (LootRollResult $lootRollResult) {
             return $lootRollResult->getItemId();
