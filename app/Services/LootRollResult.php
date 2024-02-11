@@ -48,6 +48,6 @@ class LootRollResult
 
     public function toString(): string
     {
-        return $this->getItemName()  . ' (' . $this->getItemId() . '): ' . $this->getQuantity();
+        return $this->getItemName() . ': ' . $this->getQuantity();
     }
 }

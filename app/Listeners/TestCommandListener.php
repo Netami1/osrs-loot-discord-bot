@@ -24,7 +24,9 @@ class TestCommandListener implements ApplicationCommandInteractionEventListenerC
         $lootResult = $this->lootGeneratorService->generateLoot($options);
         $sourceName = $lootResult->getSource()->name;
         $quantity = $lootResult->getQuantity();
-        $lootRollResults = $lootResult->getLootRollResults();
+        $lootRollResults = $lootResult->getLootRollResults()->sortByDesc(function (LootRollResult $lootRollResult) {
+            return $lootRollResult->getQuantity();
+        });
 
         $replyContent = "## Results of killing {$quantity} {$sourceName}s: " . PHP_EOL . '```';
 

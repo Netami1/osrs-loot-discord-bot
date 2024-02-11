@@ -76,12 +76,6 @@ class LootGeneratorService
 
                 /** @var LootTableRoll $roll */
                 foreach ($rolls as $roll) {
-                    Log::info('Rolling', [
-                        'roll' => $roll->item_name,
-                        'chance' => $roll->chance,
-                        'randRoll' => $randRoll,
-                    ]);
-
                     // Check if we succeeded on the roll
                     if ($randRoll <= $roll->chance) {
                         // Check if this roll was for a "Nothing" drop
