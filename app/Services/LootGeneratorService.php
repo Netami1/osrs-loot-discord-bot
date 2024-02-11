@@ -122,7 +122,10 @@ class LootGeneratorService
                             ->setQuantity($rollQuantity);
 
                         //Break out since we hit an item for this table
-                        if ($lootType !== LootTypeEnum::ALWAYS) {
+                        if ($lootType === LootTypeEnum::ALWAYS) {
+                            $toReturn->push($rollHit);
+                            $rollHit = null;
+                        } else {
                             break;
                         }
                     } else {
