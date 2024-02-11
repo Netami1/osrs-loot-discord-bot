@@ -19,7 +19,8 @@ class LootTableSeeder extends Seeder
                 ->find($tableData['id']);
 
             if ($table) {
-                $table->updateFrom($tableData);
+                $table->update($tableData);
+                $table->save();
             } else {
                 LootTable::query()
                     ->create($tableData);

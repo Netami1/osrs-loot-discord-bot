@@ -19,7 +19,8 @@ class LootTableRollSeeder extends Seeder
                 ->find($tableRollData['id']);
 
             if ($tableRoll) {
-                $tableRoll->updateFrom($tableRollData);
+                $tableRoll->update($tableRollData);
+                $tableRoll->save();
             } else {
                 LootTableRoll::query()
                     ->create($tableRollData);

@@ -19,7 +19,8 @@ class LootSourceSeeder extends Seeder
                 ->find($sourceData['id']);
 
             if ($source) {
-                $source->updateFrom($sourceData);
+                $source->update($sourceData);
+                $source->save();
             } else {
                 LootSource::query()
                     ->create($sourceData);
