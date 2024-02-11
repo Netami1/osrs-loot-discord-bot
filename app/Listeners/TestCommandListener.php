@@ -34,8 +34,6 @@ class TestCommandListener implements ApplicationCommandInteractionEventListenerC
         }
         $replyContent .= '```';
 
-        Log::info('Full reply content: ' . PHP_EOL . $replyContent);
-
         return $replyContent;
     }
 

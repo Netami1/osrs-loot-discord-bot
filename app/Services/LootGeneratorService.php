@@ -36,6 +36,8 @@ class LootGeneratorService
 
         $allTableLoots = $alwaysLootResults->merge($primaryLootResults);
 
+        Log::info('All table loots count: ' . $allTableLoots->count());
+
         return $allTableLoots->groupBy(function (LootRollResult $lootRollResult) {
             return $lootRollResult->getItemId();
         })->map(function (Collection $results, $itemId) {
