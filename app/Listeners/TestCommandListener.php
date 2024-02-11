@@ -2,14 +2,12 @@
 
 namespace App\Listeners;
 
+use Illuminate\Support\Facades\Log;
 use Nwilging\LaravelDiscordBot\Contracts\Listeners\ApplicationCommandInteractionEventListenerContract;
 use Nwilging\LaravelDiscordBot\Events\ApplicationCommandInteractionEvent;
 
 class TestCommandListener implements ApplicationCommandInteractionEventListenerContract
 {
-    /**
-     * Handle the event.
-     */
     public function handle(ApplicationCommandInteractionEvent $event): void
     {
 
@@ -17,6 +15,12 @@ class TestCommandListener implements ApplicationCommandInteractionEventListenerC
 
     public function replyContent(ApplicationCommandInteractionEvent $event): ?string
     {
+        Log::info('Event received', [
+            'command_name' => $event->getCommandName(),
+            'command_id' => $event->getCommandId(),
+            'command_type' => $event->getCommandType(),
+            'bag' => $event->getInteractionRequest()->all(),
+        ]);
         return "Dice roll: " . rand(1, 6);
     }
 
@@ -27,6 +31,6 @@ class TestCommandListener implements ApplicationCommandInteractionEventListenerC
 
     public function command(): ?string
     {
-        return 'test-command';
+        return null;
     }
 }
