@@ -17,8 +17,7 @@ class TestCommandListener implements ApplicationCommandInteractionEventListenerC
     {
         $options = $event->getInteractionRequest()->all()['data']['options'];
         $service = app(LootGeneratorService::class);
-        $service->setCommandOptions($options);
-        $loots = $service->generateLoot();
+        $loots = $service->generateLoot($options);
 
         $replyContent = 'Results: ' . PHP_EOL;
 
