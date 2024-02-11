@@ -22,9 +22,7 @@ class CreateTestSlashCommand extends Command
             ->get()
             ->toArray();
 
-        $option1 = (new StringOption('npc', 'Name of NPC to kill'))
-            ->autocomplete()
-            ->choices($sourceNames);
+        $option1 = (new StringOption('npc', 'Name of NPC to kill'));
         $option2 = (new NumberOption('quantity', 'The number of NPC to kill'))
             ->minValue(1)
             ->maxValue(1000);
