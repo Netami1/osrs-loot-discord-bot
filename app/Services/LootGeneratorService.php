@@ -109,6 +109,7 @@ class LootGeneratorService
                         $rollHit = null;
                     } else {
                         if ($lootType === LootTypeEnum::PRIMARY) {
+                            $i++;
                             Log::warning('No loot hit', [
                                 'source' => $source->name,
                                 'lootType' => $lootType,
