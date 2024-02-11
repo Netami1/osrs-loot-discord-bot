@@ -44,7 +44,6 @@ class LootGeneratorService
         $toReturn = [];
         /** @var LootTable $lootTable */
         foreach ($alwaysTables as $lootTable) {
-            var_dump($lootTable);
             $rolls = $lootTable->lootTableRolls;
 
             /** @var LootTableRoll $roll */
