@@ -95,7 +95,9 @@ class LootGeneratorService
 
             /** @var LootTable $lootTable */
             foreach ($primaryTables as $lootTable) {
-                $rolls = $lootTable->lootTableRolls;
+                $rolls = $lootTable->lootTableRolls()->sortByDesc(function (LootTableRoll $tableRoll) {
+                    return $tableRoll->chance;
+                });
 
                 /** @var LootTableRoll $roll */
                 foreach ($rolls as $roll) {
