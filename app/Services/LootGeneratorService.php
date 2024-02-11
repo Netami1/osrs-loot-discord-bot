@@ -23,6 +23,7 @@ class LootGeneratorService
         ]);
 
         $loots = $this->processLootTables($source, $quantity);
+        Log::info('Loots count: ' . $loots->count());
         return (new LootResult())
             ->setSource($source)
             ->setQuantity($quantity)
