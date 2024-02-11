@@ -22,6 +22,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::table('loot_table_roll', function (Blueprint $table) {
+            $table->string('item_name')->nullable(false)->change();
+            $table->string('item_id')->nullable(false)->change();
+        });
     }
 };
