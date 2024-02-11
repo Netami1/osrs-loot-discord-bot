@@ -52,6 +52,10 @@ class LootSources
                 'id' => self::GIANT_MOLE_ID,
                 'name' => self::GIANT_MOLE_NAME,
             ],
+            [
+                'id' => self::KALPHITE_QUEEN_ID,
+                'name' => self::KALPHITE_QUEEN_NAME,
+            ],
         ];
     }
 }
