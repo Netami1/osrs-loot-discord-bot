@@ -97,13 +97,15 @@ class LootGeneratorService
             foreach ($primaryTables as $lootTable) {
                 $rolls = $lootTable->lootTableRolls()
                     ->get()
-                    ->sortByDesc(function (LootTableRoll $tableRoll) {
+                    ->sortBy(function (LootTableRoll $tableRoll) {
                         return $tableRoll->chance;
                     });
 
+                $randRoll = rand(0, 100) / 100;
+                $rollHit = null;
+
                 /** @var LootTableRoll $roll */
                 foreach ($rolls as $roll) {
-                    $randRoll = rand(0, 100) / 100;
 
                     Log::info('Loot roll', [
                         'item_id' => $roll->item_id,
@@ -114,7 +116,7 @@ class LootGeneratorService
                     ]);
 
                     // Check if we succeeded on the roll
-                    if ($randRoll < $roll->chance) {
+                    if ($randRoll <= $roll->chance) {
                         // Check if this roll was for a "Nothing" drop
                         if ($roll->item_id === null) {
                             break;
@@ -122,16 +124,22 @@ class LootGeneratorService
 
                         $rollQuantity = rand($roll->min, $roll->max);
 
-                        $lootRollResult = (new LootRollResult())
+                        $rollHit = (new LootRollResult())
                             ->setItemId($roll->item_id)
                             ->setItemName($roll->item_name)
                             ->setQuantity($rollQuantity);
 
-                        $toReturn->push($lootRollResult);
-
                         //Break out since we hit an item for this table
                         break;
+                    } else {
+                        $randRoll -= $roll->chance;
                     }
+                }
+
+                if ($rollHit !== null) {
+                    $toReturn->push($rollHit);
+                } else{
+                    Log::warning('Roll came up missing all');
                 }
             }
         }
