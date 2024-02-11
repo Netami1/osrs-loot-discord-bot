@@ -38,6 +38,10 @@ class LootTables
     public const ZULRAH_ALWAYS_ID = 'd7b77efd-da9e-4b4b-ba91-677a43fdf1e1';
     public const ZULRAH_PRIMARY_ID = 'e37742bd-8823-42ba-8f32-8ebbb1c3c2d2';
     public const ZULRAH_TERTIARY_ID = '4e68c18a-45b4-4ed4-970d-0f5e1fc84759';
+    //
+    public const VORKATH_ALWAYS_ID = '4ab542d0-6eac-442e-8373-22e629f293ba';
+    public const VORKATH_PRIMARY_ID = 'efc50aec-69ae-44c0-84b0-6eb940b3c6fc';
+    public const VORKATH_TERTIARY_ID = 'b2709ce7-0d87-46af-92db-a497f50266ce';
 
     public function data(): array
     {
@@ -154,6 +158,21 @@ class LootTables
                 ],
                 [
                     'id' => self::ZULRAH_TERTIARY_ID,
+                    'type' => LootTypeEnum::TERTIARY,
+                ],
+            ],
+            LootSources::VORKATH_ID => [
+                [
+                    'id' => self::VORKATH_ALWAYS_ID,
+                    'type' => LootTypeEnum::ALWAYS,
+                ],
+                [
+                    'id' => self::VORKATH_PRIMARY_ID,
+                    'type' => LootTypeEnum::PRIMARY,
+                    'rolls' => 2,
+                ],
+                [
+                    'id' => self::VORKATH_TERTIARY_ID,
                     'type' => LootTypeEnum::TERTIARY,
                 ],
             ],

@@ -30,6 +30,9 @@ class LootSources
     //
     public const ZULRAH_ID = '05a77cc1-10a8-4cb0-92f0-12547609d852';
     public const ZULRAH_NAME = 'Zulrah';
+    //
+    public const VORKATH_ID = '2c843db3-43a1-4848-b366-f68bcddebefe';
+    public const VORKATH_NAME = 'Vorkath';
 
     public function data(): array
     {
@@ -69,6 +72,10 @@ class LootSources
             [
                 'id' => self::ZULRAH_ID,
                 'name' => self::ZULRAH_NAME,
+            ],
+            [
+                'id' => self::VORKATH_ID,
+                'name' => self::VORKATH_NAME,
             ],
         ];
     }
