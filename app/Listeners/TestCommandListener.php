@@ -18,9 +18,15 @@ class TestCommandListener implements ApplicationCommandInteractionEventListenerC
         $options = $event->getInteractionRequest()->all()['data']['options'];
         $service = app(LootGeneratorService::class);
         $service->setCommandOptions($options);
-        $service->generateLoot();
+        $loots = $service->generateLoot();
 
-        return "Dice roll: " . rand(1, 6);
+        $replyContent = 'Results: ' . PHP_EOL;
+
+        foreach ($loots as $lootName => $lootQuantity) {
+            $replyContent .= $lootName . ': ' . $lootQuantity . PHP_EOL;
+        }
+
+        return $replyContent;
     }
 
     public function behavior(ApplicationCommandInteractionEvent $event): int

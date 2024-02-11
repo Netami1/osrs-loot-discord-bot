@@ -2,29 +2,67 @@
 
 namespace App\Services;
 
+use App\Enum\LootTypeEnum;
 use App\Models\LootSource;
+use App\Models\LootTable;
+use App\Models\LootTableRoll;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
 
 class LootGeneratorService
 {
-    private Collection $commandOptions;
-
-    public function setCommandOptions(array $commandOptions): void
+    public function generateLoot(array $commandOptions): array
     {
-        $this->commandOptions = collect($commandOptions);
+        $commandOptions = collect($commandOptions);
+
+        $source = $this->getLootSource($commandOptions);
+        $quantity = $this->getQuantity($commandOptions);
+        Log::info('Generating loot', [
+            'source' => $source->name,
+            'quantity' => $quantity,
+        ]);
+
+        $loots = $this->processLootTables($source, $quantity);
+
+        return $loots;
     }
 
-    public function generateLoot(): Collection
+    private function processLootTables(LootSource $source, int $quantity): array
     {
-        Log::info('Source' . $this->getLootSource());
-        Log::info('Quantity' . $this->getQuantity());
-        return new Collection();
+        $alwaysLootResults = $this->processAlwaysLootTables($source, $quantity);
+
+        return $alwaysLootResults;
     }
 
-    private function getLootSource(): LootSource
+    private function processAlwaysLootTables(LootSource $source, int $quantity): array
     {
-        $npcOption = $this->commandOptions->firstWhere('name', '=', 'npc');
+        $alwaysTables = $source->lootTables()
+            ->where('type', LootTypeEnum::ALWAYS)
+            ->get();
+
+        $toReturn = [];
+        /** @var LootTable $lootTable */
+        foreach ($alwaysTables->toArray() as $lootTable) {
+            $rolls = $lootTable->lootTableRolls();
+            /** @var LootTableRoll $roll */
+            foreach ($rolls as $roll) {
+                for ($i=0; $i < $quantity; $i++) {
+                    $rollQuantity = rand($roll->min, $roll->max);
+                    if (array_key_exists($roll->item_name, $toReturn)) {
+                        $toReturn[$roll->item_name] += $rollQuantity;
+                    } else {
+                        $toReturn[$roll->item_name] = $rollQuantity;
+                    }
+                }
+            }
+        }
+
+        return $toReturn;
+    }
+
+    private function getLootSource(Collection $commandOptions): LootSource
+    {
+        $npcOption = $commandOptions->firstWhere('name', '=', 'npc');
 
         /** @var LootSource */
         return LootSource::query()
@@ -32,9 +70,9 @@ class LootGeneratorService
             ->firstOrFail();
     }
 
-    private function getQuantity(): int
+    private function getQuantity(Collection $commandOptions): int
     {
-        $quantityOption = $this->commandOptions->firstWhere('name', '=', 'quantity');
+        $quantityOption = $commandOptions->firstWhere('name', '=', 'quantity');
 
         return $quantityOption['value'];
     }
