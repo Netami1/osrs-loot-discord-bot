@@ -75,6 +75,16 @@ class LootGeneratorService
 
                 /** @var LootTableRoll $roll */
                 foreach ($rolls as $roll) {
+                    if ($lootType === LootTypeEnum::TERTIARY) {
+                        Log::info('Tertiary roll', [
+                            'roll' => $roll->item_name,
+                            'chance' => $roll->chance,
+                            'randRoll' => $randRoll,
+                            'item_name' => $roll->item_name,
+                            'rolls_count' => $rolls->count(),
+                        ]);
+                    }
+
                     // Check if we succeeded on the roll
                     if ($randRoll <= $roll->chance) {
                         // Check if this roll was for a "Nothing" drop
@@ -101,13 +111,11 @@ class LootGeneratorService
                 }
 
                 if ($rollHit !== null) {
-                    Log::info('Hit roll', [
-                        'roll' => $rollHit->getItemName(),
-                        'quantity' => $rollHit->getQuantity(),
-                    ]);
                     $toReturn->push($rollHit);
                 } else {
-                    Log::info('No hit');
+                    Log::info('No hit', [
+                        'type' => $lootType,
+                    ]);
                 }
             }
         }
