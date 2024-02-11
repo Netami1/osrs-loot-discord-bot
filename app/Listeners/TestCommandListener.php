@@ -19,7 +19,7 @@ class TestCommandListener implements ApplicationCommandInteractionEventListenerC
             'command_name' => $event->getCommandName(),
             'command_id' => $event->getCommandId(),
             'command_type' => $event->getCommandType(),
-            'bag' => $event->getInteractionRequest()->all(),
+            'options' => $event->getInteractionRequest()->get('data')->get('options'),
         ]);
         return "Dice roll: " . rand(1, 6);
     }
