@@ -6,13 +6,12 @@ use App\Enum\LootTypeEnum;
 use App\Models\LootSource;
 use App\Models\LootTable;
 use App\Models\LootTableRoll;
-use Illuminate\Log\Logger;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
 
 class LootGeneratorService
 {
-    public function generateLoot(array $commandOptions): array
+    public function generateLoot(array $commandOptions): Collection
     {
         $commandOptions = collect($commandOptions);
 
@@ -28,20 +27,35 @@ class LootGeneratorService
         return $loots;
     }
 
-    private function processLootTables(LootSource $source, int $quantity): array
+    private function processLootTables(LootSource $source, int $quantity): Collection
     {
         $alwaysLootResults = $this->processAlwaysLootTables($source, $quantity);
+        $allTableLoots = collect($alwaysLootResults);
 
-        return $alwaysLootResults;
+        return $allTableLoots->groupBy(function (LootRollResult $lootRollResult) {
+            return $lootRollResult->getItemId();
+        })->map(function (Collection $results, $itemId) {
+            $itemName = $results->first()->getItemName();
+
+            $totalQuantity = $results->sum(function (LootRollResult $lootRollResult) {
+                return $lootRollResult->getQuantity();
+            });
+
+            return (new LootRollResult())
+                ->setItemId($itemId)
+                ->setItemName($itemName)
+                ->setQuantity($totalQuantity);
+
+        })->values();
     }
 
-    private function processAlwaysLootTables(LootSource $source, int $quantity): array
+    private function processAlwaysLootTables(LootSource $source, int $quantity): Collection
     {
         $alwaysTables = $source->lootTables()
             ->where('type', LootTypeEnum::ALWAYS)
             ->get();
 
-        $toReturn = [];
+        $toReturn = new Collection();
         /** @var LootTable $lootTable */
         foreach ($alwaysTables as $lootTable) {
             $rolls = $lootTable->lootTableRolls;
@@ -50,11 +64,13 @@ class LootGeneratorService
             foreach ($rolls as $roll) {
                 for ($i=0; $i < $quantity; $i++) {
                     $rollQuantity = rand($roll->min, $roll->max);
-                    if (array_key_exists($roll->item_name, $toReturn)) {
-                        $toReturn[$roll->item_name] += $rollQuantity;
-                    } else {
-                        $toReturn[$roll->item_name] = $rollQuantity;
-                    }
+
+                    $lootRollResult = (new LootRollResult())
+                        ->setItemId($roll->item_id)
+                        ->setItemName($roll->item_name)
+                        ->setQuantity($rollQuantity);
+
+                    $toReturn->push($lootRollResult);
                 }
             }
         }
