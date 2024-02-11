@@ -103,10 +103,6 @@ class LootGeneratorService
 
                 if ($rollHit !== null) {
                     $toReturn->push($rollHit);
-                } else {
-                    Log::info('No hit', [
-                        'type' => $lootType,
-                    ]);
                 }
             }
         }
