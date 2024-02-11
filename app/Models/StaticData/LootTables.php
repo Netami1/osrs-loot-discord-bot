@@ -24,6 +24,10 @@ class LootTables
     public const KREEARRA_ALWAYS_ID = '8031fcc5-4b96-484b-9d2e-ecfb870e4783';
     public const KREEARRA_PRIMARY_ID = '04c96de2-6499-4e9e-b079-a5b817358739';
     public const KREEARRA_TERTIARY_ID = '57b93190-3909-4416-baa1-30f5fa05b1ab';
+    //
+    public const GIANT_MOLE_ALWAYS_ID = 'd30f2d26-afff-4e5f-80eb-94f846b181ff';
+    public const GIANT_MOLE_PRIMARY_ID = '7b3d1720-e546-4c3f-9419-587a8a745a5b';
+    public const GIANT_MOLE_TERTIARY_ID = 'f5d38715-e806-4069-9749-1e997b4d8cef';
 
     public function data(): array
     {
@@ -91,6 +95,20 @@ class LootTables
                 ],
                 [
                     'id' => self::KREEARRA_TERTIARY_ID,
+                    'type' => LootTypeEnum::TERTIARY,
+                ],
+            ],
+            LootSources::GIANT_MOLE_ID => [
+                [
+                    'id' => self::GIANT_MOLE_ALWAYS_ID,
+                    'type' => LootTypeEnum::ALWAYS,
+                ],
+                [
+                    'id' => self::GIANT_MOLE_PRIMARY_ID,
+                    'type' => LootTypeEnum::PRIMARY,
+                ],
+                [
+                    'id' => self::GIANT_MOLE_TERTIARY_ID,
                     'type' => LootTypeEnum::TERTIARY,
                 ],
             ],

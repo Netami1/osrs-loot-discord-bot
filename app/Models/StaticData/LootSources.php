@@ -18,6 +18,9 @@ class LootSources
     //
     public const KREEARRA_ID = '7112572f-39e7-4b81-a3e1-2a8acd7452a2';
     public const KREEARRA_NAME = 'Kreearra';
+    //
+    public const GIANT_MOLE_ID = '2b5ba50d-5c59-4cca-9930-77b01be16b31';
+    public const GIANT_MOLE_NAME = 'Giant Mole';
 
     public function data(): array
     {
@@ -41,6 +44,10 @@ class LootSources
             [
                 'id' => self::KREEARRA_ID,
                 'name' => self::KREEARRA_NAME,
+            ],
+            [
+                'id' => self::GIANT_MOLE_ID,
+                'name' => self::GIANT_MOLE_NAME,
             ],
         ];
     }
