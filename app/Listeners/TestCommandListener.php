@@ -16,9 +16,6 @@ class TestCommandListener implements ApplicationCommandInteractionEventListenerC
     public function replyContent(ApplicationCommandInteractionEvent $event): ?string
     {
         Log::info('Event received', [
-            'command_name' => $event->getCommandName(),
-            'command_id' => $event->getCommandId(),
-            'command_type' => $event->getCommandType(),
             'options' => $event->getInteractionRequest()->get('data')->get('options'),
         ]);
         return "Dice roll: " . rand(1, 6);
