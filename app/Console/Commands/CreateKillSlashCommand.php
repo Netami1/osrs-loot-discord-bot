@@ -40,6 +40,6 @@ class CreateKillSlashCommand extends Command
 
         $result = $commandServiceContract->createGlobalCommand($command);
 
-        print_r($result);
+        $this->output->writeln("Command created/updated: {$result['name']} - {$result['id']}");
     }
 }

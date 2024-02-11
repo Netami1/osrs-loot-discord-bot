@@ -27,7 +27,5 @@ class LootSourceSeeder extends Seeder
                     ->create($sourceData);
             }
         }
-
-        Artisan::call('register-kill-command');
     }
 }
