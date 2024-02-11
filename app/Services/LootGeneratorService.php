@@ -63,10 +63,13 @@ class LootGeneratorService
             ->get();
 
         $toReturn = new Collection();
+        // Number of rolls requested by the user
         for ($i=0; $i < $quantity; $i++) {
 
             /** @var LootTable $lootTable */
             foreach ($lootTables as $lootTable) {
+
+                // Number of rolls for this loot table
                 for ($j=0; $j < $lootTable->rolls; $j++) {
 
                     $rolls = $lootTable->lootTableRolls()
@@ -109,7 +112,7 @@ class LootGeneratorService
                         $rollHit = null;
                     } else {
                         if ($lootType === LootTypeEnum::PRIMARY) {
-                            $i++;
+                            $quantity++;
                             Log::warning('No loot hit', [
                                 'source' => $source->name,
                                 'lootType' => $lootType,
