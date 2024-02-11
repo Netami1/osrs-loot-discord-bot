@@ -92,9 +92,11 @@ class LootGeneratorService
 
         $toReturn = new Collection();
         for ($i=0; $i < $quantity; $i++) {
+            Log::info('Primary table roll number ' . $i);
 
             /** @var LootTable $lootTable */
             foreach ($primaryTables as $lootTable) {
+                Log::info('Rolling table id ' . $lootTable->id);
                 $rolls = $lootTable->lootTableRolls;
 
                 /** @var LootTableRoll $roll */
@@ -103,6 +105,7 @@ class LootGeneratorService
 
                     // Check if we succeeded on the roll
                     if ($randRoll < $roll->chance) {
+                        Log::info('Roll succeeded for item id ' . $roll->item_id);
                         // Check if this roll was for a "Nothing" drop
                         if ($roll->item_id === null) {
                             break;
@@ -123,6 +126,7 @@ class LootGeneratorService
                 }
             }
         }
+        Log::info('Primary rolls size: ' . count($toReturn));
 
         return $toReturn;
     }
