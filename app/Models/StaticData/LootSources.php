@@ -8,7 +8,7 @@ class LootSources
     public const CHICKEN_NAME = 'Chicken';
     //
     public const GENERAL_GRAARDOOR_ID = '399775d6-4c1e-4d6f-b3d6-d841ff95ec26';
-    public const GENERAL_GRAARDOOR_NAME = 'General Graardoor';
+    public const GENERAL_GRAARDOOR_NAME = 'General Graardor';
 
     public function data(): array
     {
