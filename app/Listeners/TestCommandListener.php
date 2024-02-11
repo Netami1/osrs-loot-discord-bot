@@ -17,7 +17,7 @@ class TestCommandListener implements ApplicationCommandInteractionEventListenerC
 
     public function replyContent(ApplicationCommandInteractionEvent $event): ?string
     {
-        return "test";
+        return "Dice roll: " . rand(1, 6);
     }
 
     public function behavior(ApplicationCommandInteractionEvent $event): int
