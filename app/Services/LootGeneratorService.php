@@ -6,6 +6,7 @@ use App\Enum\LootTypeEnum;
 use App\Models\LootSource;
 use App\Models\LootTable;
 use App\Models\LootTableRoll;
+use Illuminate\Log\Logger;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
 
@@ -38,13 +39,14 @@ class LootGeneratorService
     {
         $alwaysTables = $source->lootTables()
             ->where('type', LootTypeEnum::ALWAYS)
-            ->get()
-            ->toArray();
+            ->get();
 
         $toReturn = [];
         /** @var LootTable $lootTable */
         foreach ($alwaysTables as $lootTable) {
+            var_dump($lootTable);
             $rolls = $lootTable->lootTableRolls;
+
             /** @var LootTableRoll $roll */
             foreach ($rolls as $roll) {
                 for ($i=0; $i < $quantity; $i++) {
