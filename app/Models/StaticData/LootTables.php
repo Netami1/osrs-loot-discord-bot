@@ -28,6 +28,9 @@ class LootTables
     public const GIANT_MOLE_ALWAYS_ID = 'd30f2d26-afff-4e5f-80eb-94f846b181ff';
     public const GIANT_MOLE_PRIMARY_ID = '7b3d1720-e546-4c3f-9419-587a8a745a5b';
     public const GIANT_MOLE_TERTIARY_ID = 'f5d38715-e806-4069-9749-1e997b4d8cef';
+    //
+    public const KALPHITE_QUEEN_PRIMARY_ID = '29471292-3c49-4bba-a8c2-ccee4d3ec711';
+    public const KALPHITE_QUEEN_TERTIARY_ID = 'aa165e1b-b6a3-48b0-9fbd-9d91261a468e';
 
     public function data(): array
     {
@@ -109,6 +112,16 @@ class LootTables
                 ],
                 [
                     'id' => self::GIANT_MOLE_TERTIARY_ID,
+                    'type' => LootTypeEnum::TERTIARY,
+                ],
+            ],
+            LootSources::KALPHITE_QUEEN_ID => [
+                [
+                    'id' => self::KALPHITE_QUEEN_PRIMARY_ID,
+                    'type' => LootTypeEnum::PRIMARY,
+                ],
+                [
+                    'id' => self::KALPHITE_QUEEN_TERTIARY_ID,
                     'type' => LootTypeEnum::TERTIARY,
                 ],
             ],

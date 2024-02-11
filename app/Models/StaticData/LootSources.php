@@ -21,6 +21,9 @@ class LootSources
     //
     public const GIANT_MOLE_ID = '2b5ba50d-5c59-4cca-9930-77b01be16b31';
     public const GIANT_MOLE_NAME = 'Giant Mole';
+    //
+    public const KALPHITE_QUEEN_ID = '45a86aa4-c77f-4e6a-b467-115dbb47a3ec';
+    public const KALPHITE_QUEEN_NAME = 'Kalphite Queen';
 
     public function data(): array
     {
