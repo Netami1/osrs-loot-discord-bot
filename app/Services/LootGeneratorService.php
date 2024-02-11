@@ -67,7 +67,7 @@ class LootGeneratorService
             foreach ($primaryTables as $lootTable) {
                 $rolls = $lootTable->lootTableRolls()
                     ->get()
-                    ->sortBy(function (LootTableRoll $tableRoll) {
+                    ->sortByDesc(function (LootTableRoll $tableRoll) {
                         return $tableRoll->chance;
                     });
 
@@ -108,7 +108,13 @@ class LootGeneratorService
                 }
 
                 if ($rollHit !== null) {
+                    Log::info('Hit roll', [
+                        'roll' => $rollHit->getItemName(),
+                        'quantity' => $rollHit->getQuantity(),
+                    ]);
                     $toReturn->push($rollHit);
+                } else {
+                    Log::info('No hit');
                 }
             }
         }
