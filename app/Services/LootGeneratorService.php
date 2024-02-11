@@ -33,8 +33,8 @@ class LootGeneratorService
 
     private function processLootTables(LootSource $source, int $quantity): Collection
     {
-        $alwaysLootResults = $this->processAlwaysLootTables($source, $quantity);
-        $primaryLootResults = $this->processPrimaryLootTables($source, $quantity);
+        $alwaysLootResults = $this->processLootTableType($source, $quantity, LootTypeEnum::ALWAYS);
+        $primaryLootResults = $this->processLootTableType($source, $quantity, LootTypeEnum::PRIMARY);
 
         $allTableLoots = $alwaysLootResults->merge($primaryLootResults);
 
@@ -84,10 +84,10 @@ class LootGeneratorService
         return $toReturn;
     }
 
-    private function processPrimaryLootTables(LootSource $source, int $quantity): Collection
+    private function processLootTableType(LootSource $source, int $quantity, LootTypeEnum $lootType): Collection
     {
         $primaryTables = $source->lootTables()
-            ->where('type', LootTypeEnum::PRIMARY)
+            ->where('type', $lootType)
             ->get();
 
         $toReturn = new Collection();
@@ -106,14 +106,6 @@ class LootGeneratorService
 
                 /** @var LootTableRoll $roll */
                 foreach ($rolls as $roll) {
-
-                    Log::info('Loot roll', [
-                        'item_id' => $roll->item_id,
-                        'min' => $roll->min,
-                        'max' => $roll->max,
-                        'chance' => $roll->chance,
-                        'roll' => $randRoll,
-                    ]);
 
                     // Check if we succeeded on the roll
                     if ($randRoll <= $roll->chance) {
@@ -136,10 +128,9 @@ class LootGeneratorService
                     }
                 }
 
+                // This might be an issue but I'm just gonna ignore it for now...
                 if ($rollHit !== null) {
                     $toReturn->push($rollHit);
-                } else{
-                    Log::warning('Roll came up missing all');
                 }
             }
         }
