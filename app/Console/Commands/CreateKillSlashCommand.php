@@ -6,12 +6,13 @@ use App\Models\LootSource;
 use Illuminate\Console\Command;
 use Nwilging\LaravelDiscordBot\Contracts\Services\DiscordApplicationCommandServiceContract;
 use Nwilging\LaravelDiscordBot\Support\Commands\Options\NumberOption;
+use Nwilging\LaravelDiscordBot\Support\Commands\Options\OptionChoice;
 use Nwilging\LaravelDiscordBot\Support\Commands\Options\StringOption;
 use Nwilging\LaravelDiscordBot\Support\Commands\SlashCommand;
 
-class CreateTestSlashCommand extends Command
+class CreateKillSlashCommand extends Command
 {
-    protected $signature = 'register-test-command';
+    protected $signature = 'register-kill-command';
 
     protected $description = '';
 
@@ -19,10 +20,16 @@ class CreateTestSlashCommand extends Command
     {
         $sourceNames = LootSource::query()
             ->select(['name'])
-            ->get()
-            ->toArray();
+            ->get();
+        $optionChoices = $sourceNames->map(function (LootSource $source) {
+            return new OptionChoice($source->name, $source->name);
+        });
 
         $option1 = (new StringOption('npc', 'Name of NPC to kill'));
+        $optionChoices->each(function (OptionChoice $choice) use ($option1) {
+            $option1->choice($choice);
+        });
+
         $option2 = (new NumberOption('quantity', 'The number of NPC to kill'))
             ->minValue(1)
             ->maxValue(1000);

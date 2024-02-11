@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\LootSource;
 use App\Models\StaticData\LootSources;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Artisan;
 
 class LootSourceSeeder extends Seeder
 {
@@ -26,5 +27,7 @@ class LootSourceSeeder extends Seeder
                     ->create($sourceData);
             }
         }
+
+        Artisan::call('register-kill-command');
     }
 }
