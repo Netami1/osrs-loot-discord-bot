@@ -34,9 +34,12 @@ class LootGeneratorService
     private function processLootTables(LootSource $source, int $quantity): Collection
     {
         $alwaysLootResults = $this->processAlwaysLootTables($source, $quantity);
+        Log::info('Always size: ' . $alwaysLootResults->count());
         $primaryLootResults = $this->processPrimaryLootTables($source, $quantity);
+        Log::info('Primary size: ' . $primaryLootResults->count());
 
-        $allTableLoots = $alwaysLootResults->union($primaryLootResults);
+        $allTableLoots = $alwaysLootResults->merge($primaryLootResults);
+        Log::info('All size: ' . $alwaysLootResults->count());
 
         return $allTableLoots->groupBy(function (LootRollResult $lootRollResult) {
             return $lootRollResult->getItemId();
