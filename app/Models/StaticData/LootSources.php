@@ -12,6 +12,9 @@ class LootSources
     //
     public const KRIL_TSUROTH_ID = '29447f51-cb2b-4d9c-ab4d-fdfc2b60ca49';
     public const KRIL_TSUROTH_NAME = 'Kril';
+    //
+    public const COMMAND_ZILYANA_ID = '4cbd53ae-5752-4555-98e9-0b7d3856117d';
+    public const COMMAND_ZILYANA_NAME = 'Commander Zilyana';
 
     public function data(): array
     {
@@ -27,6 +30,10 @@ class LootSources
             [
                 'id' => self::KRIL_TSUROTH_ID,
                 'name' => self::KRIL_TSUROTH_NAME,
+            ],
+            [
+                'id' => self::COMMAND_ZILYANA_ID,
+                'name' => self::COMMAND_ZILYANA_NAME,
             ],
         ];
     }

@@ -16,6 +16,10 @@ class LootTables
     public const KRIL_TSUROTH_ALWAYS_ID = '6ea3ff7f-ea25-45ef-b369-fbf97964d418';
     public const KRIL_TSUROTH_PRIMARY_ID = 'bc7f108b-1cf4-4f26-8d71-4f8d01939372';
     public const KRIL_TSUROTH_TERTIARY_ID = 'b30ed72c-1bef-4313-a094-2b47d472058a';
+    //
+    public const COMMAND_ZILYANA_ALWAYS_ID = '7416655c-e52a-4cee-b4a7-8fff1c96d742';
+    public const COMMAND_ZILYANA_PRIMARY_ID = 'bf182173-43bb-482d-9645-f13f3e27fa9f';
+    public const COMMAND_ZILYANA_TERTIARY_ID = '4f204412-b0fa-405f-89ed-6a608d55b04e';
 
     public function data(): array
     {
@@ -55,6 +59,20 @@ class LootTables
                 ],
                 [
                     'id' => self::KRIL_TSUROTH_TERTIARY_ID,
+                    'type' => LootTypeEnum::TERTIARY,
+                ],
+            ],
+            LootSources::COMMAND_ZILYANA_ID => [
+                [
+                    'id' => self::COMMAND_ZILYANA_ALWAYS_ID,
+                    'type' => LootTypeEnum::ALWAYS,
+                ],
+                [
+                    'id' => self::COMMAND_ZILYANA_PRIMARY_ID,
+                    'type' => LootTypeEnum::PRIMARY,
+                ],
+                [
+                    'id' => self::COMMAND_ZILYANA_TERTIARY_ID,
                     'type' => LootTypeEnum::TERTIARY,
                 ],
             ],
