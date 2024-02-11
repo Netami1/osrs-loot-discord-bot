@@ -30,7 +30,7 @@ class LootGeneratorService
             ->setLootRollResults($loots);
     }
 
-    private function processLootTables(LootSource $source, int $quantity): Collection
+    public function processLootTables(LootSource $source, int $quantity): Collection
     {
         $alwaysLootResults = $this->processLootTableType($source, $quantity, LootTypeEnum::ALWAYS);
         $primaryLootResults = $this->processLootTableType($source, $quantity, LootTypeEnum::PRIMARY);
