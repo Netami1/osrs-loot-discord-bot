@@ -67,7 +67,7 @@ class LootGeneratorService
             foreach ($primaryTables as $lootTable) {
                 $rolls = $lootTable->lootTableRolls()
                     ->get()
-                    ->sortByDesc(function (LootTableRoll $tableRoll) {
+                    ->sortBy(function (LootTableRoll $tableRoll) {
                         return $tableRoll->chance;
                     });
 
