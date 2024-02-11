@@ -98,7 +98,7 @@ class LootGeneratorService
                             break;
                         }
                     } else {
-                        $randRoll -= $roll->chance;
+                       // $randRoll -= $roll->chance;
                     }
                 }
 
