@@ -59,6 +59,7 @@ class LootGeneratorService
     {
         $primaryTables = $source->lootTables()
             ->where('type', $lootType)
+            ->with('lootTableRolls')
             ->get();
 
         $toReturn = new Collection();
