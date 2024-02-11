@@ -67,9 +67,7 @@ class LootGeneratorService
             foreach ($primaryTables as $lootTable) {
                 $rolls = $lootTable->lootTableRolls()
                     ->get()
-                    ->sortBy(function (LootTableRoll $tableRoll) {
-                        return $tableRoll->chance;
-                    });
+                    ->shuffle();
 
                 $rollHit = null;
                 $randRoll = rand(0, 100) / 100;
