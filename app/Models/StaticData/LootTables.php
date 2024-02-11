@@ -31,6 +31,9 @@ class LootTables
     //
     public const KALPHITE_QUEEN_PRIMARY_ID = '29471292-3c49-4bba-a8c2-ccee4d3ec711';
     public const KALPHITE_QUEEN_TERTIARY_ID = 'aa165e1b-b6a3-48b0-9fbd-9d91261a468e';
+    //
+    public const CORPOREAL_BEAST_PRIMARY_ID = 'bcbfce5e-7dd4-42b0-87cd-1debc8908d84';
+    public const CORPOREAL_BEAST_TERTIARY_ID = 'bf436919-391a-4d3b-865d-5da33d08c6ff';
 
     public function data(): array
     {
@@ -125,6 +128,16 @@ class LootTables
                     'type' => LootTypeEnum::TERTIARY,
                 ],
             ],
+            LootSources::CORPOREAL_BEAST_ID => [
+                [
+                    'id' => self::CORPOREAL_BEAST_PRIMARY_ID,
+                    'type' => LootTypeEnum::PRIMARY,
+                ],
+                [
+                    'id' => self::CORPOREAL_BEAST_TERTIARY_ID,
+                    'type' => LootTypeEnum::TERTIARY,
+                ],
+            ]
         ];
     }
 }

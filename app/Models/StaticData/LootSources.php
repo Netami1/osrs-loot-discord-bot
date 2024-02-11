@@ -24,6 +24,9 @@ class LootSources
     //
     public const KALPHITE_QUEEN_ID = '45a86aa4-c77f-4e6a-b467-115dbb47a3ec';
     public const KALPHITE_QUEEN_NAME = 'Kalphite Queen';
+    //
+    public const CORPOREAL_BEAST_ID = '5e231bc8-0c65-4715-a669-d69fa87041b1';
+    public const CORPOREAL_BEAST_NAME = 'Corporeal Beast';
 
     public function data(): array
     {
@@ -55,6 +58,10 @@ class LootSources
             [
                 'id' => self::KALPHITE_QUEEN_ID,
                 'name' => self::KALPHITE_QUEEN_NAME,
+            ],
+            [
+                'id' => self::CORPOREAL_BEAST_ID,
+                'name' => self::CORPOREAL_BEAST_NAME,
             ],
         ];
     }
