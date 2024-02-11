@@ -103,6 +103,10 @@ class LootGeneratorService
 
                     // Check if we succeeded on the roll
                     if ($randRoll < $roll->chance) {
+                        // Check if this roll was for a "Nothing" drop
+                        if ($roll->item_id === null) {
+                            break;
+                        }
 
                         $rollQuantity = rand($roll->min, $roll->max);
 
