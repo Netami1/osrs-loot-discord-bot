@@ -42,6 +42,18 @@ class LootTables
     public const VORKATH_ALWAYS_ID = '4ab542d0-6eac-442e-8373-22e629f293ba';
     public const VORKATH_PRIMARY_ID = 'efc50aec-69ae-44c0-84b0-6eb940b3c6fc';
     public const VORKATH_TERTIARY_ID = 'b2709ce7-0d87-46af-92db-a497f50266ce';
+    //
+    public const DAGANNOTH_REX_ALWAYS_ID = '662c8437-c49b-4547-8f00-8a845c3a0295';
+    public const DAGANNOTH_REX_PRIMARY_ID = 'cdeea891-fb0a-4e5d-a094-79929357f0a0';
+    public const DAGANNOTH_REX_TERTIARY_ID = '92019720-d114-4e30-a65d-1200f7caf11a';
+    //
+    public const DAGANNOTH_SUPREME_ALWAYS_ID = '2e149a50-fc92-4bad-b1f7-ad0392a255d7';
+    public const DAGANNOTH_SUPREME_PRIMARY_ID = '43cebb8a-9630-4959-a2bb-44f814590d9d';
+    public const DAGANNOTH_SUPREME_TERTIARY_ID = 'b03d2e25-c6d3-4847-95d9-3cb0d8bd0ab7';
+    //
+    public const DAGANNOTH_PRIME_ALWAYS_ID = 'b4650188-5e35-46b5-9db2-fd2b268711df';
+    public const DAGANNOTH_PRIME_PRIMARY_ID = 'e93f4688-b834-45c7-852f-656a362edca0';
+    public const DAGANNOTH_PRIME_TERTIARY_ID = '68e17219-323b-40a4-85b1-c82b9c31d5ba';
 
     public function data(): array
     {
@@ -173,6 +185,48 @@ class LootTables
                 ],
                 [
                     'id' => self::VORKATH_TERTIARY_ID,
+                    'type' => LootTypeEnum::TERTIARY,
+                ],
+            ],
+            LootSources::DAGANNOTH_REX_ID => [
+                [
+                    'id' => self::DAGANNOTH_REX_ALWAYS_ID,
+                    'type' => LootTypeEnum::ALWAYS,
+                ],
+                [
+                    'id' => self::DAGANNOTH_REX_PRIMARY_ID,
+                    'type' => LootTypeEnum::PRIMARY,
+                ],
+                [
+                    'id' => self::DAGANNOTH_REX_TERTIARY_ID,
+                    'type' => LootTypeEnum::TERTIARY,
+                ],
+            ],
+            LootSources::DAGANNOTH_SUPREME_ID => [
+                [
+                    'id' => self::DAGANNOTH_SUPREME_ALWAYS_ID,
+                    'type' => LootTypeEnum::ALWAYS,
+                ],
+                [
+                    'id' => self::DAGANNOTH_SUPREME_PRIMARY_ID,
+                    'type' => LootTypeEnum::PRIMARY,
+                ],
+                [
+                    'id' => self::DAGANNOTH_SUPREME_TERTIARY_ID,
+                    'type' => LootTypeEnum::TERTIARY,
+                ],
+            ],
+            LootSources::DAGANNOTH_PRIME_ID => [
+                [
+                    'id' => self::DAGANNOTH_PRIME_ALWAYS_ID,
+                    'type' => LootTypeEnum::ALWAYS,
+                ],
+                [
+                    'id' => self::DAGANNOTH_PRIME_PRIMARY_ID,
+                    'type' => LootTypeEnum::PRIMARY,
+                ],
+                [
+                    'id' => self::DAGANNOTH_PRIME_TERTIARY_ID,
                     'type' => LootTypeEnum::TERTIARY,
                 ],
             ],

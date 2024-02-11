@@ -33,6 +33,15 @@ class LootSources
     //
     public const VORKATH_ID = '2c843db3-43a1-4848-b366-f68bcddebefe';
     public const VORKATH_NAME = 'Vorkath';
+    //
+    public const DAGANNOTH_REX_ID = '0223c364-54f4-4c1a-9782-ca8c7ba0789a';
+    public const DAGANNOTH_REX_NAME = 'Dagannoth Rex';
+    //
+    public const DAGANNOTH_SUPREME_ID = 'aafa85fe-c76c-4319-82e7-9f845e30be87';
+    public const DAGANNOTH_SUPREME_NAME = 'Dagannoth Supreme';
+    //
+    public const DAGANNOTH_PRIME_ID = '2ed89a6b-1920-4259-86ed-5c2d158835e3';
+    public const DAGANNOTH_PRIME_NAME = 'Dagannoth Prime';
 
     public function data(): array
     {
@@ -76,6 +85,18 @@ class LootSources
             [
                 'id' => self::VORKATH_ID,
                 'name' => self::VORKATH_NAME,
+            ],
+            [
+                'id' => self::DAGANNOTH_REX_ID,
+                'name' => self::DAGANNOTH_REX_NAME,
+            ],
+            [
+                'id' => self::DAGANNOTH_SUPREME_ID,
+                'name' => self::DAGANNOTH_SUPREME_NAME,
+            ],
+            [
+                'id' => self::DAGANNOTH_PRIME_ID,
+                'name' => self::DAGANNOTH_PRIME_NAME,
             ],
         ];
     }
