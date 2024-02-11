@@ -19,12 +19,15 @@ class TestCommandListener implements ApplicationCommandInteractionEventListenerC
     public function replyContent(ApplicationCommandInteractionEvent $event): ?string
     {
         $options = $event->getInteractionRequest()->all()['data']['options'];
-        $loots = $this->lootGeneratorService->generateLoot($options);
+        $lootResult = $this->lootGeneratorService->generateLoot($options);
+        $sourceName = $lootResult->getSource()->name;
+        $quantity = $lootResult->getQuantity();
+        $lootRollResults = $lootResult->getLootRollResults();
 
-        $replyContent = 'Results: ' . PHP_EOL;
+        $replyContent = "Results of killing $quantity $sourceName\\s: " . PHP_EOL;
 
         /** @var LootRollResult $lootResult */
-        foreach ($loots as $lootResult) {
+        foreach ($lootRollResults as $lootResult) {
             $replyContent .= $lootResult->getItemName()  . ' (' . $lootResult->getItemId() . '): ' . $lootResult->getQuantity() . PHP_EOL;
         }
 

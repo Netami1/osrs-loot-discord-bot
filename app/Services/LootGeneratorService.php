@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Log;
 
 class LootGeneratorService
 {
-    public function generateLoot(array $commandOptions): Collection
+    public function generateLoot(array $commandOptions): LootResult
     {
         $commandOptions = collect($commandOptions);
 
@@ -23,8 +23,12 @@ class LootGeneratorService
         ]);
 
         $loots = $this->processLootTables($source, $quantity);
+        $lootResult = (new LootResult())
+            ->setSource($source)
+            ->setQuantity($quantity)
+            ->setLootRollResults($loots);
 
-        return $loots;
+        return $lootResult;
     }
 
     private function processLootTables(LootSource $source, int $quantity): Collection
