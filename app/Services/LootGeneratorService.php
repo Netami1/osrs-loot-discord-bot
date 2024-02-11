@@ -23,7 +23,13 @@ class LootGeneratorService
         ]);
 
         $loots = $this->processLootTables($source, $quantity);
-        Log::info('Loots count: ' . $loots->count());
+
+        $names = $loots->map(function (LootRollResult $lootRollResult) {
+            return $lootRollResult->getItemName();
+        })->toArray();
+
+        Log::info('Loot names', $names);
+
         return (new LootResult())
             ->setSource($source)
             ->setQuantity($quantity)
@@ -36,11 +42,6 @@ class LootGeneratorService
         $primaryLootResults = $this->processLootTableType($source, $quantity, LootTypeEnum::PRIMARY);
 
         $allTableLoots = $alwaysLootResults->merge($primaryLootResults);
-
-        $names = $allTableLoots->map(function (LootRollResult $lootRollResult) {
-            return $lootRollResult->getItemName();
-        })->toArray();
-        Log::info('Loot names', $names);
 
         return $allTableLoots->groupBy(function (LootRollResult $lootRollResult) {
             return $lootRollResult->getItemId();
