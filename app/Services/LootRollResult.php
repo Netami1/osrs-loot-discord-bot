@@ -45,4 +45,9 @@ class LootRollResult
 
         return $this;
     }
+
+    public function toString(): string
+    {
+        return $this->getItemName()  . ' (' . $this->getItemId() . '): ' . $this->getQuantity();
+    }
 }
