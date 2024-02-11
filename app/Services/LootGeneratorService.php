@@ -37,12 +37,6 @@ class LootGeneratorService
 
         $allTableLoots = $alwaysLootResults->merge($primaryLootResults);
 
-        $names = [];
-        foreach ($allTableLoots as $loot) {
-            $names[] = $loot->getItemName();
-        }
-        Log::info('Loot names', ['names' => $names, 'count' => count($names)]);
-
         return $allTableLoots->groupBy(function (LootRollResult $lootRollResult) {
             return $lootRollResult->getItemId();
         })->map(function (Collection $results, $itemId) {
@@ -82,6 +76,11 @@ class LootGeneratorService
 
                 /** @var LootTableRoll $roll */
                 foreach ($rolls as $roll) {
+                    Log::info('Rolling', [
+                        'roll' => $roll->item_name,
+                        'chance' => $roll->chance,
+                        'randRoll' => $randRoll,
+                    ]);
 
                     // Check if we succeeded on the roll
                     if ($randRoll <= $roll->chance) {
@@ -105,13 +104,15 @@ class LootGeneratorService
                             break;
                         }
                     } else {
-                        $randRoll -= $roll->chance;
+                       // $randRoll -= $roll->chance;
                     }
                 }
 
                 // This might be an issue but I'm just gonna ignore it for now...
                 if ($rollHit !== null) {
                     $toReturn->push($rollHit);
+                } else {
+                    Log::warning('No loot found');
                 }
             }
         }
