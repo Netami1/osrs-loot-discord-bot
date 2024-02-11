@@ -13,17 +13,21 @@ class LootTableSeeder extends Seeder
      */
     public function run(): void
     {
-        $tables = (new LootTables())->data();
-        foreach ($tables as $tableData) {
-            $table = LootTable::query()
-                ->find($tableData['id']);
+        $lootSources = (new LootTables())->data();
+        foreach ($lootSources as $sourceId => $tablesData) {
+            foreach ($tablesData as $tableData) {
+                $tableData = array_merge($tableData, ['loot_source_id' => $sourceId]);
 
-            if ($table) {
-                $table->update($tableData);
-                $table->save();
-            } else {
-                LootTable::query()
-                    ->create($tableData);
+                $table = LootTable::query()
+                    ->find($tableData['id']);
+
+                if ($table) {
+                    $table->update($tableData);
+                    $table->save();
+                } else {
+                    LootTable::query()
+                        ->create($tableData);
+                }
             }
         }
     }

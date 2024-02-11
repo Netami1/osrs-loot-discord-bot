@@ -13,17 +13,22 @@ class LootTableRollSeeder extends Seeder
      */
     public function run(): void
     {
-        $tableRolls = (new LootTableRolls())->data();
-        foreach ($tableRolls as $tableRollData) {
-            $tableRoll = LootTableRoll::query()
-                ->find($tableRollData['id']);
+        $lootTables = (new LootTableRolls())->data();
+        foreach ($lootTables as $lootTableId => $tableRolls) {
 
-            if ($tableRoll) {
-                $tableRoll->update($tableRollData);
-                $tableRoll->save();
-            } else {
-                LootTableRoll::query()
-                    ->create($tableRollData);
+            foreach ($tableRolls as $tableRollData) {
+                $tableRollData = array_merge($tableRollData, ['loot_table_id' => $lootTableId]);
+
+                $tableRoll = LootTableRoll::query()
+                    ->find($tableRollData['id']);
+
+                if ($tableRoll) {
+                    $tableRoll->update($tableRollData);
+                    $tableRoll->save();
+                } else {
+                    LootTableRoll::query()
+                        ->create($tableRollData);
+                }
             }
         }
     }
