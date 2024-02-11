@@ -71,7 +71,7 @@ class LootGeneratorService
                     ->shuffle();
 
                 $rollHit = null;
-                $randRoll = rand(0, 100) / 100;
+                $randRoll = rand(0, 1000000) / 1000000;
 
                 /** @var LootTableRoll $roll */
                 foreach ($rolls as $roll) {
