@@ -2,26 +2,17 @@
 
 namespace App\Listeners;
 
-use Illuminate\Support\Facades\Log;
 use Nwilging\LaravelDiscordBot\Contracts\Listeners\ApplicationCommandInteractionEventListenerContract;
 use Nwilging\LaravelDiscordBot\Events\ApplicationCommandInteractionEvent;
 
 class TestCommandListener implements ApplicationCommandInteractionEventListenerContract
 {
     /**
-     * Create the event listener.
-     */
-    public function __construct()
-    {
-        //
-    }
-
-    /**
      * Handle the event.
      */
     public function handle(ApplicationCommandInteractionEvent $event): void
     {
-        Log::info('Test123');
+
     }
 
     public function replyContent(ApplicationCommandInteractionEvent $event): ?string
@@ -36,6 +27,6 @@ class TestCommandListener implements ApplicationCommandInteractionEventListenerC
 
     public function command(): ?string
     {
-        return null;
+        return 'test-command';
     }
 }
