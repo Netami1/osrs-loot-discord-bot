@@ -72,38 +72,44 @@ class LootGeneratorService
                     });
 
                 $rollHit = null;
-                while ($rollHit === null) {
-                    $randRoll = rand(0, 100) / 100;
+                $randRoll = rand(0, 100) / 100;
 
-                    /** @var LootTableRoll $roll */
-                    foreach ($rolls as $roll) {
-                        Log::info('Rolling', [
-                            'roll' => $roll->item_name,
-                            'chance' => $roll->chance,
-                            'randRoll' => $randRoll,
-                        ]);
+                /** @var LootTableRoll $roll */
+                foreach ($rolls as $roll) {
+                    Log::info('Rolling', [
+                        'roll' => $roll->item_name,
+                        'chance' => $roll->chance,
+                        'randRoll' => $randRoll,
+                    ]);
 
-                        // Check if we succeeded on the roll
-                        if ($randRoll <= $roll->chance) {
-                            // Check if this roll was for a "Nothing" drop
-                            if ($roll->item_id === null) {
-                                break;
-                            }
-
-                            $rollQuantity = rand($roll->min, $roll->max);
-
-                            $rollHit = (new LootRollResult())
-                                ->setItemId($roll->item_id)
-                                ->setItemName($roll->item_name)
-                                ->setQuantity($rollQuantity);
-
+                    // Check if we succeeded on the roll
+                    if ($randRoll <= $roll->chance) {
+                        // Check if this roll was for a "Nothing" drop
+                        if ($roll->item_id === null) {
                             break;
-                        } else {
-                            $randRoll -= $roll->chance;
                         }
+
+                        $rollQuantity = rand($roll->min, $roll->max);
+
+                        $rollHit = (new LootRollResult())
+                            ->setItemId($roll->item_id)
+                            ->setItemName($roll->item_name)
+                            ->setQuantity($rollQuantity);
+
+                        if ($lootType === LootTypeEnum::ALWAYS) {
+                            $toReturn->push($rollHit);
+                            $rollHit = null;
+                        } else {
+                            break;
+                        }
+                    } else {
+                        $randRoll -= $roll->chance;
                     }
                 }
-                $toReturn->push($rollHit);
+
+                if ($rollHit !== null) {
+                    $toReturn->push($rollHit);
+                }
             }
         }
 
