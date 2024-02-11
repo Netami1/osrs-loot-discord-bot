@@ -36,7 +36,7 @@ class LootGeneratorService
         $alwaysLootResults = $this->processAlwaysLootTables($source, $quantity);
         $primaryLootResults = $this->processPrimaryLootTables($source, $quantity);
 
-        $allTableLoots = collect([$alwaysLootResults, $primaryLootResults]);
+        $allTableLoots = $alwaysLootResults->union($primaryLootResults);
 
         return $allTableLoots->groupBy(function (LootRollResult $lootRollResult) {
             return $lootRollResult->getItemId();
