@@ -38,11 +38,12 @@ class LootGeneratorService
     {
         $alwaysTables = $source->lootTables()
             ->where('type', LootTypeEnum::ALWAYS)
-            ->get();
+            ->get()
+            ->toArray();
 
         $toReturn = [];
         /** @var LootTable $lootTable */
-        foreach ($alwaysTables->toArray() as $lootTable) {
+        foreach ($alwaysTables as $lootTable) {
             $rolls = $lootTable->lootTableRolls();
             /** @var LootTableRoll $roll */
             foreach ($rolls as $roll) {
