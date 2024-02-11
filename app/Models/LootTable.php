@@ -19,6 +19,7 @@ class LootTable extends Model
     protected $fillable = [
         'loot_source_id',
         'type',
+        'rolls',
     ];
 
     protected $casts = [

@@ -34,6 +34,10 @@ class LootTables
     //
     public const CORPOREAL_BEAST_PRIMARY_ID = 'bcbfce5e-7dd4-42b0-87cd-1debc8908d84';
     public const CORPOREAL_BEAST_TERTIARY_ID = 'bf436919-391a-4d3b-865d-5da33d08c6ff';
+    //
+    public const ZULRAH_ALWAYS_ID = 'd7b77efd-da9e-4b4b-ba91-677a43fdf1e1';
+    public const ZULRAH_PRIMARY_ID = 'e37742bd-8823-42ba-8f32-8ebbb1c3c2d2';
+    public const ZULRAH_TERTIARY_ID = '4e68c18a-45b4-4ed4-970d-0f5e1fc84759';
 
     public function data(): array
     {
@@ -137,7 +141,22 @@ class LootTables
                     'id' => self::CORPOREAL_BEAST_TERTIARY_ID,
                     'type' => LootTypeEnum::TERTIARY,
                 ],
-            ]
+            ],
+            LootSources::ZULRAH_ID => [
+                [
+                    'id' => self::ZULRAH_ALWAYS_ID,
+                    'type' => LootTypeEnum::ALWAYS,
+                ],
+                [
+                    'id' => self::ZULRAH_PRIMARY_ID,
+                    'type' => LootTypeEnum::PRIMARY,
+                    'rolls' => 2,
+                ],
+                [
+                    'id' => self::ZULRAH_TERTIARY_ID,
+                    'type' => LootTypeEnum::TERTIARY,
+                ],
+            ],
         ];
     }
 }

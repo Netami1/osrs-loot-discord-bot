@@ -57,7 +57,7 @@ class LootGeneratorService
 
     private function processLootTableType(LootSource $source, int $quantity, LootTypeEnum $lootType): Collection
     {
-        $primaryTables = $source->lootTables()
+        $lootTables = $source->lootTables()
             ->where('type', $lootType)
             ->with('lootTableRolls')
             ->get();
@@ -66,43 +66,53 @@ class LootGeneratorService
         for ($i=0; $i < $quantity; $i++) {
 
             /** @var LootTable $lootTable */
-            foreach ($primaryTables as $lootTable) {
-                $rolls = $lootTable->lootTableRolls()
-                    ->get()
-                    ->shuffle();
+            foreach ($lootTables as $lootTable) {
+                for ($j=0; $j < $lootTable->rolls; $j++) {
 
-                $rollHit = null;
-                $randRoll = rand(0, 1000000000000000) / 1000000000000000;
+                    $rolls = $lootTable->lootTableRolls()
+                        ->get()
+                        ->shuffle();
 
-                /** @var LootTableRoll $roll */
-                foreach ($rolls as $roll) {
-                    // Check if we succeeded on the roll
-                    if ($lootType === LootTypeEnum::ALWAYS || $randRoll <= $roll->chance) {
-                        // Check if this roll was for a "Nothing" drop
-                        if ($roll->item_id === null) {
-                            break;
+                    $rollHit = null;
+                    $randRoll = rand(0, 1000000000000000) / 1000000000000000;
+
+                    /** @var LootTableRoll $roll */
+                    foreach ($rolls as $roll) {
+                        // Check if we succeeded on the roll
+                        if ($lootType === LootTypeEnum::ALWAYS || $randRoll <= $roll->chance) {
+                            // Check if this roll was for a "Nothing" drop
+                            if ($roll->item_id === null) {
+                                break;
+                            }
+
+                            $rollQuantity = rand($roll->min, $roll->max);
+
+                            $rollHit = (new LootRollResult())
+                                ->setItemId($roll->item_id)
+                                ->setItemName($roll->item_name)
+                                ->setQuantity($rollQuantity);
+
+                            if ($lootType === LootTypeEnum::ALWAYS) {
+                                $toReturn->push($rollHit);
+                                $rollHit = null;
+                            } else {
+                                break;
+                            }
+                        } else if ($lootType === LootTypeEnum::PRIMARY) {
+                            $randRoll -= $roll->chance;
                         }
-
-                        $rollQuantity = rand($roll->min, $roll->max);
-
-                        $rollHit = (new LootRollResult())
-                            ->setItemId($roll->item_id)
-                            ->setItemName($roll->item_name)
-                            ->setQuantity($rollQuantity);
-
-                        if ($lootType === LootTypeEnum::ALWAYS) {
-                            $toReturn->push($rollHit);
-                            $rollHit = null;
-                        } else {
-                            break;
-                        }
-                    } else if ($lootType === LootTypeEnum::PRIMARY) {
-                        $randRoll -= $roll->chance;
                     }
-                }
 
-                if ($rollHit !== null) {
-                    $toReturn->push($rollHit);
+                    if ($rollHit !== null) {
+                        $toReturn->push($rollHit);
+                        // Set it back to null in case we have multiple rolls on this table
+                        $rollHit = null;
+                    } else {
+                        Log::warning('No loot hit', [
+                            'source' => $source->name,
+                            'lootType' => $lootType,
+                        ]);
+                    }
                 }
             }
         }

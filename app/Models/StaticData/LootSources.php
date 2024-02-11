@@ -27,6 +27,9 @@ class LootSources
     //
     public const CORPOREAL_BEAST_ID = '5e231bc8-0c65-4715-a669-d69fa87041b1';
     public const CORPOREAL_BEAST_NAME = 'Corporeal Beast';
+    //
+    public const ZULRAH_ID = '05a77cc1-10a8-4cb0-92f0-12547609d852';
+    public const ZULRAH_NAME = 'Zulrah';
 
     public function data(): array
     {
@@ -62,6 +65,10 @@ class LootSources
             [
                 'id' => self::CORPOREAL_BEAST_ID,
                 'name' => self::CORPOREAL_BEAST_NAME,
+            ],
+            [
+                'id' => self::ZULRAH_ID,
+                'name' => self::ZULRAH_NAME,
             ],
         ];
     }
