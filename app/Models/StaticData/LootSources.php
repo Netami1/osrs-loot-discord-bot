@@ -15,6 +15,9 @@ class LootSources
     //
     public const COMMAND_ZILYANA_ID = '4cbd53ae-5752-4555-98e9-0b7d3856117d';
     public const COMMAND_ZILYANA_NAME = 'Commander Zilyana';
+    //
+    public const KREEARRA_ID = '7112572f-39e7-4b81-a3e1-2a8acd7452a2';
+    public const KREEARRA_NAME = 'Kreearra';
 
     public function data(): array
     {
@@ -34,6 +37,10 @@ class LootSources
             [
                 'id' => self::COMMAND_ZILYANA_ID,
                 'name' => self::COMMAND_ZILYANA_NAME,
+            ],
+            [
+                'id' => self::KREEARRA_ID,
+                'name' => self::KREEARRA_NAME,
             ],
         ];
     }

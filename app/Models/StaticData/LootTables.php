@@ -20,6 +20,10 @@ class LootTables
     public const COMMAND_ZILYANA_ALWAYS_ID = '7416655c-e52a-4cee-b4a7-8fff1c96d742';
     public const COMMAND_ZILYANA_PRIMARY_ID = 'bf182173-43bb-482d-9645-f13f3e27fa9f';
     public const COMMAND_ZILYANA_TERTIARY_ID = '4f204412-b0fa-405f-89ed-6a608d55b04e';
+    //
+    public const KREEARRA_ALWAYS_ID = '8031fcc5-4b96-484b-9d2e-ecfb870e4783';
+    public const KREEARRA_PRIMARY_ID = '04c96de2-6499-4e9e-b079-a5b817358739';
+    public const KREEARRA_TERTIARY_ID = '57b93190-3909-4416-baa1-30f5fa05b1ab';
 
     public function data(): array
     {
@@ -73,6 +77,20 @@ class LootTables
                 ],
                 [
                     'id' => self::COMMAND_ZILYANA_TERTIARY_ID,
+                    'type' => LootTypeEnum::TERTIARY,
+                ],
+            ],
+            LootSources::KREEARRA_ID => [
+                [
+                    'id' => self::KREEARRA_ALWAYS_ID,
+                    'type' => LootTypeEnum::ALWAYS,
+                ],
+                [
+                    'id' => self::KREEARRA_PRIMARY_ID,
+                    'type' => LootTypeEnum::PRIMARY,
+                ],
+                [
+                    'id' => self::KREEARRA_TERTIARY_ID,
                     'type' => LootTypeEnum::TERTIARY,
                 ],
             ],
