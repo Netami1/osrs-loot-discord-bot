@@ -31,7 +31,8 @@ class KillCommand extends Command
             return $lootRollResult->totalValue();
         });
 
-        $this->output->writeln("## Results of killing {$times} {$monsterName}s: ");
+        $this->output->writeln("## Results of killing {$times} {$monsterName}s: " . kmb($lootResult->totalValue()));
+        $this->output->writeln('### GP per kill: ' . kmb($lootResult->totalValue() / $times));
 
         /** @var LootRollResult $lootResult */
         foreach ($lootRollResults as $lootResult) {
