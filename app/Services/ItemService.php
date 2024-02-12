@@ -28,7 +28,7 @@ class ItemService
         return $this->createItemFromApi($itemId);
     }
 
-    private function createItemFromApi(int $itemId): Item
+    public function createItemFromApi(int $itemId): Item
     {
         $itemDetails = $this->osrsService->getItemDetails($itemId);
         if (!$itemDetails) {
