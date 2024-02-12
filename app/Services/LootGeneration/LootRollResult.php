@@ -20,6 +20,11 @@ class LootRollResult
         return $this->quantity;
     }
 
+    public function getFormattedQuantity(): string
+    {
+        return kmb($this->quantity);
+    }
+
     public function setItem(Item $item): self
     {
         $this->item = $item;
@@ -36,7 +41,14 @@ class LootRollResult
 
     public function toString(): string
     {
-        return "{$this->quantity} x {$this->item->name}" . ' (' . kmb($this->totalValue()) . ')';
+        $valueString =  ' (' . kmb($this->totalValue()) . ')';
+        $mainString = "{$this->getFormattedQuantity()} x {$this->item->name}";
+
+        if ($this->totalValue() > 0) {
+            return $mainString . $valueString;
+        }
+
+        return $mainString;
     }
 
     public function totalValue(): int

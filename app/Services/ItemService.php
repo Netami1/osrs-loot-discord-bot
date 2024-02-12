@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Item;
+use App\Models\LootTableRoll;
 use App\Repos\ItemRepo;
 
 class ItemService
@@ -24,9 +25,14 @@ class ItemService
             return $item;
         }
 
+        return $this->createItemFromApi($itemId);
+    }
+
+    private function createItemFromApi(int $itemId): Item
+    {
         $itemDetails = $this->osrsService->getItemDetails($itemId);
         if (!$itemDetails) {
-            return null;
+            return $this->createNonTradeAbleItem($itemId);
         }
 
         $price = str_replace(',', '', $itemDetails['item']['current']['price']);
@@ -37,6 +43,26 @@ class ItemService
             'name' => $itemDetails['item']['name'],
             'icon' => $itemDetails['item']['icon'],
             'price' => $priceInt,
+        ];
+
+        return $this->itemRepo->createItem($creationArr);
+    }
+
+    private function createNonTradeAbleItem(int $itemId): Item
+    {
+        // Find the item in the LootTableRolls
+        $lootTableRoll = LootTableRoll::query()
+            ->where('item_id', $itemId)
+            ->firstOrFail();
+
+        // Coins should be worth 1 each
+        $price = $itemId === 995 ? 1 : 0;
+
+        $creationArr = [
+            'id' => $itemId,
+            'name' => $lootTableRoll->item_name,
+            'icon' => null,
+            'price' => $price,
         ];
 
         return $this->itemRepo->createItem($creationArr);

@@ -28,7 +28,7 @@ class KillCommand extends Command
             ->setQuantity($times)
             ->setLootRollResults($tableResults);
         $lootRollResults = $lootResult->getLootRollResults()->sortByDesc(function (LootRollResult $lootRollResult) {
-            return $lootRollResult->getQuantity();
+            return $lootRollResult->totalValue();
         });
 
         $this->output->writeln("## Results of killing {$times} {$monsterName}s: ");

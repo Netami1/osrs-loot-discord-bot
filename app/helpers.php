@@ -3,7 +3,7 @@
 if (!function_exists('kmb')) {
     function kmb($number)
     {
-        if ($number < 1000) {
+        if ($number < 10000) {
             return $number;
         }
 
