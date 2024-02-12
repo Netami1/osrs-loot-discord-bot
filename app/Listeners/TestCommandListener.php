@@ -40,7 +40,7 @@ class TestCommandListener implements ApplicationCommandInteractionEventListenerC
 
     public function behavior(ApplicationCommandInteractionEvent $event): int
     {
-        return static::REPLY_TO_MESSAGE;
+        return static::DEFER_WHILE_HANDLING;
     }
 
     public function command(): ?string
