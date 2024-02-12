@@ -114,6 +114,13 @@ class LootGeneratorService
                                 $randRoll -= $roll->chance;
                             }
                         }
+
+                        if (!$tableWasHit) {
+                            Log::warning('Loot table roll failed', [
+                                'source' => $source->name,
+                                'lootType' => $lootType,
+                            ]);
+                        }
                     }
                 }
             }
