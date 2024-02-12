@@ -24,10 +24,10 @@ class TestCommandListener implements ApplicationCommandInteractionEventListenerC
         $sourceName = $lootResult->getSource()->name;
         $quantity = $lootResult->getQuantity();
         $lootRollResults = $lootResult->getLootRollResults()->sortByDesc(function (LootRollResult $lootRollResult) {
-            return $lootRollResult->getQuantity();
+            return $lootRollResult->totalValue();
         });
 
-        $replyContent = "## Results of killing {$quantity} {$sourceName}s: " . PHP_EOL . '```';
+        $replyContent = "## Results of killing {$quantity} {$sourceName}s: " . kmb($lootResult->totalValue()) . PHP_EOL . '```';
 
         /** @var LootRollResult $lootResult */
         foreach ($lootRollResults as $lootResult) {

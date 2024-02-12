@@ -48,4 +48,11 @@ class LootResult
 
         return $this;
     }
+
+    public function totalValue(): int
+    {
+        return $this->lootRollResults->sum(function (LootRollResult $lootRollResult) {
+            return $lootRollResult->totalValue();
+        });
+    }
 }

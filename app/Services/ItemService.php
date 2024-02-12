@@ -29,11 +29,14 @@ class ItemService
             return null;
         }
 
+        $price = str_replace(',', '', $itemDetails['item']['current']['price']);
+        $priceInt = kmbToInt($price);
+
         $creationArr = [
             'id' => $itemDetails['item']['id'],
             'name' => $itemDetails['item']['name'],
             'icon' => $itemDetails['item']['icon'],
-            'price' => str_replace(',', '', $itemDetails['item']['current']['price']),
+            'price' => $priceInt,
         ];
 
         return $this->itemRepo->createItem($creationArr);
