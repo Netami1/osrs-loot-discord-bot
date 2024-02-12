@@ -3,9 +3,9 @@
 namespace App\Console\Commands;
 
 use App\Models\LootSource;
-use App\Services\LootGeneratorService;
-use App\Services\LootResult;
-use App\Services\LootRollResult;
+use App\Services\LootGeneration\LootGeneratorService;
+use App\Services\LootGeneration\LootResult;
+use App\Services\LootGeneration\LootRollResult;
 use Illuminate\Console\Command;
 
 class KillCommand extends Command

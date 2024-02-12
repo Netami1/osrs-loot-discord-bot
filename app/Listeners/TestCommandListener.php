@@ -2,9 +2,8 @@
 
 namespace App\Listeners;
 
-use App\Services\LootGeneratorService;
-use App\Services\LootRollResult;
-use Illuminate\Support\Facades\Log;
+use App\Services\LootGeneration\LootGeneratorService;
+use App\Services\LootGeneration\LootRollResult;
 use Nwilging\LaravelDiscordBot\Contracts\Listeners\ApplicationCommandInteractionEventListenerContract;
 use Nwilging\LaravelDiscordBot\Events\ApplicationCommandInteractionEvent;
 

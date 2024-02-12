@@ -1,16 +1,24 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\LootGeneration;
 
 use App\Enum\LootTypeEnum;
 use App\Models\LootSource;
 use App\Models\LootTable;
 use App\Models\LootTableRoll;
+use App\Services\ItemService;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
 
 class LootGeneratorService
 {
+    private ItemService $itemService;
+
+    public function __construct(ItemService $itemService)
+    {
+        $this->itemService = $itemService;
+    }
+
     public function generateLoot(array $commandOptions): LootResult
     {
         $commandOptions = collect($commandOptions);
@@ -39,17 +47,15 @@ class LootGeneratorService
         $allTableLoots = $alwaysLootResults->merge($primaryLootResults)->merge($tertiaryLootResults);
 
         return $allTableLoots->groupBy(function (LootRollResult $lootRollResult) {
-            return $lootRollResult->getItemId();
-        })->map(function (Collection $results, $itemId) {
-            $itemName = $results->first()->getItemName();
+            return $lootRollResult->getItem()->id;
+        })->map(function (Collection $results) {
 
             $totalQuantity = $results->sum(function (LootRollResult $lootRollResult) {
                 return $lootRollResult->getQuantity();
             });
 
             return (new LootRollResult())
-                ->setItemId($itemId)
-                ->setItemName($itemName)
+                ->setItem($results->first()->getItem())
                 ->setQuantity($totalQuantity);
 
         })->values();
@@ -90,9 +96,17 @@ class LootGeneratorService
 
                             $rollQuantity = rand($roll->min, $roll->max);
 
+                            $item = $this->itemService->getOrFetchItem($roll->item_id);
+
+                            if ($item === null) {
+                                Log::warning('Unable to retrieve item', [
+                                    'itemId' => $roll->item_id,
+                                ]);
+                                continue;
+                            }
+
                             $rollHit = (new LootRollResult())
-                                ->setItemId($roll->item_id)
-                                ->setItemName($roll->item_name)
+                                ->setItem($item)
                                 ->setQuantity($rollQuantity);
 
                             if ($lootType === LootTypeEnum::ALWAYS) {

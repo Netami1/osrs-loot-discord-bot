@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\LootGeneration;
 
 use App\Models\LootSource;
 use Illuminate\Support\Collection;
