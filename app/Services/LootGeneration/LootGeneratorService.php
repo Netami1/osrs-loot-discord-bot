@@ -126,6 +126,12 @@ class LootGeneratorService
                         if ($lootType === LootTypeEnum::TERTIARY) {
                             $shouldContinueRolling = false;
                         }
+
+                        if ($lootType === LootTypeEnum::PRIMARY && $shouldContinueRolling) {
+                            Log::warning('Primary loot table did not roll an item', [
+                                'source' => $source->name,
+                            ]);
+                        }
                     }
                 }
             }
