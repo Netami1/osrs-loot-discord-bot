@@ -129,11 +129,11 @@ class LootGeneratorService
                             Log::warning('No loot hit', [
                                 'source' => $source->name,
                                 'lootType' => $lootType,
-                                'iteration' => $i,
+                                'iteration' => $j,
                             ]);
-                            $i--;
+                            $j--;
                             Log::warning('Decreasing iteration', [
-                                'iteration' => $i,
+                                'iteration' => $j,
                             ]);
                         }
                     }
