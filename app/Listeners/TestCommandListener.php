@@ -27,8 +27,9 @@ class TestCommandListener implements ApplicationCommandInteractionEventListenerC
             return $lootRollResult->totalValue();
         });
 
-        $replyContent = "## Results of killing {$quantity} {$sourceName}: " . kmb($lootResult->totalValue()) . PHP_EOL . '```';
-        $replyContent .= '### GP per kill: ' . kmb($lootResult->totalValue() / $quantity);
+        $replyContent = "## Results of killing {$quantity} {$sourceName}: " . kmb($lootResult->totalValue()) . PHP_EOL;
+        $replyContent .= '### GP per kill: ' . kmb($lootResult->totalValue() / $quantity) . PHP_EOL;
+        $replyContent .= '```' . PHP_EOL;
 
         /** @var LootRollResult $lootResult */
         foreach ($lootRollResults as $lootResult) {
