@@ -79,7 +79,7 @@ class LootGeneratorService
                 // Number of rolls for this loot table
                 for ($tableRollIndex=0; $tableRollIndex < $lootTable->rolls; $tableRollIndex++) {
                     $shouldContinueRolling = true;
-                    //while ($shouldContinueRolling) {
+                    while ($shouldContinueRolling) {
                         $rolls = $lootTable->lootTableRolls()
                             ->get()
                             ->shuffle()
@@ -97,14 +97,6 @@ class LootGeneratorService
                             // Check if we succeeded on the roll
                             $shouldHitAsDefault = $this->shouldHitAsDefault($rollIndex, $rollsOnTableCount, $lootType);
                             if ($randRoll <= $roll->chance || $shouldHitAsDefault) {
-                                if ($lootType === LootTypeEnum::PRIMARY && $shouldHitAsDefault) {
-                                    Log::info('Hit as default', [
-                                        'rollIndex' => $rollIndex,
-                                        'rollsOnTableCount' => $rollsOnTableCount,
-                                        'lootType' => $lootType,
-                                        'itemId' => $roll->item_id,
-                                    ]);
-                                }
 
                                 $shouldContinueRolling = false;
 
@@ -134,7 +126,7 @@ class LootGeneratorService
                         if ($lootType === LootTypeEnum::TERTIARY) {
                             $shouldContinueRolling = false;
                         }
-                    //}
+                    }
                 }
             }
         }
@@ -180,9 +172,9 @@ class LootGeneratorService
         }
 
         // The last roll on a primary table is always a hit
-        if ($lootTypeEnum === LootTypeEnum::PRIMARY) {
-            return $rollIndex === $rollsOnTableCount - 1;
-        }
+        //if ($lootTypeEnum === LootTypeEnum::PRIMARY) {
+        //    return $rollIndex === $rollsOnTableCount - 1;
+        //}
 
         return false;
     }
