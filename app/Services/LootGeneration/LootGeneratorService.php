@@ -108,7 +108,7 @@ class LootGeneratorService
                                 if ($lootType !== LootTypeEnum::ALWAYS) {
                                     break;
                                 }
-                            } else {
+                            } else if ($lootType === LootTypeEnum::PRIMARY) {
                                 $randRoll -= $roll->chance;
                             }
                         }
