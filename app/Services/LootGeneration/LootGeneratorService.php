@@ -46,9 +46,7 @@ class LootGeneratorService
 
         $allTableLoots = $alwaysLootResults->merge($primaryLootResults)->merge($tertiaryLootResults);
 
-
-        return $allTableLoots;
-        /*return $allTableLoots->groupBy(function (LootRollResult $lootRollResult) {
+        return $allTableLoots->groupBy(function (LootRollResult $lootRollResult) {
             return $lootRollResult->getItem()->id;
         })->map(function (Collection $results) {
 
@@ -60,7 +58,7 @@ class LootGeneratorService
                 ->setItem($results->first()->getItem())
                 ->setQuantity($totalQuantity);
 
-        })->values();*/
+        })->values();
     }
 
     private function processLootTableType(LootSource $source, int $quantity, LootTypeEnum $lootType): Collection
