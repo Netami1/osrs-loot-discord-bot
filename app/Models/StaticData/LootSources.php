@@ -42,6 +42,9 @@ class LootSources
     //
     public const DAGANNOTH_PRIME_ID = '2ed89a6b-1920-4259-86ed-5c2d158835e3';
     public const DAGANNOTH_PRIME_NAME = 'Dagannoth Prime';
+    //
+    public const BARROWS_ID = '665309e6-3ccc-49a1-b75b-37c938c0b7e0';
+    public const BARROWS_NAME = 'Barrows';
 
     public function data(): array
     {
@@ -97,6 +100,10 @@ class LootSources
             [
                 'id' => self::DAGANNOTH_PRIME_ID,
                 'name' => self::DAGANNOTH_PRIME_NAME,
+            ],
+            [
+                'id' => self::BARROWS_ID,
+                'name' => self::BARROWS_NAME,
             ],
         ];
     }
