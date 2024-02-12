@@ -60,7 +60,7 @@ class ItemService
 
         // Try to get the icon from the wiki instead
         $wikiService = app(WikiService::class);
-        $icon = $wikiService->getItemIconUrlByName($itemId);
+        $icon = $wikiService->getItemIconUrlByName($lootTableRoll->item_name);
 
         $creationArr = [
             'id' => $itemId,
