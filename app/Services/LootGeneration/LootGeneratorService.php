@@ -91,7 +91,7 @@ class LootGeneratorService
                         /** @var LootTableRoll $roll */
                         foreach ($rolls as $roll) {
                             // Check if we succeeded on the roll
-                            if ($lootType === LootTypeEnum::ALWAYS || $randRoll <= $roll->chance) {
+                            if ($lootType !== LootTypeEnum::PRIMARY || $randRoll <= $roll->chance) {
                                 $tableWasHit = true;
 
                                 // Check if this roll was for a "Nothing" drop
@@ -110,7 +110,7 @@ class LootGeneratorService
                                 if ($lootType !== LootTypeEnum::ALWAYS) {
                                     break;
                                 }
-                            } else if ($lootType === LootTypeEnum::PRIMARY) {
+                            } else {
                                 $randRoll -= $roll->chance;
                             }
                         }
