@@ -81,51 +81,38 @@ class LootGeneratorService
                 // Number of rolls for this loot table
                 for ($j=0; $j < $lootTable->rolls; $j++) {
                     $tableWasHit = false;
+                    while (!$tableWasHit) {
+                        $rolls = $lootTable->lootTableRolls()
+                            ->get()
+                            ->shuffle();
 
-                    $rolls = $lootTable->lootTableRolls()
-                        ->get()
-                        ->shuffle();
+                        $randRoll = rand(0, 1000000000000000) / 1000000000000000;
 
-                    $randRoll = rand(0, 1000000000000000) / 1000000000000000;
+                        /** @var LootTableRoll $roll */
+                        foreach ($rolls as $roll) {
+                            // Check if we succeeded on the roll
+                            if ($lootType === LootTypeEnum::ALWAYS || $randRoll <= $roll->chance) {
+                                $tableWasHit = true;
 
-                    /** @var LootTableRoll $roll */
-                    foreach ($rolls as $roll) {
-                        // Check if we succeeded on the roll
-                        if ($lootType === LootTypeEnum::ALWAYS || $randRoll <= $roll->chance) {
-                            $tableWasHit = true;
+                                // Check if this roll was for a "Nothing" drop
+                                if ($roll->item_id === null) {
+                                    break;
+                                }
 
-                            // Check if this roll was for a "Nothing" drop
-                            if ($roll->item_id === null) {
-                                break;
+                                $rollQuantity = rand($roll->min, $roll->max);
+
+                                if (array_key_exists($roll->item_id, $rollResults)) {
+                                    $rollResults[$roll->item_id] += $rollQuantity;
+                                } else {
+                                    $rollResults[$roll->item_id] = $rollQuantity;
+                                }
+
+                                if ($lootType !== LootTypeEnum::ALWAYS) {
+                                    break;
+                                }
+                            } else if ($lootType === LootTypeEnum::PRIMARY) {
+                                $randRoll -= $roll->chance;
                             }
-
-                            $rollQuantity = rand($roll->min, $roll->max);
-
-                            if (array_key_exists($roll->item_id, $rollResults)) {
-                                $rollResults[$roll->item_id] += $rollQuantity;
-                            } else {
-                                $rollResults[$roll->item_id] = $rollQuantity;
-                            }
-
-                            if ($lootType !== LootTypeEnum::ALWAYS) {
-                                break;
-                            }
-                        } else if ($lootType === LootTypeEnum::PRIMARY) {
-                            $randRoll -= $roll->chance;
-                        }
-                    }
-
-                    if (!$tableWasHit)  {
-                        if ($lootType === LootTypeEnum::PRIMARY) {
-                            Log::warning('No loot hit', [
-                                'source' => $source->name,
-                                'lootType' => $lootType,
-                                'iteration' => $j,
-                            ]);
-                            $j--;
-                            Log::warning('Decreasing iteration', [
-                                'iteration' => $j,
-                            ]);
                         }
                     }
                 }
