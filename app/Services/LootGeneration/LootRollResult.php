@@ -36,7 +36,7 @@ class LootRollResult
 
     public function toString(): string
     {
-        return "{$this->quantity}x {$this->item->name}" . ' (' . kmb($this->totalValue()) . ')';
+        return "{$this->quantity} x {$this->item->name}" . ' (' . kmb($this->totalValue()) . ')';
     }
 
     public function totalValue(): int
