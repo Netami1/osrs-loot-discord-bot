@@ -71,7 +71,7 @@ class LootGeneratorService
         $rollResults = [];
         $toReturn = new Collection();
         // Number of rolls requested by the user
-        for ($i=0; $i < $quantity; $i++) {
+        for ($rollNumberIndex=0; $rollNumberIndex < $quantity; $rollNumberIndex++) {
 
             /** @var LootTable $lootTable */
             foreach ($lootTables as $lootTable) {
@@ -79,17 +79,33 @@ class LootGeneratorService
                 // Number of rolls for this loot table
                 for ($tableRollIndex=0; $tableRollIndex < $lootTable->rolls; $tableRollIndex++) {
                     $shouldContinueRolling = true;
-                    while ($shouldContinueRolling) {
+                    //while ($shouldContinueRolling) {
                         $rolls = $lootTable->lootTableRolls()
                             ->get()
-                            ->shuffle();
+                            ->shuffle()
+                            ->map(function (LootTableRoll $roll) {
+                                return $roll;
+                            })
+                            ->all();
+                        $rollsOnTableCount = count($rolls);
 
                         $randRoll = rand(0, 1000000000000000) / 1000000000000000;
 
-                        /** @var LootTableRoll $roll */
-                        foreach ($rolls as $roll) {
+                        for ($rollIndex=0; $rollIndex < $rollsOnTableCount; $rollIndex++) {
+                            /** @var LootTableRoll $roll */
+                            $roll = $rolls[$rollIndex];
                             // Check if we succeeded on the roll
-                            if ($lootType === LootTypeEnum::ALWAYS || $randRoll <= $roll->chance) {
+                            $shouldHitAsDefault = $this->shouldHitAsDefault($rollIndex, $rollsOnTableCount, $lootType);
+                            if ($randRoll <= $roll->chance || $shouldHitAsDefault) {
+                                if ($lootType === LootTypeEnum::PRIMARY && $shouldHitAsDefault) {
+                                    Log::info('Hit as default', [
+                                        'rollIndex' => $rollIndex,
+                                        'rollsOnTableCount' => $rollsOnTableCount,
+                                        'lootType' => $lootType,
+                                        'itemId' => $roll->item_id,
+                                    ]);
+                                }
+
                                 $shouldContinueRolling = false;
 
                                 // Check if this roll was for a "Nothing" drop
@@ -118,7 +134,7 @@ class LootGeneratorService
                         if ($lootType === LootTypeEnum::TERTIARY) {
                             $shouldContinueRolling = false;
                         }
-                    }
+                    //}
                 }
             }
         }
@@ -154,6 +170,21 @@ class LootGeneratorService
         $quantityOption = $commandOptions->firstWhere('name', '=', 'quantity');
 
         return $quantityOption['value'];
+    }
+
+    private function shouldHitAsDefault(int $rollIndex, int $rollsOnTableCount, LootTypeEnum $lootTypeEnum): bool
+    {
+        // Always loot tables always hit
+        if ($lootTypeEnum === LootTypeEnum::ALWAYS) {
+            return true;
+        }
+
+        // The last roll on a primary table is always a hit
+        if ($lootTypeEnum === LootTypeEnum::PRIMARY) {
+            return $rollIndex === $rollsOnTableCount - 1;
+        }
+
+        return false;
     }
 
 }
