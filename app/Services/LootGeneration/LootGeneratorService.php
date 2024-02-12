@@ -77,7 +77,7 @@ class LootGeneratorService
             foreach ($lootTables as $lootTable) {
 
                 // Number of rolls for this loot table
-                for ($j=0; $j < $lootTable->rolls; $j++) {
+                for ($tableRollIndex=0; $tableRollIndex < $lootTable->rolls; $tableRollIndex++) {
                     $shouldContinueRolling = true;
                     while ($shouldContinueRolling) {
                         $rolls = $lootTable->lootTableRolls()
@@ -105,6 +105,7 @@ class LootGeneratorService
                                     $rollResults[$roll->item_id] = $rollQuantity;
                                 }
 
+                                // Now that we rolled an item, we can discard the rest of the rolls for this table
                                 if ($lootType !== LootTypeEnum::ALWAYS) {
                                     break;
                                 }
@@ -113,13 +114,9 @@ class LootGeneratorService
                             }
                         }
 
-                        if ($lootType !== LootTypeEnum::PRIMARY) {
+                        // Tertiary loot tables should only roll once and aren't guaranteed to roll an item
+                        if ($lootType === LootTypeEnum::TERTIARY) {
                             $shouldContinueRolling = false;
-                        } else {
-                            Log::warning('Failed to roll primary for loot', [
-                                'source' => $source->name,
-                                'lootType' => $lootType,
-                            ]);
                         }
                     }
                 }
