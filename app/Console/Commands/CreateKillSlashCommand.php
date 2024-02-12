@@ -32,7 +32,7 @@ class CreateKillSlashCommand extends Command
 
         $option2 = (new NumberOption('quantity', 'The number of NPC to kill'))
             ->minValue(1)
-            ->maxValue(500);
+            ->maxValue(1000);
 
         $command = new SlashCommand('kill', "It rolls loot");
         $command->option($option1);
