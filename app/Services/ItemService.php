@@ -58,10 +58,14 @@ class ItemService
         // Coins should be worth 1 each
         $price = $itemId === 995 ? 1 : 0;
 
+        // Try to get the icon from the wiki instead
+        $wikiService = app(WikiService::class);
+        $icon = $wikiService->getItemIconUrlByName($itemId);
+
         $creationArr = [
             'id' => $itemId,
             'name' => $lootTableRoll->item_name,
-            'icon' => null,
+            'icon' => $icon,
             'price' => $price,
         ];
 
