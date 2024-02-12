@@ -80,8 +80,8 @@ class LootGeneratorService
 
                 // Number of rolls for this loot table
                 for ($j=0; $j < $lootTable->rolls; $j++) {
-                    $tableWasHit = false;
-                    while (!$tableWasHit) {
+                    $shouldContinueRolling = true;
+                    while ($shouldContinueRolling) {
                         $rolls = $lootTable->lootTableRolls()
                             ->get()
                             ->shuffle();
@@ -92,7 +92,7 @@ class LootGeneratorService
                         foreach ($rolls as $roll) {
                             // Check if we succeeded on the roll
                             if ($lootType === LootTypeEnum::ALWAYS || $randRoll <= $roll->chance) {
-                                $tableWasHit = true;
+                                $shouldContinueRolling = false;
 
                                 // Check if this roll was for a "Nothing" drop
                                 if ($roll->item_id === null) {
@@ -115,8 +115,10 @@ class LootGeneratorService
                             }
                         }
 
-                        if (!$tableWasHit) {
-                            Log::warning('Loot table roll failed', [
+                        if ($lootType !== LootTypeEnum::PRIMARY) {
+                            $shouldContinueRolling = false;
+                        } else {
+                            Log::warning('Failed to roll primary for loot', [
                                 'source' => $source->name,
                                 'lootType' => $lootType,
                             ]);
