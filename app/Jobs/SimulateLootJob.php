@@ -55,7 +55,7 @@ class SimulateLootJob implements ShouldQueue
             'type' => 4,
             //'contentType' => 'rich',
             //'channelId' => $this->channelId,
-            'embeds' => $embedBuilder->getEmbeds(),
+            'embeds' => $embedBuilder->toArray(),
         ];
         $responseUrl = 'https://discord.com/api/v10/webhooks/%s/%s/messages/@original';
         $responseUrl = sprintf($responseUrl, $this->commandRequest['application_id'], $this->commandRequest['token']);
