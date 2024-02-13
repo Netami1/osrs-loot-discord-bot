@@ -57,8 +57,7 @@ class SimulateLootJob implements ShouldQueue
         $imageName = Str::random() . '.png';
         $imagePath = storage_path('/app/public/' . $imageName);
         Log::info('Saving image as ' . $imagePath);
-        $imageData = $image->toPng()->toFilePointer();
-        Storage::put($imagePath, $imageData);
+        $image->toPng()->save($imagePath);
 
         $imageUri = env('APP_URL') . Storage::url($imageName);
         Log::info('Image URI: ' . $imageUri);
