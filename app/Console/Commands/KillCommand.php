@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\LootSource;
+use App\Services\ImageService;
 use App\Services\LootGeneration\LootGeneratorService;
 use App\Services\LootGeneration\LootResult;
 use App\Services\LootGeneration\LootRollResult;
@@ -13,7 +14,7 @@ class KillCommand extends Command
     protected $signature = 'kill {--monster=} {--times=1}';
     protected $description = 'Kill a monster';
 
-    public function handle(LootGeneratorService $lootGeneratorService): void
+    public function handle(LootGeneratorService $lootGeneratorService, ImageService $imageService): void
     {
         $monsterName = $this->input->getOption('monster');
         $times = $this->input->getOption('times');
@@ -35,8 +36,11 @@ class KillCommand extends Command
         $this->output->writeln('### GP per kill: ' . kmb($lootResult->totalValue() / $times));
 
         /** @var LootRollResult $lootResult */
-        foreach ($lootRollResults as $lootResult) {
-            $this->output->writeln($lootResult->toString());
+        foreach ($lootRollResults as $lootRollResult) {
+            $this->output->writeln($lootRollResult->toString());
         }
+
+        $image = $imageService->createItemResultsImage($lootResult);
+        $image->toPng()->save(storage_path('app/loot_results.png'));
     }
 }

@@ -4,10 +4,11 @@ namespace App\Listeners;
 
 use App\Services\LootGeneration\LootGeneratorService;
 use App\Services\LootGeneration\LootRollResult;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Nwilging\LaravelDiscordBot\Contracts\Listeners\ApplicationCommandInteractionEventListenerContract;
 use Nwilging\LaravelDiscordBot\Events\ApplicationCommandInteractionEvent;
 
-class TestCommandListener implements ApplicationCommandInteractionEventListenerContract
+class TestCommandListener implements ApplicationCommandInteractionEventListenerContract, ShouldQueue
 {
     private LootGeneratorService $lootGeneratorService;
 

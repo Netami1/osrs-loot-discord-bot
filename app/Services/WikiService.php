@@ -41,8 +41,13 @@ class WikiService
         $url = sprintf(self::ITEM_ICON_BASE_URL, $encodedItemName);
         $response = Http::head($url);
         if ($response->status() !== 200) {
-            Log::warning('Failed to fetch icon for item ' . $itemName . ' from the wiki');
-            return null;
+            // Let's try it with 5 at the end for stackable items
+            $url = sprintf(self::ITEM_ICON_BASE_URL, $encodedItemName . '_5');
+            $response = Http::head($url);
+            if ($response->status() !== 200) {
+                Log::warning('Failed to fetch icon for item ' . $itemName . ' from the wiki');
+                return null;
+            }
         }
 
         return $url;

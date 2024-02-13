@@ -10,11 +10,13 @@ class ItemService
 {
     private ItemRepo $itemRepo;
     private OsrsService $osrsService;
+    private WikiService $wikiService;
 
-    public function __construct(ItemRepo $itemRepo, OsrsService $osrsService)
+    public function __construct(ItemRepo $itemRepo, OsrsService $osrsService, WikiService $wikiService)
     {
         $this->itemRepo = $itemRepo;
         $this->osrsService = $osrsService;
+        $this->wikiService = $wikiService;
     }
 
     public function getOrFetchItem(int $itemId): ?Item
@@ -38,10 +40,12 @@ class ItemService
         $price = str_replace(',', '', $itemDetails['item']['current']['price']);
         $priceInt = kmbToInt($price);
 
+        $icon = $this->wikiService->getItemIconUrlByName($itemDetails['item']['name']);
+
         $creationArr = [
             'id' => $itemDetails['item']['id'],
             'name' => $itemDetails['item']['name'],
-            'icon' => $itemDetails['item']['icon'],
+            'icon' => $icon,
             'price' => $priceInt,
         ];
 
@@ -59,8 +63,7 @@ class ItemService
         $price = $itemId === 995 ? 1 : 0;
 
         // Try to get the icon from the wiki instead
-        $wikiService = app(WikiService::class);
-        $icon = $wikiService->getItemIconUrlByName($lootTableRoll->item_name);
+        $icon = $this->wikiService->getItemIconUrlByName($lootTableRoll->item_name);
 
         $creationArr = [
             'id' => $itemId,
