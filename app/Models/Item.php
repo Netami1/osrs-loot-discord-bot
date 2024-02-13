@@ -15,4 +15,9 @@ class Item extends Model
         'icon',
         'price',
     ];
+
+    public function __toString(): string
+    {
+        return $this->name . ' (' . $this->id . ')' . ' - ' . kmb($this->price);
+    }
 }

@@ -9,13 +9,11 @@ use App\Repos\ItemRepo;
 class ItemService
 {
     private ItemRepo $itemRepo;
-    private OsrsService $osrsService;
     private WikiService $wikiService;
 
-    public function __construct(ItemRepo $itemRepo, OsrsService $osrsService, WikiService $wikiService)
+    public function __construct(ItemRepo $itemRepo, WikiService $wikiService)
     {
         $this->itemRepo = $itemRepo;
-        $this->osrsService = $osrsService;
         $this->wikiService = $wikiService;
     }
 
@@ -27,22 +25,21 @@ class ItemService
             return $item;
         }
 
-        return $this->createItemFromApi($itemId);
+        $lootRollResult = LootTableRoll::query()
+            ->where('item_id', $itemId)
+            ->firstOrFail();
+
+        return $this->createItemFromApi($itemId, $lootRollResult->item_name);
     }
 
-    public function createItemFromApi(int $itemId): Item
+    public function createItemFromApi(int $itemId, string $itemName): Item
     {
-        $itemDetails = $this->osrsService->getItemDetails($itemId);
-        if (!$itemDetails) {
-            return $this->createNonTradeAbleItem($itemId);
-        }
-
         $price = $this->wikiService->getItemPrice($itemId);
-        $icon = $this->wikiService->getItemIconUrlByName($itemDetails['item']['name']);
+        $icon = $this->wikiService->getItemIconUrlByName($itemName);
 
         $creationArr = [
-            'id' => $itemDetails['item']['id'],
-            'name' => $itemDetails['item']['name'],
+            'id' => $itemId,
+            'name' => $itemName,
             'icon' => $icon,
             'price' => $price,
         ];

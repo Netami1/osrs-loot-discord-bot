@@ -17,18 +17,17 @@ class CreateItemsForLootRolls extends Command
     {
         $lootTableRollsItemIds = LootTableRoll::query()
             ->whereNotNull('item_id')
-            ->select(['item_id'])
+            ->select(['item_id', 'item_name'])
             ->distinct()
-            ->get()
-            ->pluck('item_id');
+            ->get();
 
         $this->info('Creating missing items for loot rolls...');
         $created = 0;
-        $lootTableRollsItemIds->filter(function ($itemId) use ($itemRepo, $itemService) {
-            return !$itemRepo->getItem($itemId);
-        })->each(function ($itemId) use (&$created, $itemService) {
-            $itemService->createItemFromApi($itemId);
-            $this->output->writeln("Created item {$itemId}");
+        $lootTableRollsItemIds->filter(function (LootTableRoll $tableRoll) use ($itemRepo, $itemService) {
+            return !$itemRepo->getItem($tableRoll->item_id);
+        })->each(function (LootTableRoll $tableRoll) use (&$created, $itemService) {
+            $item = $itemService->createItemFromApi($tableRoll->item_id, $tableRoll->item_name);
+            $this->output->writeln("Created item {$item->__toString()}");
             $created++;
             sleep(1);
         });
