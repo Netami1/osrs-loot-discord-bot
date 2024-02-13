@@ -35,7 +35,7 @@ class SimulateLootJob implements ShouldQueue
     {
         $options = $this->commandRequest['data']['options'];
         $lootResult = $lootGeneratorService->generateLoot($options);
-        $sourceName = $lootResult->getSource()->name;
+        /*$sourceName = $lootResult->getSource()->name;
         $quantity = $lootResult->getQuantity();
         $lootRollResults = $lootResult->getLootRollResults()->sortByDesc(function (LootRollResult $lootRollResult) {
             return $lootRollResult->totalValue();
@@ -45,11 +45,11 @@ class SimulateLootJob implements ShouldQueue
         $replyContent .= '### GP per kill: ' . kmb($lootResult->totalValue() / $quantity) . PHP_EOL;
         $replyContent .= '```' . PHP_EOL;
 
-        /** @var LootRollResult $lootResult */
-        foreach ($lootRollResults as $lootResult) {
-            $replyContent .=  $lootResult->toString() . PHP_EOL;
+        foreach ($lootRollResults as $lootRollResult) {
+            $replyContent .=  $lootRollResult->toString() . PHP_EOL;
         }
         $replyContent .= '```';
+        **/
 
         $image = $imageService->createItemResultsImage($lootResult);
         $imagePath = public_path(sprintf('app/%s.png', Str::uuid()));
