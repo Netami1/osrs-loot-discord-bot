@@ -63,7 +63,7 @@ class SimulateLootJob implements ShouldQueue
         $httpClient = Http::withHeaders([
             'Authorization' => 'Bot ' . env('DISCORD_API_BOT_TOKEN'),
         ]);
-        $response = $httpClient->post($responseUrl, $payload);
+        $response = $httpClient->patch($responseUrl, $payload);
         Log::info('Response from Discord: ' . $response->status(), $response->json());
     }
 }
