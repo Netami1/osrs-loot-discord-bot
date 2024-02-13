@@ -30,6 +30,7 @@ class CreateItemsForLootRolls extends Command
             $itemService->createItemFromApi($itemId);
             $this->output->writeln("Created item {$itemId}");
             $created++;
+            sleep(1);
         });
 
         $this->output->writeln("Created {$created} items");

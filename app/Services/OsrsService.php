@@ -25,7 +25,6 @@ class OsrsService
 
     private function makeApiRequest(string $url): ?array
     {
-
         $response = $this->httpClient()
             ->timeout(5)
             ->get($url);

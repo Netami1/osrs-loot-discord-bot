@@ -37,16 +37,14 @@ class ItemService
             return $this->createNonTradeAbleItem($itemId);
         }
 
-        $price = str_replace(',', '', $itemDetails['item']['current']['price']);
-        $priceInt = kmbToInt($price);
-
+        $price = $this->wikiService->getItemPrice($itemId);
         $icon = $this->wikiService->getItemIconUrlByName($itemDetails['item']['name']);
 
         $creationArr = [
             'id' => $itemDetails['item']['id'],
             'name' => $itemDetails['item']['name'],
             'icon' => $icon,
-            'price' => $priceInt,
+            'price' => $price,
         ];
 
         return $this->itemRepo->createItem($creationArr);

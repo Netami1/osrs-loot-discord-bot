@@ -10,7 +10,6 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Nwilging\LaravelDiscordBot\Support\Builder\EmbedBuilder;
@@ -42,11 +41,9 @@ class SimulateLootJob implements ShouldQueue
         $imageName = 'loot_' . Str::random() . '.png';
         $imagePath = storage_path('/app/public/' . $imageName);
 
-        Log::info('Saving image as ' . $imagePath);
         $image->toPng()->save($imagePath);
 
         $imageUri = env('APP_URL') . Storage::url($imageName);
-        Log::info('Image URI: ' . $imageUri);
 
         $embedBuilder = new EmbedBuilder();
         $embedBuilder->addImage($imageUri);
@@ -57,11 +54,9 @@ class SimulateLootJob implements ShouldQueue
         ];
         $responseUrl = 'https://discord.com/api/v10/webhooks/%s/%s/messages/@original';
         $responseUrl = sprintf($responseUrl, $this->commandRequest['application_id'], $this->commandRequest['token']);
-        Log::info('Sending response to Discord URL: ' . $responseUrl);
         $httpClient = Http::withHeaders([
             'Authorization' => 'Bot ' . env('DISCORD_API_BOT_TOKEN'),
         ]);
-        $response = $httpClient->patch($responseUrl, $payload);
-        Log::info('Response from Discord: ' . $response->status(), $response->json());
+        $httpClient->patch($responseUrl, $payload);
     }
 }

@@ -28,9 +28,7 @@ class KillCommandListener implements ApplicationCommandInteractionEventListenerC
     public function handle(ApplicationCommandInteractionEvent $event): void
     {
         $commandRequest = $event->getInteractionRequest()->all();
-        Log::info('Handling command', $commandRequest);
 
         SimulateLootJob::dispatch($commandRequest)->onConnection('redis');
-        Log::info('Dispatched job');
     }
 }

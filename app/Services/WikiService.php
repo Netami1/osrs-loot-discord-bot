@@ -11,13 +11,17 @@ class WikiService
 {
     private const USER_AGENT = 'Netami-Loot-Bot';
     private const MAPPING_URL = 'https://prices.runescape.wiki/api/v1/osrs/mapping';
+    private const PRICE_URL = 'https://prices.runescape.wiki/api/v1/osrs/latest';
     private CONST ITEM_ICON_BASE_URL = 'https://oldschool.runescape.wiki/images/%s.png';
 
     private string $mappingStoragePath;
+    private string $pricingStoragePath;
 
     public function __construct()
     {
         $this->mappingStoragePath = storage_path('app/osrs_mapping.json');
+        $this->pricingStoragePath = storage_path('app/osrs_pricing.json');
+
     }
 
     public function getItemIconUrlById(int $itemId): string
@@ -53,7 +57,45 @@ class WikiService
         return $url;
     }
 
-    public function getItemDetails(int $itemId): ?array
+    public function getItemPrice(int $itemId): ?int
+    {
+        $itemDetails = $this->getItemPricingDetails($itemId);
+        if (!$itemDetails) {
+            return null;
+        }
+
+        return $itemDetails['high'];
+    }
+
+    public function getItemPricingDetails(int $itemId): ?array
+    {
+        $pricing = $this->getItemPricing()['data'];
+        // Search the pricing array for id matching itemId
+        return array_key_exists($itemId, $pricing) ? $pricing[$itemId] : null;
+    }
+
+    public function getItemPricing(): array
+    {
+        if (!file_exists($this->pricingStoragePath)) {
+            $this->downloadItemPricing();
+        }
+
+        return json_decode(file_get_contents($this->pricingStoragePath), true);
+    }
+
+    public function downloadItemPricing(): void
+    {
+        $json = $this->makeApiRequest(self::PRICE_URL);
+
+        if (!$json) {
+            Log::error('Failed to download item pricing from the wiki API');
+            return;
+        }
+
+        file_put_contents($this->pricingStoragePath, json_encode($json));
+    }
+
+    public function getItemMappingDetails(int $itemId): ?array
     {
         $mapping = $this->getItemMapping();
         // Search the mapping array for id matching itemId
