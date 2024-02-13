@@ -13,6 +13,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class SimulateLootJob implements ShouldQueue
@@ -53,11 +54,13 @@ class SimulateLootJob implements ShouldQueue
         **/
 
         $image = $imageService->createItemResultsImage($lootResult);
-        $imagePath = storage_path('app/public/' . Str::random() . '.png');
-        Log::info('Saving image to ' . $imagePath);
-        $image->toPng()->save($imagePath);
+        $imageName = Str::random() . '.png';
+        Log::info('Saving image as ' . $imageName);
+        $imageData = $image->toPng()->toFilePointer();
+        Storage::put($imageName, $imageData);
 
-        $imageUri = url($imagePath);
+        $imageUri = Storage::url($imageName);
+        Log::info('Image URI: ' . $imageUri);
         $notification = new LootSimulationNotification($this->commandRequest['channel_id'], $imageUri);
         Notification::send(['discord'], $notification);
     }
