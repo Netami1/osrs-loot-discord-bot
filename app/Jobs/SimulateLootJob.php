@@ -53,7 +53,7 @@ class SimulateLootJob implements ShouldQueue
         $payload = [
             'type' => 4,
             'embeds' => $embedBuilder->toArray(),
-            'content' => '',
+            'content' => "## Results of killing {$lootResult->getQuantity()} {$lootResult->getSource()->name}: " . kmb($lootResult->totalValue()),
         ];
         $responseUrl = 'https://discord.com/api/v10/webhooks/%s/%s/messages/@original';
         $responseUrl = sprintf($responseUrl, $this->commandRequest['application_id'], $this->commandRequest['token']);

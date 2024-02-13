@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Listeners\TestCommandListener;
+use App\Listeners\KillCommandListener;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Nwilging\LaravelDiscordBot\Events\ApplicationCommandInteractionEvent;
 
@@ -15,7 +15,7 @@ class EventServiceProvider extends ServiceProvider
      */
     protected $listen = [
         ApplicationCommandInteractionEvent::class => [
-            TestCommandListener::class,
+            KillCommandListener::class,
         ],
     ];
 
