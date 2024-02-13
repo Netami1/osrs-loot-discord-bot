@@ -2,10 +2,8 @@
 
 namespace App\Jobs;
 
-use App\Notifications\LootSimulationNotification;
 use App\Services\ImageService;
 use App\Services\LootGeneration\LootGeneratorService;
-use App\Services\LootGeneration\LootRollResult;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -13,7 +11,6 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Nwilging\LaravelDiscordBot\Support\Builder\EmbedBuilder;
