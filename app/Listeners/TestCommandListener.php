@@ -30,6 +30,6 @@ class TestCommandListener implements ApplicationCommandInteractionEventListenerC
         $commandRequest = $event->getInteractionRequest()->all();
         Log::info('Handling command', $commandRequest);
 
-        SimulateLootJob::dispatchAfterResponse($commandRequest);
+        SimulateLootJob::dispatch($commandRequest)->onConnection('redis');
     }
 }
