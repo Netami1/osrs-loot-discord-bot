@@ -57,7 +57,7 @@ class SimulateLootJob implements ShouldQueue
             //'channelId' => $this->channelId,
             'embeds' => $embedBuilder->getEmbeds(),
         ];
-        $responseUrl = 'https://discord.com/api/v10/interactions/%s/%s/callback';
+        $responseUrl = 'https://discord.com/api/v10/interactions/%s/%s/messages/@original';
         $responseUrl = sprintf($responseUrl, $this->commandRequest['id'], $this->commandRequest['token']);
         Log::info('Sending response to Discord URL: ' . $responseUrl);
         $httpClient = Http::withHeaders([
