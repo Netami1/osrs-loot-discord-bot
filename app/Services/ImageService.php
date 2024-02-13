@@ -20,7 +20,7 @@ class ImageService
     private const ICON_SIZE = 32;
     private CONST ICON_START_X = 30;
     private CONST ICON_START_Y = 20;
-    private CONST ICON_SPACE_BETWEEN_X = 10;
+    private CONST ICON_SPACE_BETWEEN_X = 24;
     private CONST ICON_MAX_START_X = 440;
     private CONST ICON_SPACE_BETWEEN_Y = 55;
     private CONST BACKGROUND_WIDTH = 479;
