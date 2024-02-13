@@ -41,7 +41,7 @@ class ImageService
         $yPos = self::ICON_START_Y;
         $outputImage = $this->imageManager->create(self::BACKGROUND_WIDTH, self::BACKGROUND_HEIGHT);
         $outputImage->place($background);
-        $outputImage->scale(self::BACKGROUND_WIDTH, self::BACKGROUND_HEIGHT + 50);
+        $outputImage->scale(self::BACKGROUND_WIDTH, self::BACKGROUND_HEIGHT + 70);
 
         /** @var LootRollResult $lootRollResult */
         foreach ($lootResult->getLootRollResults() as $lootRollResult) {
