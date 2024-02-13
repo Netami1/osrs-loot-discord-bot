@@ -11,6 +11,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Str;
 
@@ -53,6 +54,7 @@ class SimulateLootJob implements ShouldQueue
 
         $image = $imageService->createItemResultsImage($lootResult);
         $imagePath = public_path(Str::random() . '.png');
+        Log::info('Saving image to ' . $imagePath);
         $image->toPng()->save($imagePath);
 
         $notification = new LootSimulationNotification($this->commandRequest['channel_id'], $imagePath);
