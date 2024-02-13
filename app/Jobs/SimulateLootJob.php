@@ -52,7 +52,8 @@ class SimulateLootJob implements ShouldQueue
         $embedBuilder = new EmbedBuilder();
         $embedBuilder->addImage($imageUri);
         $payload = [
-            'contentType' => 'rich',
+            'type' => 4,
+            //'contentType' => 'rich',
             //'channelId' => $this->channelId,
             'embeds' => $embedBuilder->getEmbeds(),
         ];
