@@ -2,48 +2,22 @@
 
 namespace App\Listeners;
 
-use App\Services\LootGeneration\LootGeneratorService;
-use App\Services\LootGeneration\LootRollResult;
+use App\Jobs\SimulateLootJob;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Support\Facades\Log;
 use Nwilging\LaravelDiscordBot\Contracts\Listeners\ApplicationCommandInteractionEventListenerContract;
 use Nwilging\LaravelDiscordBot\Events\ApplicationCommandInteractionEvent;
 
 class TestCommandListener implements ApplicationCommandInteractionEventListenerContract, ShouldQueue
 {
-    private LootGeneratorService $lootGeneratorService;
-
-    public function __construct(LootGeneratorService $lootGeneratorService)
-    {
-        $this->lootGeneratorService = $lootGeneratorService;
-    }
-
     public function replyContent(ApplicationCommandInteractionEvent $event): ?string
     {
-        $options = $event->getInteractionRequest()->all()['data']['options'];
-
-        $lootResult = $this->lootGeneratorService->generateLoot($options);
-        $sourceName = $lootResult->getSource()->name;
-        $quantity = $lootResult->getQuantity();
-        $lootRollResults = $lootResult->getLootRollResults()->sortByDesc(function (LootRollResult $lootRollResult) {
-            return $lootRollResult->totalValue();
-        });
-
-        $replyContent = "## Results of killing {$quantity} {$sourceName}: " . kmb($lootResult->totalValue()) . PHP_EOL;
-        $replyContent .= '### GP per kill: ' . kmb($lootResult->totalValue() / $quantity) . PHP_EOL;
-        $replyContent .= '```' . PHP_EOL;
-
-        /** @var LootRollResult $lootResult */
-        foreach ($lootRollResults as $lootResult) {
-            $replyContent .=  $lootResult->toString() . PHP_EOL;
-        }
-        $replyContent .= '```';
-
-        return $replyContent;
+        return null;
     }
 
     public function behavior(ApplicationCommandInteractionEvent $event): int
     {
-        return static::REPLY_TO_MESSAGE;
+        return static::DEFER_WHILE_HANDLING;
     }
 
     public function command(): ?string
@@ -53,6 +27,10 @@ class TestCommandListener implements ApplicationCommandInteractionEventListenerC
 
     public function handle(ApplicationCommandInteractionEvent $event): void
     {
+        $commandRequest = $event->getInteractionRequest()->all();
+        Log::info('Handling command', $commandRequest);
 
+        $job = new SimulateLootJob($commandRequest);
+        dispatch($job);
     }
 }
