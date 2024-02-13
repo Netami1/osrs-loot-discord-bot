@@ -17,7 +17,7 @@ class TestCommandListener implements ApplicationCommandInteractionEventListenerC
 
     public function behavior(ApplicationCommandInteractionEvent $event): int
     {
-        return static::DEFER_WHILE_HANDLING;
+        return static::LOAD_WHILE_HANDLING;
     }
 
     public function command(): ?string
@@ -31,5 +31,6 @@ class TestCommandListener implements ApplicationCommandInteractionEventListenerC
         Log::info('Handling command', $commandRequest);
 
         SimulateLootJob::dispatch($commandRequest)->onConnection('redis');
+        Log::info('Dispatched job');
     }
 }
