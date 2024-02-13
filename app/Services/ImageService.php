@@ -17,6 +17,15 @@ use Intervention\Image\Typography\FontFactory;
 class ImageService
 {
     private const USER_AGENT = 'Netami-Loot-Bot';
+    private const ICON_SIZE = 32;
+    private CONST ICON_START_X = 30;
+    private CONST ICON_START_Y = 20;
+    private CONST ICON_SPACE_BETWEEN_X = 10;
+    private CONST ICON_MAX_START_X = 440;
+    private CONST ICON_SPACE_BETWEEN_Y = 55;
+    private CONST BACKGROUND_WIDTH = 479;
+    private CONST BACKGROUND_HEIGHT = 237;
+    private CONST TEXT_SIZE = 16;
 
     private ImageManager $imageManager;
 
@@ -28,12 +37,10 @@ class ImageService
     public function createItemResultsImage(LootResult $lootResult): ImageInterface
     {
         $background = $this->getBackgroundImage();
-        $xPos = 30;
-        $yPos = 20;
-        $outputImage = $this->imageManager->create(479, 237);
+        $xPos = self::ICON_START_X;
+        $yPos = self::ICON_START_Y;
+        $outputImage = $this->imageManager->create(self::BACKGROUND_WIDTH, self::BACKGROUND_HEIGHT);
         $outputImage->place($background);
-        $outputImage->scale(800, 400);
-
 
         /** @var LootRollResult $lootRollResult */
         foreach ($lootResult->getLootRollResults() as $lootRollResult) {
@@ -47,23 +54,23 @@ class ImageService
             $outputImage = $outputImage->place($icon, 'top-left', $xPos, $yPos);
             $outputImage->text($quantity, $xPos - 4, $yPos + 1, function (FontFactory $font) {
                 $font->filename(storage_path('app/osrs_font.ttf'));
-                $font->size(16);
+                $font->size(self::TEXT_SIZE);
                 $font->color('#000000');
                 $font->align('left');
                 $font->valign('top');
             });
             $outputImage->text($quantity, $xPos - 5, $yPos, function (FontFactory $font) {
                 $font->filename(storage_path('app/osrs_font.ttf'));
-                $font->size(16);
+                $font->size(self::TEXT_SIZE);
                 $font->color('#ffff00');
                 $font->align('left');
                 $font->valign('top');
             });
 
-            $xPos += 75;
-            if ($xPos > 750) {
-                $xPos = 30;
-                $yPos += 55;
+            $xPos += (self::ICON_SIZE + self::ICON_SPACE_BETWEEN_X);
+            if ($xPos > self::ICON_MAX_START_X) {
+                $xPos = self::ICON_START_X;
+                $yPos += self::ICON_SPACE_BETWEEN_Y;
             }
         }
 
@@ -95,7 +102,7 @@ class ImageService
         }
 
         return $this->imageManager->read($iconPath, FilePathImageDecoder::class)
-            ->contain(40, 40, 'rgba(0, 0, 0, 0)' , 'bottom');
+            ->contain(self::ICON_SIZE, self::ICON_SIZE, 'rgba(0, 0, 0, 0)' , 'bottom');
     }
 
     private function makeApiRequest(string $url): ?string
