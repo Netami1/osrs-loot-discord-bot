@@ -39,7 +39,7 @@ class SimulateLootJob implements ShouldQueue
 
         $image = $imageService->createItemResultsImage($lootResult);
 
-        $imageName = Str::random() . '.png';
+        $imageName = 'loot_' . Str::random() . '.png';
         $imagePath = storage_path('/app/public/' . $imageName);
 
         Log::info('Saving image as ' . $imagePath);
@@ -48,14 +48,12 @@ class SimulateLootJob implements ShouldQueue
         $imageUri = env('APP_URL') . Storage::url($imageName);
         Log::info('Image URI: ' . $imageUri);
 
-        //$notification = new LootSimulationNotification($this->commandRequest['channel_id'], $imageUri);
         $embedBuilder = new EmbedBuilder();
         $embedBuilder->addImage($imageUri);
         $payload = [
             'type' => 4,
-            //'contentType' => 'rich',
-            //'channelId' => $this->channelId,
             'embeds' => $embedBuilder->toArray(),
+            'content' => '',
         ];
         $responseUrl = 'https://discord.com/api/v10/webhooks/%s/%s/messages/@original';
         $responseUrl = sprintf($responseUrl, $this->commandRequest['application_id'], $this->commandRequest['token']);
