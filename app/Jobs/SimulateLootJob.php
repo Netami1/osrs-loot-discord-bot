@@ -52,7 +52,7 @@ class SimulateLootJob implements ShouldQueue
         **/
 
         $image = $imageService->createItemResultsImage($lootResult);
-        $imagePath = public_path(sprintf('app/%s.png', Str::uuid()));
+        $imagePath = public_path(Str::random() . '.png');
         $image->toPng()->save($imagePath);
 
         $notification = new LootSimulationNotification($this->commandRequest['channel_id'], $imagePath);
