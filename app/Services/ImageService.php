@@ -87,6 +87,10 @@ class ImageService
 
             // Download the icon from the Item icon URL, saving it to storage
             $iconFile = $this->makeApiRequest($item->icon);
+            if (!$iconFile) {
+                Log::warning("Failed to download icon for item {$item->id}");
+                return null;
+            }
             file_put_contents($iconPath, $iconFile);
         }
 
