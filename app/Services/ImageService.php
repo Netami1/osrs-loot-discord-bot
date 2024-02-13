@@ -23,6 +23,7 @@ class ImageService
     private CONST ICON_SPACE_BETWEEN_X = 20;
     private CONST ICON_MAX_START_X = 420;
     private CONST ICON_SPACE_BETWEEN_Y = 42;
+    private CONST MAX_ICONS_IN_IMAGE = 40;
     private CONST BACKGROUND_WIDTH = 479;
     private CONST BACKGROUND_HEIGHT = 237;
     private CONST TEXT_SIZE = 16;
@@ -45,7 +46,7 @@ class ImageService
 
         $sortedLootResults = $lootResult->getLootRollResults()->sortByDesc(function (LootRollResult $lootRollResult) {
             return $lootRollResult->totalValue();
-        });
+        })->take(self::MAX_ICONS_IN_IMAGE);
 
         /** @var LootRollResult $lootRollResult */
         foreach ($sortedLootResults as $lootRollResult) {
