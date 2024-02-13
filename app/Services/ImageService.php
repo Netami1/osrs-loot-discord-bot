@@ -17,7 +17,7 @@ use Intervention\Image\Typography\FontFactory;
 class ImageService
 {
     private const USER_AGENT = 'Netami-Loot-Bot';
-    private const ICON_SIZE = 30;
+    private const ICON_SIZE = 32;
     private CONST ICON_START_X = 25;
     private CONST ICON_START_Y = 16;
     private CONST ICON_SPACE_BETWEEN_X = 20;
@@ -43,8 +43,12 @@ class ImageService
         $outputImage->place($background);
         $outputImage->scale(self::BACKGROUND_WIDTH, self::BACKGROUND_HEIGHT);
 
+        $sortedLootResults = $lootResult->getLootRollResults()->sortByDesc(function (LootRollResult $lootRollResult) {
+            return $lootRollResult->totalValue();
+        });
+
         /** @var LootRollResult $lootRollResult */
-        foreach ($lootResult->getLootRollResults() as $lootRollResult) {
+        foreach ($sortedLootResults as $lootRollResult) {
             $item = $lootRollResult->getItem();
             $quantity = $lootRollResult->getQuantity();
             $icon = $this->getIconImage($item);
