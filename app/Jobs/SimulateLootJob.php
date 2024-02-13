@@ -59,7 +59,7 @@ class SimulateLootJob implements ShouldQueue
         $imageData = $image->toPng()->toFilePointer();
         Storage::put($imageName, $imageData);
 
-        $imageUri = Storage::url($imageName);
+        $imageUri = env('APP_URL') . Storage::url($imageName);
         Log::info('Image URI: ' . $imageUri);
         $notification = new LootSimulationNotification($this->commandRequest['channel_id'], $imageUri);
         Notification::send(['discord'], $notification);
