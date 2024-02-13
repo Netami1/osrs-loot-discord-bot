@@ -11,10 +11,12 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Nwilging\LaravelDiscordBot\Support\Builder\EmbedBuilder;
 
 class SimulateLootJob implements ShouldQueue
 {
@@ -37,31 +39,28 @@ class SimulateLootJob implements ShouldQueue
     {
         $options = $this->commandRequest['data']['options'];
         $lootResult = $lootGeneratorService->generateLoot($options);
-        /*$sourceName = $lootResult->getSource()->name;
-        $quantity = $lootResult->getQuantity();
-        $lootRollResults = $lootResult->getLootRollResults()->sortByDesc(function (LootRollResult $lootRollResult) {
-            return $lootRollResult->totalValue();
-        });
-
-        $replyContent = "## Results of killing {$quantity} {$sourceName}: " . kmb($lootResult->totalValue()) . PHP_EOL;
-        $replyContent .= '### GP per kill: ' . kmb($lootResult->totalValue() / $quantity) . PHP_EOL;
-        $replyContent .= '```' . PHP_EOL;
-
-        foreach ($lootRollResults as $lootRollResult) {
-            $replyContent .=  $lootRollResult->toString() . PHP_EOL;
-        }
-        $replyContent .= '```';
-        **/
 
         $image = $imageService->createItemResultsImage($lootResult);
+
         $imageName = Str::random() . '.png';
         $imagePath = storage_path('/app/public/' . $imageName);
+
         Log::info('Saving image as ' . $imagePath);
         $image->toPng()->save($imagePath);
 
         $imageUri = env('APP_URL') . Storage::url($imageName);
         Log::info('Image URI: ' . $imageUri);
-        $notification = new LootSimulationNotification($this->commandRequest['channel_id'], $imageUri);
-        Notification::send(['discord'], $notification);
+
+        //$notification = new LootSimulationNotification($this->commandRequest['channel_id'], $imageUri);
+        $embedBuilder = new EmbedBuilder();
+        $embedBuilder->addImage($imageUri);
+        $payload = [
+            'contentType' => 'rich',
+            //'channelId' => $this->channelId,
+            'embeds' => $embedBuilder->getEmbeds(),
+        ];
+        $responseUrl = 'https://discord.com/api/v1/webhooks/%s/%s/messages/@original';
+        $responseUrl = sprintf($responseUrl, $this->commandRequest['application_id'], $this->commandRequest['token']);
+        Http::patch($responseUrl, $payload);
     }
 }
