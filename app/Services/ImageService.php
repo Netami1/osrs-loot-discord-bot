@@ -17,8 +17,8 @@ use Intervention\Image\Typography\FontFactory;
 class ImageService
 {
     private const USER_AGENT = 'Netami-Loot-Bot';
-    private const ICON_SIZE = 28;
-    private CONST ICON_START_X = 36;
+    private const ICON_SIZE = 30;
+    private CONST ICON_START_X = 25;
     private CONST ICON_START_Y = 16;
     private CONST ICON_SPACE_BETWEEN_X = 20;
     private CONST ICON_MAX_START_X = 420;
