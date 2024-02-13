@@ -58,6 +58,7 @@ class SimulateLootJob implements ShouldQueue
         ];
         $responseUrl = 'https://discord.com/api/v10/webhooks/%s/%s/messages/@original';
         $responseUrl = sprintf($responseUrl, $this->commandRequest['application_id'], $this->commandRequest['token']);
+        Log::info('Sending response to Discord URL: ' . $responseUrl);
         $httpClient = Http::withHeaders([
             'Authorization' => 'Bot ' . env('DISCORD_API_BOT_TOKEN'),
         ]);

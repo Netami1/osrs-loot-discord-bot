@@ -12,7 +12,7 @@ class TestCommandListener implements ApplicationCommandInteractionEventListenerC
 {
     public function replyContent(ApplicationCommandInteractionEvent $event): ?string
     {
-        return null;
+        return 'Loading...';
     }
 
     public function behavior(ApplicationCommandInteractionEvent $event): int
