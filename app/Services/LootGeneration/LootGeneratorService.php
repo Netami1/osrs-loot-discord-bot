@@ -25,10 +25,6 @@ class LootGeneratorService
 
         $source = $this->getLootSource($commandOptions);
         $quantity = $this->getQuantity($commandOptions);
-        Log::info('Generating loot', [
-            'source' => $source->name,
-            'quantity' => $quantity,
-        ]);
 
         $loots = $this->processLootTables($source, $quantity);
 
@@ -40,11 +36,12 @@ class LootGeneratorService
 
     public function processLootTables(LootSource $source, int $quantity): Collection
     {
-        $alwaysLootResults = $this->processLootTableType($source, $quantity, LootTypeEnum::ALWAYS);
-        $primaryLootResults = $this->processLootTableType($source, $quantity, LootTypeEnum::PRIMARY);
-        $tertiaryLootResults = $this->processLootTableType($source, $quantity, LootTypeEnum::TERTIARY);
+        $allTableLoots = new Collection();
 
-        $allTableLoots = $alwaysLootResults->merge($primaryLootResults)->merge($tertiaryLootResults);
+        foreach (LootTypeEnum::cases() as $lootType) {
+            $lootResults = $this->processLootTableType($source, $quantity, $lootType);
+            $allTableLoots = $allTableLoots->merge($lootResults);
+        }
 
         return $allTableLoots->groupBy(function (LootRollResult $lootRollResult) {
             return $lootRollResult->getItem()->id;
@@ -67,6 +64,10 @@ class LootGeneratorService
             ->where('type', $lootType)
             ->with('lootTableRolls')
             ->get();
+
+        if ($lootTables->isEmpty()) {
+            return new Collection();
+        }
 
         $rollResults = [];
         $toReturn = new Collection();
