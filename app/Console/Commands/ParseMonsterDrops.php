@@ -24,15 +24,6 @@ class ParseMonsterDrops extends Command
         $drops = $monster['drops'];
 
         foreach ($drops as $drop) {
-            /**
-            $this->info("Item ID: {$drop['id']}");
-            $this->info("Item Name: {$drop['name']}");
-            $this->info("Chance: {$drop['rarity']}");
-            $this->info("Quantity: {$drop['quantity']}");
-            $this->info("Rolls: {$drop['rolls']}");
-            $this->info("-------------");
-             **/
-
             $this->info('[');
             $this->info('    \'id\' => \'' . Str::uuid(). '\',');
             $this->info('    \'item_name\' => \'' . $drop['name'] . '\',');

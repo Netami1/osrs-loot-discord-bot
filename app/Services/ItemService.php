@@ -17,7 +17,7 @@ class ItemService
         $this->wikiService = $wikiService;
     }
 
-    public function getOrFetchItem(int $itemId): ?Item
+    public function getOrCreateItem(int $itemId): ?Item
     {
         $item = $this->itemRepo->getItem($itemId);
 

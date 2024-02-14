@@ -10,11 +10,11 @@ use Nwilging\LaravelDiscordBot\Support\Commands\Options\OptionChoice;
 use Nwilging\LaravelDiscordBot\Support\Commands\Options\StringOption;
 use Nwilging\LaravelDiscordBot\Support\Commands\SlashCommand;
 
-class CreateKillSlashCommand extends Command
+class CreateLootSlashCommand extends Command
 {
-    protected $signature = 'register-kill-command';
+    protected $signature = 'register-slash-commands';
 
-    protected $description = '';
+    protected $description = 'Registers/updates the slash commands with Discord.';
 
     public function handle(DiscordApplicationCommandServiceContract $commandServiceContract): void
     {
@@ -25,16 +25,16 @@ class CreateKillSlashCommand extends Command
             return new OptionChoice($source->name, $source->name);
         });
 
-        $option1 = (new StringOption('npc', 'Name of NPC to kill'));
+        $option1 = (new StringOption('target', 'Name of NPC/activity'));
         $optionChoices->each(function (OptionChoice $choice) use ($option1) {
             $option1->choice($choice);
         });
 
-        $option2 = (new NumberOption('quantity', 'The number of NPC to kill'))
+        $option2 = (new NumberOption('quantity', 'The number of simulations to run'))
             ->minValue(1)
             ->maxValue(1000);
 
-        $command = new SlashCommand('kill', "It rolls loot");
+        $command = new SlashCommand('loot', 'Simulate loot from a source');
         $command->option($option1);
         $command->option($option2);
 

@@ -9,20 +9,20 @@ use App\Services\LootGeneration\LootResult;
 use App\Services\LootGeneration\LootRollResult;
 use Illuminate\Console\Command;
 
-class KillCommand extends Command
+class GenerateLootCommand extends Command
 {
-    protected $signature = 'kill {--monster=} {--times=1}';
-    protected $description = 'Kill a monster';
+    protected $signature = 'loot {--source=} {--times=1}';
+    protected $description = 'Generate loot from a source';
 
     public function handle(LootGeneratorService $lootGeneratorService, ImageService $imageService): void
     {
-        $monsterName = $this->input->getOption('monster');
+        $sourceName = $this->input->getOption('source');
         $times = $this->input->getOption('times');
 
-        $this->info("Killing {$monsterName} {$times} times...");
+        $this->info("Looting {$sourceName} {$times} times...");
 
         /** @var LootSource $lootSource */
-        $lootSource = LootSource::query()->where('name', $monsterName)->firstOrFail();
+        $lootSource = LootSource::query()->where('name', $sourceName)->firstOrFail();
         $tableResults = $lootGeneratorService->processLootTables($lootSource, $times);
         $lootResult = (new LootResult())
             ->setSource($lootSource)
@@ -32,8 +32,8 @@ class KillCommand extends Command
             return $lootRollResult->totalValue();
         });
 
-        $this->output->writeln("## Results of killing {$times} {$monsterName}s: " . kmb($lootResult->totalValue()));
-        $this->output->writeln('### GP per kill: ' . kmb($lootResult->totalValue() / $times));
+        $this->output->writeln("## Results of {$times} {$sourceName}s: " . kmb($lootResult->totalValue()));
+        $this->output->writeln('### GP per: ' . kmb($lootResult->totalValue() / $times));
 
         /** @var LootRollResult $lootResult */
         foreach ($lootRollResults as $lootRollResult) {

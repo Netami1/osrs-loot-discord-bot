@@ -8,6 +8,8 @@ use App\Services\LootGeneration\LootRollResult;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Intervention\Image\Drivers\Imagick\Decoders\FilePathImageDecoder;
 use Intervention\Image\Drivers\Imagick\Driver;
 use Intervention\Image\ImageManager;
@@ -109,6 +111,16 @@ class ImageService
 
         return $this->imageManager->read($iconPath, FilePathImageDecoder::class)
             ->contain(self::ICON_SIZE, self::ICON_SIZE, 'rgba(0, 0, 0, 0)' , 'bottom');
+    }
+
+    public function storeImage(ImageInterface $image): string
+    {
+        $imageName = 'loot_' . Str::random() . '.png';
+        $imagePath = storage_path('/app/public/' . $imageName);
+
+        $image->toPng()->save($imagePath);
+
+        return env('APP_URL') . Storage::url($imageName);
     }
 
     private function makeApiRequest(string $url): ?string

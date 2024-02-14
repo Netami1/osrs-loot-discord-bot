@@ -138,7 +138,7 @@ class LootGeneratorService
         }
 
         foreach ($rollResults as $itemId => $quantity) {
-            $item = $this->itemService->getOrFetchItem($itemId);
+            $item = $this->itemService->getOrCreateItem($itemId);
             if ($item) {
                 $toReturn->push((new LootRollResult())
                     ->setItem($item)

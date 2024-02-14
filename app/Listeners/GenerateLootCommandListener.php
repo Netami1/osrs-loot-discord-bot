@@ -4,11 +4,10 @@ namespace App\Listeners;
 
 use App\Jobs\SimulateLootJob;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Support\Facades\Log;
 use Nwilging\LaravelDiscordBot\Contracts\Listeners\ApplicationCommandInteractionEventListenerContract;
 use Nwilging\LaravelDiscordBot\Events\ApplicationCommandInteractionEvent;
 
-class KillCommandListener implements ApplicationCommandInteractionEventListenerContract, ShouldQueue
+class GenerateLootCommandListener implements ApplicationCommandInteractionEventListenerContract, ShouldQueue
 {
     public function replyContent(ApplicationCommandInteractionEvent $event): ?string
     {

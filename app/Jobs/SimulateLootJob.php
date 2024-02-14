@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Services\DiscordService;
 use App\Services\ImageService;
 use App\Services\LootGeneration\LootGeneratorService;
 use Illuminate\Bus\Queueable;
@@ -9,10 +10,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
-use Nwilging\LaravelDiscordBot\Support\Builder\EmbedBuilder;
+use Illuminate\Support\Facades\Log;
 
 class SimulateLootJob implements ShouldQueue
 {
@@ -31,32 +29,26 @@ class SimulateLootJob implements ShouldQueue
     /**
      * Execute the job.
      */
-    public function handle(LootGeneratorService $lootGeneratorService, ImageService $imageService): void
+    public function handle(LootGeneratorService $lootGeneratorService, ImageService $imageService, DiscordService $discordService): void
     {
         $options = $this->commandRequest['data']['options'];
         $lootResult = $lootGeneratorService->generateLoot($options);
 
         $image = $imageService->createItemResultsImage($lootResult);
+        $imageUri = $imageService->storeImage($image);
+        $messageContent = "## Results of {$lootResult->getQuantity()} {$lootResult->getSource()->name}: " . kmb($lootResult->totalValue());
 
-        $imageName = 'loot_' . Str::random() . '.png';
-        $imagePath = storage_path('/app/public/' . $imageName);
+        $discordPayload = $discordService->createImageMessagePayload($imageUri, $messageContent);
+        $success = $discordService->editInteractionMessage(
+            $this->commandRequest['application_id'],
+            $this->commandRequest['token'],
+            $discordPayload
+        );
 
-        $image->toPng()->save($imagePath);
-
-        $imageUri = env('APP_URL') . Storage::url($imageName);
-
-        $embedBuilder = new EmbedBuilder();
-        $embedBuilder->addImage($imageUri);
-        $payload = [
-            'type' => 4,
-            'embeds' => $embedBuilder->toArray(),
-            'content' => "## Results of killing {$lootResult->getQuantity()} {$lootResult->getSource()->name}: " . kmb($lootResult->totalValue()),
-        ];
-        $responseUrl = 'https://discord.com/api/v10/webhooks/%s/%s/messages/@original';
-        $responseUrl = sprintf($responseUrl, $this->commandRequest['application_id'], $this->commandRequest['token']);
-        $httpClient = Http::withHeaders([
-            'Authorization' => 'Bot ' . env('DISCORD_API_BOT_TOKEN'),
-        ]);
-        $httpClient->patch($responseUrl, $payload);
+        if (!$success) {
+            Log::error('Failed to send loot results to Discord');
+        }
     }
+
+
 }
