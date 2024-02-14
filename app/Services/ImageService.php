@@ -65,14 +65,14 @@ class ImageService
             }
 
             $outputImage = $outputImage->place($icon, 'top-left', $xPos, $yPos);
-            $outputImage->text($quantity, $xPos - 6, $yPos + 2, function (FontFactory $font) {
+            $outputImage->text($quantity, $xPos - 4, $yPos + 1, function (FontFactory $font) {
                 $font->filename($this->fontPath);
                 $font->size(self::TEXT_SIZE);
                 $font->color(self::TEXT_BLACK_COLOR);
                 $font->align('left');
                 $font->valign('top');
             });
-            $outputImage->text($quantity, $xPos - 7, $yPos + 1, function (FontFactory $font) {
+            $outputImage->text($quantity, $xPos - 5, $yPos, function (FontFactory $font) {
                 $font->filename($this->fontPath);
                 $font->size(self::TEXT_SIZE);
                 $font->color(self::TEXT_YELLOW_COLOR);
