@@ -20,21 +20,26 @@ class ImageService
 {
     private const USER_AGENT = 'Netami-Loot-Bot';
     private const ICON_SIZE = 32;
-    private CONST ICON_START_X = 25;
-    private CONST ICON_START_Y = 16;
-    private CONST ICON_SPACE_BETWEEN_X = 20;
-    private CONST ICON_MAX_START_X = 420;
-    private CONST ICON_SPACE_BETWEEN_Y = 42;
-    private CONST MAX_ICONS_IN_IMAGE = 40;
-    private CONST BACKGROUND_WIDTH = 479;
-    private CONST BACKGROUND_HEIGHT = 237;
-    private CONST TEXT_SIZE = 16;
+    private const ICON_START_X = 25;
+    private const ICON_START_Y = 16;
+    private const ICON_SPACE_BETWEEN_X = 20;
+    private const ICON_MAX_START_X = 420;
+    private const ICON_SPACE_BETWEEN_Y = 42;
+    private const MAX_ICONS_IN_IMAGE = 40;
+    private const BACKGROUND_WIDTH = 479;
+    private const BACKGROUND_HEIGHT = 237;
+    private const TEXT_SIZE = 16;
+    private const TRANSPARENT_COLOR = 'rgba(0, 0, 0, 0)';
+    private const TEXT_YELLOW_COLOR = '#ffff00';
+    private const TEXT_BLACK_COLOR = '#000000';
 
     private ImageManager $imageManager;
+    private string $fontPath;
 
     public function __construct()
     {
         $this->imageManager = new ImageManager(Driver::class);
+        $this->fontPath = storage_path('app/osrs_font.ttf');
     }
 
     public function createItemResultsImage(LootResult $lootResult): ImageInterface
@@ -60,17 +65,17 @@ class ImageService
             }
 
             $outputImage = $outputImage->place($icon, 'top-left', $xPos, $yPos);
-            $outputImage->text($quantity, $xPos - 4, $yPos + 1, function (FontFactory $font) {
-                $font->filename(storage_path('app/osrs_font.ttf'));
+            $outputImage->text($quantity, $xPos - 6, $yPos + 2, function (FontFactory $font) {
+                $font->filename($this->fontPath);
                 $font->size(self::TEXT_SIZE);
-                $font->color('#000000');
+                $font->color(self::TEXT_BLACK_COLOR);
                 $font->align('left');
                 $font->valign('top');
             });
-            $outputImage->text($quantity, $xPos - 5, $yPos, function (FontFactory $font) {
-                $font->filename(storage_path('app/osrs_font.ttf'));
+            $outputImage->text($quantity, $xPos - 7, $yPos + 1, function (FontFactory $font) {
+                $font->filename($this->fontPath);
                 $font->size(self::TEXT_SIZE);
-                $font->color('#ffff00');
+                $font->color(self::TEXT_YELLOW_COLOR);
                 $font->align('left');
                 $font->valign('top');
             });
@@ -110,7 +115,7 @@ class ImageService
         }
 
         return $this->imageManager->read($iconPath, FilePathImageDecoder::class)
-            ->contain(self::ICON_SIZE, self::ICON_SIZE, 'rgba(0, 0, 0, 0)' , 'bottom');
+            ->contain(self::ICON_SIZE, self::ICON_SIZE, self::TRANSPARENT_COLOR , 'bottom');
     }
 
     public function storeImage(ImageInterface $image): string
