@@ -15,7 +15,7 @@ class CreateItemsForLootRolls extends Command
 
     public function handle(ItemService $itemService, ItemRepo $itemRepo): void
     {
-        $lootTableRollsItemIds = LootTableRoll::query()
+        $lootTableRolls = LootTableRoll::query()
             ->whereNotNull('item_id')
             ->select(['item_id', 'item_name'])
             ->distinct()
@@ -23,12 +23,16 @@ class CreateItemsForLootRolls extends Command
 
         $this->info('Creating missing items for loot rolls...');
         $created = 0;
-        $lootTableRollsItemIds->filter(function (LootTableRoll $tableRoll) use ($itemRepo, $itemService) {
+
+        $lootTableRollsMissingItems = $lootTableRolls->filter(function (LootTableRoll $tableRoll) use ($itemRepo) {
             return !$itemRepo->getItem($tableRoll->item_id);
-        })->each(function (LootTableRoll $tableRoll) use (&$created, $itemService) {
+        });
+
+        $lootTableRollsMissingItems->each(function (LootTableRoll $tableRoll) use (&$created, $itemService) {
             $item = $itemService->createItemFromApi($tableRoll->item_id, $tableRoll->item_name);
             $this->output->writeln("Created item {$item->__toString()}");
             $created++;
+            // Rate limit to avoid hitting the API too hard
             sleep(1);
         });
 

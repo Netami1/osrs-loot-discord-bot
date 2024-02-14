@@ -51,12 +51,10 @@ class ImageService
         $outputImage->place($background);
         $outputImage->scale(self::BACKGROUND_WIDTH, self::BACKGROUND_HEIGHT);
 
-        $sortedLootResults = $lootResult->getLootRollResults()->sortByDesc(function (LootRollResult $lootRollResult) {
-            return $lootRollResult->totalValue();
-        })->take(self::MAX_ICONS_IN_IMAGE);
+        $selectedLootResults = $lootResult->getLootRollResultsByValueDesc()->take(self::MAX_ICONS_IN_IMAGE);
 
         /** @var LootRollResult $lootRollResult */
-        foreach ($sortedLootResults as $lootRollResult) {
+        foreach ($selectedLootResults as $lootRollResult) {
             $item = $lootRollResult->getItem();
             $quantity = $lootRollResult->getQuantity();
             $icon = $this->getIconImage($item);

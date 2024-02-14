@@ -28,6 +28,13 @@ class LootResult
         return $this->lootRollResults;
     }
 
+    public function getLootRollResultsByValueDesc(): Collection
+    {
+        return $this->lootRollResults->sortByDesc(function (LootRollResult $lootRollResult) {
+            return $lootRollResult->totalValue();
+        });
+    }
+
     public function setSource(LootSource $source): self
     {
         $this->source = $source;

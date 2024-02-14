@@ -27,6 +27,9 @@ class LootGeneratorService
         $quantity = $this->getQuantity($commandOptions);
 
         $loots = $this->processLootTables($source, $quantity);
+        $loots->sortByDesc(function (LootRollResult $lootRollResult) {
+            return $lootRollResult->totalValue();
+        });
 
         return (new LootResult())
             ->setSource($source)

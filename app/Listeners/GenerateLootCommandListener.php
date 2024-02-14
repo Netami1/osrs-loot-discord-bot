@@ -21,7 +21,7 @@ class GenerateLootCommandListener implements ApplicationCommandInteractionEventL
 
     public function command(): ?string
     {
-        return 'kill';
+        return 'loot';
     }
 
     public function handle(ApplicationCommandInteractionEvent $event): void

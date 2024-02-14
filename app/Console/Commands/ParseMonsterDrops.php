@@ -9,7 +9,7 @@ class ParseMonsterDrops extends Command
 {
     protected $signature = 'parse-monster-drops {--monster=}';
 
-    protected $description = 'Parse monster drops from JSON';
+    protected $description = 'Parse monster drops from JSON, used to assist in creating loot tables.';
 
     public function handle(): void
     {
