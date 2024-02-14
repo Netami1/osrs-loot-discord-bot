@@ -56,6 +56,9 @@ class LootTables
     public const DAGANNOTH_PRIME_TERTIARY_ID = '68e17219-323b-40a4-85b1-c82b9c31d5ba';
     //
     public const BARROWS_PRIMARY_ID = 'b707b1a9-559b-4248-8b48-c6c3ae3baec0';
+    //
+    public const MEDIUM_CLUE_PRIMARY_ID = 'b5bd2c34-cd56-49eb-8454-77de73607469';
+    public const MEDIUM_CLUE_TERTIARY_ID = '4565e65e-47a0-4d52-bca2-dc4de8ae4e09';
 
     public function data(): array
     {
@@ -237,6 +240,18 @@ class LootTables
                     'id' => self::BARROWS_PRIMARY_ID,
                     'type' => LootTypeEnum::PRIMARY,
                     'rolls' => 7,
+                ],
+            ],
+            LootSources::MEDIUM_CLUE_ID => [
+                [
+                    'id' => self::MEDIUM_CLUE_PRIMARY_ID,
+                    'type' => LootTypeEnum::PRIMARY,
+                    'rolls_min' => 3,
+                    'rolls_max' => 5,
+                ],
+                [
+                    'id' => self::MEDIUM_CLUE_TERTIARY_ID,
+                    'type' => LootTypeEnum::TERTIARY,
                 ],
             ],
         ];

@@ -20,6 +20,8 @@ class LootTable extends Model
         'loot_source_id',
         'type',
         'rolls',
+        'rolls_min',
+        'rolls_max',
     ];
 
     protected $casts = [

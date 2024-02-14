@@ -83,7 +83,12 @@ class LootGeneratorService
             foreach ($lootTables as $lootTable) {
 
                 // Number of rolls for this loot table
-                for ($tableRollIndex=0; $tableRollIndex < $lootTable->rolls; $tableRollIndex++) {
+                if ($lootTable->rolls_min !== null && $lootTable->rolls_max !== null) {
+                    $tableRollsAmount = rand($lootTable->rolls_min, $lootTable->rolls_max);
+                } else {
+                    $tableRollsAmount = $lootTable->rolls;
+                }
+                for ($tableRollIndex=0; $tableRollIndex < $tableRollsAmount; $tableRollIndex++) {
 
                     // Check if we should continue rolling, this is to handle the case where we miss all rolls on the table
                     $shouldContinueRolling = true;
