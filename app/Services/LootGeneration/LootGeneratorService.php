@@ -41,11 +41,13 @@ class LootGeneratorService
     {
         $allTableLoots = new Collection();
 
+        // Process each loot table type and merge the results together
         foreach (LootTypeEnum::cases() as $lootType) {
             $lootResults = $this->processLootTableType($source, $quantity, $lootType);
             $allTableLoots = $allTableLoots->merge($lootResults);
         }
 
+        // Group the results by item id and sum the quantities, to combine multiple rolls of the same item
         return $allTableLoots->groupBy(function (LootRollResult $lootRollResult) {
             return $lootRollResult->getItem()->id;
         })->map(function (Collection $results) {
@@ -82,8 +84,11 @@ class LootGeneratorService
 
                 // Number of rolls for this loot table
                 for ($tableRollIndex=0; $tableRollIndex < $lootTable->rolls; $tableRollIndex++) {
+
+                    // Check if we should continue rolling, this is to handle the case where we miss all rolls on the table
                     $shouldContinueRolling = true;
                     while ($shouldContinueRolling) {
+                        // Shuffle the rolls to make it more random
                         $rolls = $lootTable->lootTableRolls()
                             ->get()
                             ->shuffle()
@@ -91,26 +96,31 @@ class LootGeneratorService
                                 return $roll;
                             })
                             ->all();
+
+                        // Roll a double between 0 and 1 to check against each roll's chance weighting
+                        $randRoll = rand(0, 1000000000) / 1000000000;
                         $rollsOnTableCount = count($rolls);
-
-                        $randRoll = rand(0, 1000000000000000) / 1000000000000000;
-
                         for ($rollIndex=0; $rollIndex < $rollsOnTableCount; $rollIndex++) {
                             /** @var LootTableRoll $roll */
                             $roll = $rolls[$rollIndex];
                             // Check if we succeeded on the roll
-                            $shouldHitAsDefault = $this->shouldHitAsDefault($lootType);
-                            if ($randRoll <= $roll->chance || $shouldHitAsDefault) {
-
+                            $shouldHitOverride = $this->shouldHitOverride($lootType);
+                            if ($shouldHitOverride || $randRoll <= $roll->chance) {
+                                // We hit the roll, so we can stop rolling after we finish here
                                 $shouldContinueRolling = false;
 
-                                // Check if this roll was for a "Nothing" drop
+                                // Check if this roll was for an intended "Nothing" drop
                                 if ($roll->item_id === null) {
+                                    Log::info('Rolled nothing', [
+                                        'source' => $source->name,
+                                    ]);
                                     break;
                                 }
 
+                                // Roll the quantity of the item
                                 $rollQuantity = rand($roll->min, $roll->max);
 
+                                // Add the roll's item id and quantity to the results array
                                 if (array_key_exists($roll->item_id, $rollResults)) {
                                     $rollResults[$roll->item_id] += $rollQuantity;
                                 } else {
@@ -118,10 +128,12 @@ class LootGeneratorService
                                 }
 
                                 // Now that we rolled an item, we can discard the rest of the rolls for this table
+                                // we don't break out of Always tables, as they can/should roll multiple items
                                 if ($lootType !== LootTypeEnum::ALWAYS) {
                                     break;
                                 }
                             } else if ($lootType === LootTypeEnum::PRIMARY) {
+                                // Adjust the roll chance for the next roll
                                 $randRoll -= $roll->chance;
                             }
                         }
@@ -130,17 +142,12 @@ class LootGeneratorService
                         if ($lootType === LootTypeEnum::TERTIARY) {
                             $shouldContinueRolling = false;
                         }
-
-                        if ($lootType === LootTypeEnum::PRIMARY && $shouldContinueRolling) {
-                            Log::warning('Primary loot table did not roll an item', [
-                                'source' => $source->name,
-                            ]);
-                        }
                     }
                 }
             }
         }
 
+        // Convert the roll results into a collection of LootRollResults
         foreach ($rollResults as $itemId => $quantity) {
             $item = $this->itemService->getOrCreateItem($itemId);
             if ($item) {
@@ -174,12 +181,13 @@ class LootGeneratorService
         return $quantityOption['value'];
     }
 
-    private function shouldHitAsDefault(LootTypeEnum $lootTypeEnum): bool
+    private function shouldHitOverride(LootTypeEnum $lootTypeEnum): bool
     {
         // Always loot tables always hit
         if ($lootTypeEnum === LootTypeEnum::ALWAYS) {
             return true;
         }
+
         return false;
     }
 
