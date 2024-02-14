@@ -95,7 +95,7 @@ class LootGeneratorService
                             /** @var LootTableRoll $roll */
                             $roll = $rolls[$rollIndex];
                             // Check if we succeeded on the roll
-                            $shouldHitAsDefault = $this->shouldHitAsDefault($rollIndex, $rollsOnTableCount, $lootType);
+                            $shouldHitAsDefault = $this->shouldHitAsDefault($lootType);
                             if ($randRoll <= $roll->chance || $shouldHitAsDefault) {
 
                                 $shouldContinueRolling = false;
@@ -155,7 +155,7 @@ class LootGeneratorService
 
     private function getLootSource(Collection $commandOptions): LootSource
     {
-        $npcOption = $commandOptions->firstWhere('name', '=', 'npc');
+        $npcOption = $commandOptions->firstWhere('name', '=', 'target');
 
         /** @var LootSource */
         return LootSource::query()
@@ -170,18 +170,12 @@ class LootGeneratorService
         return $quantityOption['value'];
     }
 
-    private function shouldHitAsDefault(int $rollIndex, int $rollsOnTableCount, LootTypeEnum $lootTypeEnum): bool
+    private function shouldHitAsDefault(LootTypeEnum $lootTypeEnum): bool
     {
         // Always loot tables always hit
         if ($lootTypeEnum === LootTypeEnum::ALWAYS) {
             return true;
         }
-
-        // The last roll on a primary table is always a hit
-        //if ($lootTypeEnum === LootTypeEnum::PRIMARY) {
-        //    return $rollIndex === $rollsOnTableCount - 1;
-        //}
-
         return false;
     }
 
