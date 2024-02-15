@@ -59,6 +59,9 @@ class LootTables
     //
     public const MEDIUM_CLUE_PRIMARY_ID = 'b5bd2c34-cd56-49eb-8454-77de73607469';
     public const MEDIUM_CLUE_TERTIARY_ID = '4565e65e-47a0-4d52-bca2-dc4de8ae4e09';
+    //
+    public const HARD_CLUE_PRIMARY_ID = '7a006f2b-a8be-4bc8-8d6f-24254aa5a2c9';
+    public const HARD_CLUE_TERTIARY_ID = '04ae4b68-c7ad-4d5f-ae71-312e5cece3e5';
 
     public function data(): array
     {
@@ -251,6 +254,18 @@ class LootTables
                 ],
                 [
                     'id' => self::MEDIUM_CLUE_TERTIARY_ID,
+                    'type' => LootTypeEnum::TERTIARY,
+                ],
+            ],
+            LootSources::HARD_CLUE_ID => [
+                [
+                    'id' => self::HARD_CLUE_PRIMARY_ID,
+                    'type' => LootTypeEnum::PRIMARY,
+                    'rolls_min' => 4,
+                    'rolls_max' => 6,
+                ],
+                [
+                    'id' => self::HARD_CLUE_TERTIARY_ID,
                     'type' => LootTypeEnum::TERTIARY,
                 ],
             ],

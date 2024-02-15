@@ -48,6 +48,9 @@ class LootSources
     //
     public const MEDIUM_CLUE_ID = '4af0931f-d869-4d88-b28a-c7500a4aa11b';
     public const MEDIUM_CLUE_NAME = 'Medium Clue';
+    //
+    public const HARD_CLUE_ID = '70478b86-1c8a-4912-8da5-b1231b89ddaf';
+    public const HARD_CLUE_NAME = 'Hard Clue';
 
     public function data(): array
     {
@@ -111,6 +114,10 @@ class LootSources
             [
                 'id' => self::MEDIUM_CLUE_ID,
                 'name' => self::MEDIUM_CLUE_NAME,
+            ],
+            [
+                'id' => self::HARD_CLUE_ID,
+                'name' => self::HARD_CLUE_NAME,
             ],
         ];
     }

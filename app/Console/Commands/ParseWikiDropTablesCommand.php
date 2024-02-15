@@ -39,7 +39,7 @@ class ParseWikiDropTablesCommand extends Command
             foreach ($tds as $td) {
                 if ($tdIndex === 0) {
                     $itemName = $td->find('a')->attr('title');
-                    $itemName = str_replace('&#39;', '\'', $itemName);
+                    $itemName = html_entity_decode($itemName);
                 }
 
                 if ($tdIndex === 2) {
@@ -90,13 +90,13 @@ class ParseWikiDropTablesCommand extends Command
                 $this->output->writeln('[');
                 $this->output->writeln('    \'id\' => \'' . Str::uuid() . '\',');
                 $this->output->writeln('    \'item_id\' => ' . $itemId . ',');
-                $this->output->writeln('    \'item_name\' => \'' . $item['name'] . '\',');
+                $this->output->writeln('    \'item_name\' => "' . $item['name'] . '",');
                 $this->output->writeln('    \'chance\' => ' . $item['rarity'] . ',');
                 if ($item['quantity_min'] != 1) {
                     $this->output->writeln('    \'min\' => ' . $item['quantity_min'] . ',');
                 }
                 if ($item['quantity_max'] != 1) {
-                    $this->output->writeln('    \'min\' => ' . $item['quantity_max'] . ',');
+                    $this->output->writeln('    \'max\' => ' . $item['quantity_max'] . ',');
                 }
                 $this->output->writeln('],');
             }
