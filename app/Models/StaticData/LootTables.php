@@ -57,6 +57,9 @@ class LootTables
     //
     public const BARROWS_PRIMARY_ID = 'b707b1a9-559b-4248-8b48-c6c3ae3baec0';
     //
+    public const EASY_CLUE_PRIMARY_ID = '66708fc4-02df-4c32-a3fa-122b5bdd9c28';
+    public const EASY_CLUE_TERTIARY_ID = 'ebb950ae-eded-4c7d-8370-5e999214ab30';
+    //
     public const MEDIUM_CLUE_PRIMARY_ID = 'b5bd2c34-cd56-49eb-8454-77de73607469';
     public const MEDIUM_CLUE_TERTIARY_ID = '4565e65e-47a0-4d52-bca2-dc4de8ae4e09';
     //
@@ -249,6 +252,18 @@ class LootTables
                     'id' => self::BARROWS_PRIMARY_ID,
                     'type' => LootTypeEnum::PRIMARY,
                     'rolls' => 7,
+                ],
+            ],
+            LootSources::EASY_CLUE_ID => [
+                [
+                    'id' => self::EASY_CLUE_PRIMARY_ID,
+                    'type' => LootTypeEnum::PRIMARY,
+                    'rolls_min' => 2,
+                    'rolls_max' => 4,
+                ],
+                [
+                    'id' => self::EASY_CLUE_TERTIARY_ID,
+                    'type' => LootTypeEnum::TERTIARY,
                 ],
             ],
             LootSources::MEDIUM_CLUE_ID => [

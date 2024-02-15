@@ -46,6 +46,9 @@ class LootSources
     public const BARROWS_ID = '665309e6-3ccc-49a1-b75b-37c938c0b7e0';
     public const BARROWS_NAME = 'Barrows';
     //
+    public const EASY_CLUE_ID = 'd1c725ae-b910-454d-ae0e-baae97ab06c8';
+    public const EASY_CLUE_NAME = 'Easy Clue';
+    //
     public const MEDIUM_CLUE_ID = '4af0931f-d869-4d88-b28a-c7500a4aa11b';
     public const MEDIUM_CLUE_NAME = 'Medium Clue';
     //
@@ -116,6 +119,10 @@ class LootSources
             [
                 'id' => self::BARROWS_ID,
                 'name' => self::BARROWS_NAME,
+            ],
+            [
+                'id' => self::EASY_CLUE_ID,
+                'name' => self::EASY_CLUE_NAME,
             ],
             [
                 'id' => self::MEDIUM_CLUE_ID,
