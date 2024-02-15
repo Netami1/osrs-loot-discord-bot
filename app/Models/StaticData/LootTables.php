@@ -57,6 +57,8 @@ class LootTables
     //
     public const BARROWS_PRIMARY_ID = 'b707b1a9-559b-4248-8b48-c6c3ae3baec0';
     //
+    public const BEGINNER_CLUE_PRIMARY_ID = 'da8f7b9e-5002-421a-8fb3-b76964ce15be';
+    //
     public const EASY_CLUE_PRIMARY_ID = '66708fc4-02df-4c32-a3fa-122b5bdd9c28';
     public const EASY_CLUE_TERTIARY_ID = 'ebb950ae-eded-4c7d-8370-5e999214ab30';
     //
@@ -252,6 +254,14 @@ class LootTables
                     'id' => self::BARROWS_PRIMARY_ID,
                     'type' => LootTypeEnum::PRIMARY,
                     'rolls' => 7,
+                ],
+            ],
+            LootSources::BEGINNER_CLUE_ID => [
+                [
+                    'id' => self::BEGINNER_CLUE_PRIMARY_ID,
+                    'type' => LootTypeEnum::PRIMARY,
+                    'rolls_min' => 1,
+                    'rolls_max' => 3,
                 ],
             ],
             LootSources::EASY_CLUE_ID => [
