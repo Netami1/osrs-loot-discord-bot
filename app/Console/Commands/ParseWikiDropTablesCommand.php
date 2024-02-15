@@ -82,10 +82,15 @@ class ParseWikiDropTablesCommand extends Command
 
         foreach ($items as $item) {
             $itemDetails = $wikiService->getItemMappingDetailsByName($item['name']);
-            if ($itemDetails) {
-                $arrId = array_key_first($itemDetails);
-                $itemDetails = $itemDetails[$arrId];
-                $itemId = $itemDetails['id'];
+            // Coins are not in the mapping, so we need to handle them separately
+            if ($itemDetails || $item['name'] == 'Coins') {
+                $itemId = 995;
+
+                if ($itemDetails) {
+                    $arrId = array_key_first($itemDetails);
+                    $itemDetails = $itemDetails[$arrId];
+                    $itemId = $itemDetails['id'];
+                }
 
                 $this->output->writeln('[');
                 $this->output->writeln('    \'id\' => \'' . Str::uuid() . '\',');
