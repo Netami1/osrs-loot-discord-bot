@@ -44,6 +44,7 @@ class ParseWikiDropTablesCommand extends Command
 
                 if ($tdIndex === 2) {
                     $quantityString = $td->text();
+                    $quantityString = str_replace(',', '', $quantityString);
                     $quantityString = str_replace("\u{00a0}(noted)", '', $quantityString);
                     // Check if the string contains a range
                     if (str_contains($quantityString, "\u{2013}")) {
