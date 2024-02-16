@@ -19,13 +19,13 @@ use Intervention\Image\Typography\FontFactory;
 class ImageService
 {
     private const USER_AGENT = 'Netami-Loot-Bot';
+    private const ICONS_PER_ROW = 8;
     private const ICON_SIZE = 32;
     private const ICON_START_X = 25;
     private const ICON_START_Y = 16;
     private const ICON_SPACE_BETWEEN_X = 20;
     private const ICON_MAX_START_X = 420;
     private const ICON_SPACE_BETWEEN_Y = 42;
-    private const MAX_ICONS_IN_IMAGE = 40;
     private const BACKGROUND_WIDTH = 479;
     private const BACKGROUND_HEIGHT = 237;
     private const TEXT_SIZE = 16;
@@ -49,9 +49,11 @@ class ImageService
         $yPos = self::ICON_START_Y;
         $outputImage = $this->imageManager->create(self::BACKGROUND_WIDTH, self::BACKGROUND_HEIGHT);
         $outputImage->place($background);
-        $outputImage->scale(self::BACKGROUND_WIDTH, self::BACKGROUND_HEIGHT);
 
-        $selectedLootResults = $lootResult->getLootRollResultsByValueDesc()->take(self::MAX_ICONS_IN_IMAGE);
+        $selectedLootResults = $lootResult->getLootRollResultsByValueDesc();
+        $neededRows = ceil($selectedLootResults->count() / self::ICONS_PER_ROW);
+        $outputHeight = (self::ICON_START_Y * 2) + ($neededRows * self::ICON_SPACE_BETWEEN_Y);
+        $outputImage->scale(self::BACKGROUND_WIDTH, $outputHeight);
 
         /** @var LootRollResult $lootRollResult */
         foreach ($selectedLootResults as $lootRollResult) {
