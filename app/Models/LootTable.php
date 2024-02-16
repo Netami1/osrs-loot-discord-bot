@@ -22,6 +22,7 @@ class LootTable extends Model
         'rolls',
         'rolls_min',
         'rolls_max',
+        'chance',
     ];
 
     protected $casts = [

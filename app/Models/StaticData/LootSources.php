@@ -63,6 +63,9 @@ class LootSources
     //
     public const MASTER_CLUE_ID = 'f892b7c3-f03d-433d-bb0d-a02dc760e9d5';
     public const MASTER_CLUE_NAME = 'Master Clue';
+    //
+    public const CHAMBERS_OF_XERIC_ID = '26b5c3c0-285c-4e94-8a7d-96f52ca183d6';
+    public const CHAMBERS_OF_XERIC_NAME = 'Chambers of Xeric';
 
     public function data(): array
     {
@@ -146,6 +149,10 @@ class LootSources
             [
                 'id' => self::MASTER_CLUE_ID,
                 'name' => self::MASTER_CLUE_NAME,
+            ],
+            [
+                'id' => self::CHAMBERS_OF_XERIC_ID,
+                'name' => self::CHAMBERS_OF_XERIC_NAME,
             ],
         ];
     }

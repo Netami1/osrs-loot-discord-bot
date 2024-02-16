@@ -39,11 +39,18 @@ class LootGeneratorService
 
     public function processLootTables(LootSource $source, int $quantity): Collection
     {
+        $timesToRollTables = $quantity;
         $allTableLoots = new Collection();
 
         // Process each loot table type and merge the results together
         foreach (LootTypeEnum::cases() as $lootType) {
-            $lootResults = $this->processLootTableType($source, $quantity, $lootType);
+            $lootResults = $this->processLootTableType($source, $timesToRollTables, $lootType);
+
+            // If we rolled a raid unique, we should roll one less time on the other tables
+            if ($lootType === LootTypeEnum::RAID_UNIQUE) {
+                $timesToRollTables -= 1;
+            }
+
             $allTableLoots = $allTableLoots->merge($lootResults);
         }
 
@@ -93,6 +100,23 @@ class LootGeneratorService
                     // Check if we should continue rolling, this is to handle the case where we miss all rolls on the table
                     $shouldContinueRolling = true;
                     while ($shouldContinueRolling) {
+
+                        // If we're rolling a raid unique table, we need to roll to see if we hit the table first
+                        if ($lootType === LootTypeEnum::RAID_UNIQUE) {
+                            $hitTableRoll = rand(0, 1000000000) / 1000000000;
+                            Log::info('Rolled raid unique table roll', [
+                                'source' => $source->name,
+                                'hitTableRoll' => $hitTableRoll,
+                                'table_chance' => $lootTable->chance,
+                                'hit' => $hitTableRoll >= $lootTable->chance,
+                            ]);
+                            // If we hit the table roll, we can continue to process the rolls on the table
+                            // Otherwise, we should stop rolling on this table by breaking
+                            if ($hitTableRoll >= $lootTable->chance) {
+                                break;
+                            }
+                        }
+
                         // Shuffle the rolls to make it more random
                         $rolls = $lootTable->lootTableRolls()
                             ->get()
@@ -144,7 +168,7 @@ class LootGeneratorService
                         }
 
                         // Tertiary loot tables should only roll once and aren't guaranteed to roll an item
-                        if ($lootType === LootTypeEnum::TERTIARY) {
+                        if ($lootType === LootTypeEnum::TERTIARY || $lootType === LootTypeEnum::RAID_UNIQUE) {
                             $shouldContinueRolling = false;
                         }
                     }

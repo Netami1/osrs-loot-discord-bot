@@ -6,7 +6,6 @@ enum LootTypeEnum: string
 {
     case ALWAYS = 'always';
     case PRIMARY = 'primary';
-    case SECONDARY = 'secondary';
     case TERTIARY = 'tertiary';
-    case PET = 'pet';
+    case RAID_UNIQUE = 'raid_unique';
 }

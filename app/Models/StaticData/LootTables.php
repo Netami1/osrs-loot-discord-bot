@@ -73,6 +73,9 @@ class LootTables
     //
     public const MASTER_CLUE_PRIMARY_ID = '84ea98e6-8860-4cf0-bfc4-98b7c3b44fb8';
     public const MASTER_CLUE_TERTIARY_ID = '0e01751d-8fd1-4cd5-8cfb-925f5cfde8d4';
+    //
+    public const CHAMBERS_OF_XERIC_PRIMARY_ID = 'e31a967a-423d-4730-b6ae-dec72dc6b32a';
+    public const CHAMBERS_OF_XERIC_UNIQUE_ID = 'e6d1e312-029e-4f20-9909-0c8f319bcd8f';
 
     public function data(): array
     {
@@ -322,6 +325,19 @@ class LootTables
                 [
                     'id' => self::MASTER_CLUE_TERTIARY_ID,
                     'type' => LootTypeEnum::TERTIARY,
+                ],
+            ],
+            LootSources::CHAMBERS_OF_XERIC_ID => [
+                [
+                    'id' => self::CHAMBERS_OF_XERIC_PRIMARY_ID,
+                    'type' => LootTypeEnum::PRIMARY,
+                    'rolls' => 2,
+                ],
+                [
+                    'id' => self::CHAMBERS_OF_XERIC_UNIQUE_ID,
+                    'type' => LootTypeEnum::RAID_UNIQUE,
+                    'rolls' => 1,
+                    'chance' => 0.04,
                 ],
             ],
         ];
