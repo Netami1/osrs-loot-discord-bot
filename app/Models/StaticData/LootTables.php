@@ -337,7 +337,7 @@ class LootTables
                     'id' => self::CHAMBERS_OF_XERIC_UNIQUE_ID,
                     'type' => LootTypeEnum::RAID_UNIQUE,
                     'rolls' => 1,
-                    'chance' => 0.04,
+                    'chance' => 0.03688335,
                 ],
             ],
         ];

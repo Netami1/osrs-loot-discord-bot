@@ -104,12 +104,7 @@ class LootGeneratorService
                         // If we're rolling a raid unique table, we need to roll to see if we hit the table first
                         if ($lootType === LootTypeEnum::RAID_UNIQUE) {
                             $hitTableRoll = rand(0, 1000000000) / 1000000000;
-                            Log::info('Rolled raid unique table roll', [
-                                'source' => $source->name,
-                                'hitTableRoll' => $hitTableRoll,
-                                'table_chance' => $lootTable->chance,
-                                'hit' => $hitTableRoll >= $lootTable->chance,
-                            ]);
+
                             // If we hit the table roll, we can continue to process the rolls on the table
                             // Otherwise, we should stop rolling on this table by breaking
                             if ($hitTableRoll >= $lootTable->chance) {
@@ -140,9 +135,6 @@ class LootGeneratorService
 
                                 // Check if this roll was for an intended "Nothing" drop
                                 if ($roll->item_id === null) {
-                                    Log::info('Rolled nothing', [
-                                        'source' => $source->name,
-                                    ]);
                                     break;
                                 }
 
