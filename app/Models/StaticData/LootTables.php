@@ -353,7 +353,7 @@ class LootTables
                     'id' => self::THEATRE_OF_BLOOD_UNIQUE_ID,
                     'type' => LootTypeEnum::RAID_UNIQUE,
                     'rolls' => 1,
-                    'chance' => 0.10989010989,
+                    'chance' => 0.02747252747,
                 ],
             ],
         ];
