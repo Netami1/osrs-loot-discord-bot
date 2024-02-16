@@ -66,6 +66,9 @@ class LootSources
     //
     public const CHAMBERS_OF_XERIC_ID = '26b5c3c0-285c-4e94-8a7d-96f52ca183d6';
     public const CHAMBERS_OF_XERIC_NAME = 'Chambers of Xeric';
+    //
+    public const THEATRE_OF_BLOOD_ID = 'aadc455a-80f0-488f-8756-2c1d90170076';
+    public const THEATRE_OF_BLOOD_NAME = 'Theatre of Blood';
 
     public function data(): array
     {
@@ -153,6 +156,10 @@ class LootSources
             [
                 'id' => self::CHAMBERS_OF_XERIC_ID,
                 'name' => self::CHAMBERS_OF_XERIC_NAME,
+            ],
+            [
+                'id' => self::THEATRE_OF_BLOOD_ID,
+                'name' => self::THEATRE_OF_BLOOD_NAME,
             ],
         ];
     }

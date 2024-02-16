@@ -76,6 +76,9 @@ class LootTables
     //
     public const CHAMBERS_OF_XERIC_PRIMARY_ID = 'e31a967a-423d-4730-b6ae-dec72dc6b32a';
     public const CHAMBERS_OF_XERIC_UNIQUE_ID = 'e6d1e312-029e-4f20-9909-0c8f319bcd8f';
+    //
+    public const THEATRE_OF_BLOOD_PRIMARY_ID = '5323d644-c8f8-4382-bdf2-a4890eb8b3ae';
+    public const THEATRE_OF_BLOOD_UNIQUE_ID = '3b6cfc3d-496f-4c34-b967-7b364836b500';
 
     public function data(): array
     {
@@ -338,6 +341,19 @@ class LootTables
                     'type' => LootTypeEnum::RAID_UNIQUE,
                     'rolls' => 1,
                     'chance' => 0.03688335,
+                ],
+            ],
+            LootSources::THEATRE_OF_BLOOD_ID => [
+                [
+                    'id' => self::THEATRE_OF_BLOOD_PRIMARY_ID,
+                    'type' => LootTypeEnum::PRIMARY,
+                    'rolls' => 3,
+                ],
+                [
+                    'id' => self::THEATRE_OF_BLOOD_UNIQUE_ID,
+                    'type' => LootTypeEnum::RAID_UNIQUE,
+                    'rolls' => 1,
+                    'chance' => 0.10989010989,
                 ],
             ],
         ];
