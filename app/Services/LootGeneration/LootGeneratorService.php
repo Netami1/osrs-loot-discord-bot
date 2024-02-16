@@ -161,14 +161,14 @@ class LootGeneratorService
                                 if ($lootType !== LootTypeEnum::ALWAYS) {
                                     break;
                                 }
-                            } else if ($lootType === LootTypeEnum::PRIMARY) {
+                            } else if ($lootType === LootTypeEnum::PRIMARY || $lootType === LootTypeEnum::RAID_UNIQUE) {
                                 // Adjust the roll chance for the next roll
                                 $randRoll -= $roll->chance;
                             }
                         }
 
                         // Tertiary loot tables should only roll once and aren't guaranteed to roll an item
-                        if ($lootType === LootTypeEnum::TERTIARY || $lootType === LootTypeEnum::RAID_UNIQUE) {
+                        if ($lootType === LootTypeEnum::TERTIARY) {
                             $shouldContinueRolling = false;
                         }
                     }
