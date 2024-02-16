@@ -43,11 +43,13 @@ class LootGeneratorService
         $allTableLoots = new Collection();
 
         // Process each loot table type and merge the results together
-        foreach (LootTypeEnum::cases() as $lootType) {
+        $lootTableTypes = [LootTypeEnum::RAID_UNIQUE, LootTypeEnum::PRIMARY, LootTypeEnum::TERTIARY, LootTypeEnum::ALWAYS];
+        foreach ($lootTableTypes as $lootType) {
             $lootResults = $this->processLootTableType($source, $timesToRollTables, $lootType);
 
             // If we rolled a raid unique, we should roll one less time on the other tables
             if ($lootType === LootTypeEnum::RAID_UNIQUE && $lootResults->isNotEmpty()) {
+                Log::info('Rolled a raid unique, rolling one less time on other tables');
                 $timesToRollTables -= 1;
             }
 
