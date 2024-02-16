@@ -53,7 +53,7 @@ class ImageService
         $selectedLootResults = $lootResult->getLootRollResultsByValueDesc();
         $neededRows = ceil($selectedLootResults->count() / self::ICONS_PER_ROW);
         $outputHeight = (self::ICON_START_Y * 2) + ($neededRows * self::ICON_SPACE_BETWEEN_Y);
-        $outputImage->scale(self::BACKGROUND_WIDTH, $outputHeight);
+        $outputImage->resize(self::BACKGROUND_WIDTH, $outputHeight);
 
         /** @var LootRollResult $lootRollResult */
         foreach ($selectedLootResults as $lootRollResult) {
