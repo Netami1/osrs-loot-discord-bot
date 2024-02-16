@@ -69,6 +69,9 @@ class LootSources
     //
     public const THEATRE_OF_BLOOD_ID = 'aadc455a-80f0-488f-8756-2c1d90170076';
     public const THEATRE_OF_BLOOD_NAME = 'Theatre of Blood';
+    //
+    public const TOMBS_OF_AMASCUT_ID = '2d31c90a-b449-442d-a63d-6faf82e6bd1b';
+    public const TOMBS_OF_AMASCUT_NAME = 'Tombs of Amascut';
 
     public function data(): array
     {
@@ -160,6 +163,10 @@ class LootSources
             [
                 'id' => self::THEATRE_OF_BLOOD_ID,
                 'name' => self::THEATRE_OF_BLOOD_NAME,
+            ],
+            [
+                'id' => self::TOMBS_OF_AMASCUT_ID,
+                'name' => self::TOMBS_OF_AMASCUT_NAME,
             ],
         ];
     }

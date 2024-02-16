@@ -79,6 +79,9 @@ class LootTables
     //
     public const THEATRE_OF_BLOOD_PRIMARY_ID = '5323d644-c8f8-4382-bdf2-a4890eb8b3ae';
     public const THEATRE_OF_BLOOD_UNIQUE_ID = '3b6cfc3d-496f-4c34-b967-7b364836b500';
+    //
+    public const TOMBS_OF_AMASCUT_PRIMARY_ID = 'cbdb741c-f484-477c-8b7c-3360ce5f8eea';
+    public const TOMBS_OF_AMASCUT_UNIQUE_ID = 'bb2b7c9a-c44d-4ee2-b99e-256823550d79';
 
     public function data(): array
     {
@@ -354,6 +357,19 @@ class LootTables
                     'type' => LootTypeEnum::RAID_UNIQUE,
                     'rolls' => 1,
                     'chance' => 0.02747252747,
+                ],
+            ],
+            LootSources::TOMBS_OF_AMASCUT_ID => [
+                [
+                    'id' => self::TOMBS_OF_AMASCUT_PRIMARY_ID,
+                    'type' => LootTypeEnum::PRIMARY,
+                    'rolls' => 3,
+                ],
+                [
+                    'id' => self::TOMBS_OF_AMASCUT_UNIQUE_ID,
+                    'type' => LootTypeEnum::RAID_UNIQUE,
+                    'rolls' => 1,
+                    'chance' => 0.0424767,
                 ],
             ],
         ];
