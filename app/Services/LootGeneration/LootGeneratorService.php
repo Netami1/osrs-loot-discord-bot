@@ -47,7 +47,7 @@ class LootGeneratorService
             $lootResults = $this->processLootTableType($source, $timesToRollTables, $lootType);
 
             // If we rolled a raid unique, we should roll one less time on the other tables
-            if ($lootType === LootTypeEnum::RAID_UNIQUE) {
+            if ($lootType === LootTypeEnum::RAID_UNIQUE && $lootResults->isNotEmpty()) {
                 $timesToRollTables -= 1;
             }
 
