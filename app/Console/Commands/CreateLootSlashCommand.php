@@ -32,7 +32,7 @@ class CreateLootSlashCommand extends Command
 
         $option2 = (new NumberOption('quantity', 'The number of simulations to run'))
             ->minValue(1)
-            ->maxValue(1000);
+            ->maxValue(10000);
 
         $command = new SlashCommand('loot', 'Simulate loot from a source');
         $command->option($option1);
