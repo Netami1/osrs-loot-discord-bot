@@ -47,10 +47,10 @@ class LootGeneratorService
         foreach ($lootTableTypes as $lootType) {
             $lootResults = $this->processLootTableType($source, $timesToRollTables, $lootType);
 
-            // If we rolled a raid unique, we should roll one less time on the other tables
+            // If we rolled a raid unique, we should roll fewer times on the other tables
             if ($lootType === LootTypeEnum::RAID_UNIQUE && $lootResults->isNotEmpty()) {
-                Log::info('Rolled a raid unique, rolling one less time on other tables');
-                $timesToRollTables -= 1;
+                $uniquesCount = $lootResults->sum(fn (LootRollResult $lootRollResult) => $lootRollResult->getQuantity());
+                $timesToRollTables -= $uniquesCount;
             }
 
             $allTableLoots = $allTableLoots->merge($lootResults);
