@@ -76,12 +76,15 @@ class LootTables
     //
     public const CHAMBERS_OF_XERIC_PRIMARY_ID = 'e31a967a-423d-4730-b6ae-dec72dc6b32a';
     public const CHAMBERS_OF_XERIC_UNIQUE_ID = 'e6d1e312-029e-4f20-9909-0c8f319bcd8f';
+    public const CHAMBERS_OF_XERIC_PET_ID = '0cac6e9d-b34a-4720-a114-89b505aadc2e';
     //
     public const THEATRE_OF_BLOOD_PRIMARY_ID = '5323d644-c8f8-4382-bdf2-a4890eb8b3ae';
     public const THEATRE_OF_BLOOD_UNIQUE_ID = '3b6cfc3d-496f-4c34-b967-7b364836b500';
+    public const THEATRE_OF_BLOOD_TERTIARY_ID = 'ccb190e7-28ae-45b6-8ed0-f8d169cc9d23';
     //
     public const TOMBS_OF_AMASCUT_PRIMARY_ID = 'cbdb741c-f484-477c-8b7c-3360ce5f8eea';
     public const TOMBS_OF_AMASCUT_UNIQUE_ID = 'bb2b7c9a-c44d-4ee2-b99e-256823550d79';
+    public const TOMB_OF_AMASCUT_TERTIARY_ID = '5f119ee8-91b3-47ea-b114-05730eac40cf';
 
     public function data(): array
     {
@@ -345,6 +348,11 @@ class LootTables
                     'rolls' => 1,
                     'chance' => 0.03688335,
                 ],
+                [
+                    'id' => self::CHAMBERS_OF_XERIC_PET_ID,
+                    'type' => LootTypeEnum::RAID_PET,
+                    'chance' => 0.01886792452,
+                ],
             ],
             LootSources::THEATRE_OF_BLOOD_ID => [
                 [
@@ -358,6 +366,10 @@ class LootTables
                     'rolls' => 1,
                     'chance' => 0.02747252747,
                 ],
+                [
+                    'id' => self::THEATRE_OF_BLOOD_TERTIARY_ID,
+                    'type' => LootTypeEnum::TERTIARY,
+                ],
             ],
             LootSources::TOMBS_OF_AMASCUT_ID => [
                 [
@@ -370,6 +382,10 @@ class LootTables
                     'type' => LootTypeEnum::RAID_UNIQUE,
                     'rolls' => 1,
                     'chance' => 0.0424767,
+                ],
+                [
+                    'id' => self::TOMB_OF_AMASCUT_TERTIARY_ID,
+                    'type' => LootTypeEnum::TERTIARY,
                 ],
             ],
         ];

@@ -8,4 +8,5 @@ enum LootTypeEnum: string
     case PRIMARY = 'primary';
     case TERTIARY = 'tertiary';
     case RAID_UNIQUE = 'raid_unique';
+    case RAID_PET = 'raid_pet';
 }

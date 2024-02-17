@@ -11344,6 +11344,14 @@ class LootTableRolls
                     'chance' => 0.02900000,
                 ],
             ],
+            LootTables::CHAMBERS_OF_XERIC_PET_ID => [
+                [
+                    'id' => '62695e6b-2603-4342-86e3-82774b6c7e64',
+                    'item_id' => 20851,
+                    'item_name' => "Olmlet",
+                    'chance' => 0.01886792452,
+                ],
+            ],
             LootTables::THEATRE_OF_BLOOD_PRIMARY_ID => [
                 [
                     'id' => '690dde6d-64b1-4c24-8a2c-7a398ac1f103',
@@ -11622,6 +11630,14 @@ class LootTableRolls
                     'chance' => 0.05263157894,
                 ],
             ],
+            LootTables::THEATRE_OF_BLOOD_TERTIARY_ID => [
+                [
+                    'id' => '9d130f63-d593-4c47-8e0b-13bec8f8c234',
+                    'item_id' => 22473,
+                    'item_name' => "Lil' zik",
+                    'chance' => 0.00153846153,
+                ],
+            ],
             LootTables::TOMBS_OF_AMASCUT_PRIMARY_ID => [
                 [
                     'id' => '38445133-d29c-4b76-9b47-28367f3e9a96',
@@ -11864,6 +11880,14 @@ class LootTableRolls
                     'chance' => 0.08330000,
                 ],
             ],
+            LootTables::TOMB_OF_AMASCUT_TERTIARY_ID => [
+                [
+                    'id' => '0c6ef4a2-c616-46ba-b328-e3ddf19dfa3f',
+                    'item_id' => 27352,
+                    'item_name' => "Tumeken's guardian",
+                    'chance' => 0.001365,
+                ],
+            ]
         ];
     }
 }

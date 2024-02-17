@@ -51,6 +51,10 @@ class LootGeneratorService
             if ($lootType === LootTypeEnum::RAID_UNIQUE && $lootResults->isNotEmpty()) {
                 $uniquesCount = $lootResults->sum(fn (LootRollResult $lootRollResult) => $lootRollResult->getQuantity());
                 $timesToRollTables -= $uniquesCount;
+
+                // Also roll for the raid's pet for each unique we got
+                $petResults = $this->processLootTableType($source, $uniquesCount, LootTypeEnum::RAID_PET);
+                $allTableLoots = $allTableLoots->merge($petResults);
             }
 
             $allTableLoots = $allTableLoots->merge($lootResults);
@@ -162,7 +166,7 @@ class LootGeneratorService
                         }
 
                         // Tertiary loot tables should only roll once and aren't guaranteed to roll an item
-                        if ($lootType === LootTypeEnum::TERTIARY) {
+                        if ($lootType === LootTypeEnum::TERTIARY || $lootType === LootTypeEnum::RAID_PET) {
                             $shouldContinueRolling = false;
                         }
                     }
