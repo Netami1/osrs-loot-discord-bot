@@ -22,12 +22,14 @@ class UpdateItemPricesJob implements ShouldQueue
     {
         Log::info('Updating item prices...');
 
+        unlink(storage_path('app/osrs_pricing.json'));
+
         $items = Item::query()->get();
 
         $items->each(function (Item $item) use ($itemService) {
             $itemService->updateItemPrice($item);
         });
-        
+
         Log::info('Item prices updated');
     }
 }
