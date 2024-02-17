@@ -1,66 +1,45 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+## OSRS Loot Simulator Discord Bot
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This is a Discord bot that simulates loot from the game Old School RuneScape. It is written in PHP using the Laravel framework.
+The loot generated is based on the drop tables and drop rates from the game, however the drop rates are not guaranteed to be
+the same as the actual game.
 
-## About Laravel
+The purpose of this discord bot is to provide a fun way for players to simulate loot from the game, merely for entertainment purposes.
+I do not own any of the content from the game, and this bot is not affiliated with Jagex Ltd.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Adding the bot to your server
+To add my hosted bot to your server, click [here](https://discord.com/api/oauth2/authorize?client_id=1205972225853890610&permissions=0&scope=bot)
+In the case that the bot is no longer hosted, you can host the bot yourself by following the instructions below.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Usage
+This bot uses Discord slash commands to generate loot.
+To use the bot, type `/loot` in a channel where the bot is present. Fill in the target and quantity options and hit Enter.
+The bot will receive the request and display a "Loading..." message while it generates the loot. Once the loot is generated, 
+the bot will edit the original message with the loot picture.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Local Development
 
-## Learning Laravel
+### Prerequisites
+- Docker
+- Git
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Setup
+1. Clone the repository, cd into the directory
+2. Run `composer install` to install the dependencies
+3. Run `cp .env.example .env` to create a .env file, adjust as needed
+4. Run `./vendor/bin/sail up -d` to create containers and start the development environment
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Deployment
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+I recommend using [Laravel Forge](https://forge.laravel.com/) to deploy this bot to a server. It is a simple and easy way to deploy Laravel applications.
 
-## Laravel Sponsors
+1. Create a discord application and bot, and then generate a token for the bot.
+   - See the Laravel Discord Bot Repo for more information on how to set up a Discord bot: https://github.com/nwilging/laravel-discord-bot
+2. Link a domain to the server so that you can generate an interactions URL for the Discord application.
+   - Discord requires SSL for the interactions URL, so you'll need to set up SSL on the server.
+3. Set up the site on Forge, and then deploy the code to the server, updating the .env file with the Discord bot information
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Example Loot Generations
+![1000 Zulrah](https://i.imgur.com/ihPNyon.png)
+![100 Chambers of Xeric](https://i.imgur.com/kfgSnNn.png)
+![20 Medium Clues](https://i.imgur.com/vpNDIzk.png)
