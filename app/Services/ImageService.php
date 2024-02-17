@@ -59,20 +59,21 @@ class ImageService
         foreach ($selectedLootResults as $lootRollResult) {
             $item = $lootRollResult->getItem();
             $quantity = $lootRollResult->getQuantity();
+            $quantityString = (string) $quantity >= 100000 ? kmb($quantity) : $quantity;
             $icon = $this->getIconImage($item);
             if (!$icon) {
                 continue;
             }
 
             $outputImage = $outputImage->place($icon, 'top-left', $xPos, $yPos);
-            $outputImage->text($quantity, $xPos - 4, $yPos + 1, function (FontFactory $font) {
+            $outputImage->text($quantityString, $xPos - 4, $yPos + 1, function (FontFactory $font) {
                 $font->filename($this->fontPath);
                 $font->size(self::TEXT_SIZE);
                 $font->color(self::TEXT_BLACK_COLOR);
                 $font->align('left');
                 $font->valign('top');
             });
-            $outputImage->text($quantity, $xPos - 5, $yPos, function (FontFactory $font) {
+            $outputImage->text($quantityString, $xPos - 5, $yPos, function (FontFactory $font) {
                 $font->filename($this->fontPath);
                 $font->size(self::TEXT_SIZE);
                 $font->color(self::TEXT_YELLOW_COLOR);
