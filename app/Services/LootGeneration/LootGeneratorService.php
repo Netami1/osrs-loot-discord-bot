@@ -156,7 +156,7 @@ class LootGeneratorService
 
                                 // Now that we rolled an item, we can discard the rest of the rolls for this table
                                 // we don't break out of Always tables, as they can/should roll multiple items
-                                if ($lootType !== LootTypeEnum::ALWAYS) {
+                                if ($lootType !== LootTypeEnum::ALWAYS && $lootType !== LootTypeEnum::TERTIARY) {
                                     break;
                                 }
                             } else if ($lootType === LootTypeEnum::PRIMARY || $lootType === LootTypeEnum::RAID_UNIQUE) {

@@ -85,6 +85,10 @@ class LootTables
     public const TOMBS_OF_AMASCUT_PRIMARY_ID = 'cbdb741c-f484-477c-8b7c-3360ce5f8eea';
     public const TOMBS_OF_AMASCUT_UNIQUE_ID = 'bb2b7c9a-c44d-4ee2-b99e-256823550d79';
     public const TOMB_OF_AMASCUT_TERTIARY_ID = '5f119ee8-91b3-47ea-b114-05730eac40cf';
+    //
+    public const ARTIO_ALWAYS_ID = '69909d40-daaa-4b70-bbb2-d359ff8e000d';
+    public const ARTIO_PRIMARY_ID = 'f3e3e3e3-3e3e-3e3e-3e3e-3e3e3e3e3e3e';
+    public const ARTIO_TERTIARY_ID = '3e3e3e3e-3e3e-3e3e-3e3e-3e3e3e3e3e3e';
 
     public function data(): array
     {
@@ -385,6 +389,20 @@ class LootTables
                 ],
                 [
                     'id' => self::TOMB_OF_AMASCUT_TERTIARY_ID,
+                    'type' => LootTypeEnum::TERTIARY,
+                ],
+            ],
+            LootSources::ARTIO_ID => [
+                [
+                    'id' => self::ARTIO_ALWAYS_ID,
+                    'type' => LootTypeEnum::ALWAYS,
+                ],
+                [
+                    'id' => self::ARTIO_PRIMARY_ID,
+                    'type' => LootTypeEnum::PRIMARY,
+                ],
+                [
+                    'id' => self::ARTIO_TERTIARY_ID,
                     'type' => LootTypeEnum::TERTIARY,
                 ],
             ],

@@ -72,6 +72,9 @@ class LootSources
     //
     public const TOMBS_OF_AMASCUT_ID = '2d31c90a-b449-442d-a63d-6faf82e6bd1b';
     public const TOMBS_OF_AMASCUT_NAME = 'Tombs of Amascut';
+    //
+    public const ARTIO_ID = '026d27e2-b896-4d94-a879-5c553420bdfb';
+    public const ARTIO_NAME = 'Artio';
 
     public function data(): array
     {
@@ -168,6 +171,10 @@ class LootSources
                 'id' => self::TOMBS_OF_AMASCUT_ID,
                 'name' => self::TOMBS_OF_AMASCUT_NAME,
             ],
+            [
+                'id' => self::ARTIO_ID,
+                'name' => self::ARTIO_NAME,
+            ]
         ];
     }
 }
