@@ -18,7 +18,7 @@ if (!function_exists('kmb')) {
             $suffix = 'k';
         }
 
-        return number_format($number, 2) . $suffix;
+        return number_format($number, 1) . $suffix;
     }
 }
 
