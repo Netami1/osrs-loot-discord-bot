@@ -126,7 +126,7 @@ class ImageService
 
         $image->toPng()->save($imagePath);
 
-        return env('APP_URL') . Storage::url($imageName);
+        return config('app.url') . Storage::url($imageName);
     }
 
     private function makeApiRequest(string $url): ?string
