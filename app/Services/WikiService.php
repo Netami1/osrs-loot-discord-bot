@@ -30,7 +30,7 @@ class WikiService
         $itemName = str_replace(' ', '_', $itemName);
         $encodedItemName = urlencode($itemName);
 
-        $url = sprintf(config($baseUrl), $encodedItemName);
+        $url = sprintf($baseUrl, $encodedItemName);
         $response = Http::head($url);
         if ($response->status() !== 200) {
             // Let's try it with 5 at the end for stackable items
