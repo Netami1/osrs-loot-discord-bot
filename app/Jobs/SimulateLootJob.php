@@ -39,14 +39,17 @@ class SimulateLootJob implements ShouldQueue
         $messageContent = "## Results of {$lootResult->getQuantity()} {$lootResult->getSource()->name}: " . kmb($lootResult->totalValue());
 
         $discordPayload = $discordService->createImageMessagePayload($imageUri, $messageContent);
-        $success = $discordService->editInteractionMessage(
+        $response = $discordService->editInteractionMessage(
             $this->commandRequest['application_id'],
             $this->commandRequest['token'],
             $discordPayload
         );
 
-        if (!$success) {
-            Log::error('Failed to send loot results to Discord');
+        if (!$response->successful()) {
+            Log::error('Failed to send loot results to Discord', [
+                'response' => $response->json(),
+                'payload' => $discordPayload,
+            ]);
         }
     }
 
