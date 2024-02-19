@@ -75,6 +75,9 @@ class LootSources
     //
     public const ARTIO_ID = '026d27e2-b896-4d94-a879-5c553420bdfb';
     public const ARTIO_NAME = 'Artio';
+    //
+    public const CALLISTO_ID = '597fa868-e0ca-414a-8439-e1064e733d7e';
+    public const CALLISTO_NAME = 'Callisto';
 
     public function data(): array
     {
@@ -174,7 +177,11 @@ class LootSources
             [
                 'id' => self::ARTIO_ID,
                 'name' => self::ARTIO_NAME,
-            ]
+            ],
+            [
+                'id' => self::CALLISTO_ID,
+                'name' => self::CALLISTO_NAME,
+            ],
         ];
     }
 }

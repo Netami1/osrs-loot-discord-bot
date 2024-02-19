@@ -89,6 +89,10 @@ class LootTables
     public const ARTIO_ALWAYS_ID = '69909d40-daaa-4b70-bbb2-d359ff8e000d';
     public const ARTIO_PRIMARY_ID = 'f3e3e3e3-3e3e-3e3e-3e3e-3e3e3e3e3e3e';
     public const ARTIO_TERTIARY_ID = '3e3e3e3e-3e3e-3e3e-3e3e-3e3e3e3e3e3e';
+    //
+    public const CALLISTO_ALWAYS_ID = '18cdce5e-2d57-4ee4-99bc-0cb1355486ce';
+    public const CALLISTO_PRIMARY_ID = '22567538-592c-4faa-9fce-51b493a09e18';
+    public const CALLISTO_TERTIARY_ID = '4f05bfb7-55dd-48b3-9ce4-e9032226e611';
 
     public function data(): array
     {
@@ -403,6 +407,20 @@ class LootTables
                 ],
                 [
                     'id' => self::ARTIO_TERTIARY_ID,
+                    'type' => LootTypeEnum::TERTIARY,
+                ],
+            ],
+            LootSources::CALLISTO_ID => [
+                [
+                    'id' => self::CALLISTO_ALWAYS_ID,
+                    'type' => LootTypeEnum::ALWAYS,
+                ],
+                [
+                    'id' => self::CALLISTO_PRIMARY_ID,
+                    'type' => LootTypeEnum::PRIMARY,
+                ],
+                [
+                    'id' => self::CALLISTO_TERTIARY_ID,
                     'type' => LootTypeEnum::TERTIARY,
                 ],
             ],
