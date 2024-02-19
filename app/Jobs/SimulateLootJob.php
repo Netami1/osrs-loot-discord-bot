@@ -37,6 +37,7 @@ class SimulateLootJob implements ShouldQueue
         $image = $imageService->createItemResultsImage($lootResult);
         $imageUri = $imageService->storeImage($image);
         $messageContent = "## Results of {$lootResult->getQuantity()} {$lootResult->getSource()->name}: " . kmb($lootResult->totalValue());
+        Log::info('Loot results', ['image_uri' => $imageUri, 'message_content' => $messageContent]);
 
         $discordPayload = $discordService->createImageMessagePayload($imageUri, $messageContent);
         $response = $discordService->editInteractionMessage(
