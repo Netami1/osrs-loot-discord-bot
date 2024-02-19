@@ -10,6 +10,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class UpdateItemPricesJob implements ShouldQueue
 {
@@ -22,7 +23,10 @@ class UpdateItemPricesJob implements ShouldQueue
     {
         Log::info('Updating item prices...');
 
-        unlink(storage_path('app/osrs_pricing.json'));
+        $pricingStoragePath = config('wiki.storage.pricing');
+        if (file_exists($pricingStoragePath)) {
+            Storage::delete($pricingStoragePath);
+        }
 
         $items = Item::query()->get();
 

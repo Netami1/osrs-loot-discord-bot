@@ -10,19 +10,6 @@ use Illuminate\Support\Facades\Log;
 class WikiService
 {
     private const USER_AGENT = 'Netami-Loot-Bot';
-    private const MAPPING_URL = 'https://prices.runescape.wiki/api/v1/osrs/mapping';
-    private const PRICE_URL = 'https://prices.runescape.wiki/api/v1/osrs/latest';
-    private CONST ITEM_ICON_BASE_URL = 'https://oldschool.runescape.wiki/images/%s.png';
-
-    private string $mappingStoragePath;
-    private string $pricingStoragePath;
-
-    public function __construct()
-    {
-        $this->mappingStoragePath = storage_path('app/osrs_mapping.json');
-        $this->pricingStoragePath = storage_path('app/osrs_pricing.json');
-
-    }
 
     public function getItemIconUrlById(int $itemId): string
     {
@@ -39,14 +26,15 @@ class WikiService
 
     public function getItemIconUrlByName(string $itemName): ?string
     {
+        $baseUrl = config('wiki.item_icon_base_url');
         $itemName = str_replace(' ', '_', $itemName);
         $encodedItemName = urlencode($itemName);
 
-        $url = sprintf(self::ITEM_ICON_BASE_URL, $encodedItemName);
+        $url = sprintf(config($baseUrl), $encodedItemName);
         $response = Http::head($url);
         if ($response->status() !== 200) {
             // Let's try it with 5 at the end for stackable items
-            $url = sprintf(self::ITEM_ICON_BASE_URL, $encodedItemName . '_5');
+            $url = sprintf($baseUrl, $encodedItemName . '_5');
             $response = Http::head($url);
             if ($response->status() !== 200) {
                 Log::warning('Failed to fetch icon for item ' . $itemName . ' from the wiki');
@@ -76,23 +64,27 @@ class WikiService
 
     public function getItemPricing(): array
     {
-        if (!file_exists($this->pricingStoragePath)) {
+        $pricingStoragePath = config('wiki.storage.pricing');
+
+        if (!file_exists($pricingStoragePath)) {
             $this->downloadItemPricing();
         }
 
-        return json_decode(file_get_contents($this->pricingStoragePath), true);
+        return json_decode(file_get_contents($pricingStoragePath), true);
     }
 
     public function downloadItemPricing(): void
     {
-        $json = $this->makeApiRequest(self::PRICE_URL);
+        $pricingUrl = config('wiki.api.base_url') . config('wiki.api.latest');
+        $pricingStoragePath = config('wiki.storage.pricing');
+        $json = $this->makeApiRequest($pricingUrl);
 
         if (!$json) {
             Log::error('Failed to download item pricing from the wiki API');
             return;
         }
 
-        file_put_contents($this->pricingStoragePath, json_encode($json));
+        file_put_contents($pricingStoragePath, json_encode($json));
     }
 
     public function getItemMappingDetailsById(int $itemId): ?array
@@ -111,23 +103,28 @@ class WikiService
 
     public function getItemMapping(): array
     {
-        if (!file_exists($this->mappingStoragePath)) {
+        $itemMappingStoragePath =  config('wiki.storage.item_mapping');
+
+        if (!file_exists($itemMappingStoragePath)) {
             $this->downloadItemMapping();
         }
 
-        return json_decode(file_get_contents($this->mappingStoragePath), true);
+        return json_decode(file_get_contents($itemMappingStoragePath), true);
     }
 
     public function downloadItemMapping(): void
     {
-        $json = $this->makeApiRequest(self::MAPPING_URL);
+        $itemMappingUrl = config('wiki.api.base_url') . config('wiki.api.mapping');
+        $itemMappingStoragePath = config('wiki.storage.item_mapping');
+
+        $json = $this->makeApiRequest($itemMappingUrl);
 
         if (!$json) {
             Log::error('Failed to download item mapping from the wiki API');
             return;
         }
 
-        file_put_contents($this->mappingStoragePath, json_encode($json));
+        file_put_contents($itemMappingStoragePath, json_encode($json));
     }
 
     private function makeApiRequest(string $url): ?array
