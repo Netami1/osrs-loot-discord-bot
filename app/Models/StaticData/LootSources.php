@@ -78,6 +78,12 @@ class LootSources
     //
     public const CALLISTO_ID = '597fa868-e0ca-414a-8439-e1064e733d7e';
     public const CALLISTO_NAME = 'Callisto';
+    //
+    public const SPINDEL_ID = '82598013-b723-4bdd-bb57-71bef1f3820f';
+    public const SPINDEL_NAME = 'Spindel';
+    //
+    public const VENENATIS_ID = 'e6508046-b997-4c0c-8e91-f596b256373b';
+    public const VENENATIS_NAME = 'Venenatis';
 
     public function data(): array
     {
@@ -181,6 +187,14 @@ class LootSources
             [
                 'id' => self::CALLISTO_ID,
                 'name' => self::CALLISTO_NAME,
+            ],
+            [
+                'id' => self::SPINDEL_ID,
+                'name' => self::SPINDEL_NAME,
+            ],
+            [
+                'id' => self::VENENATIS_ID,
+                'name' => self::VENENATIS_NAME,
             ],
         ];
     }

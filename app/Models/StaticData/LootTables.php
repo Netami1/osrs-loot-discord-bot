@@ -93,6 +93,13 @@ class LootTables
     public const CALLISTO_ALWAYS_ID = '18cdce5e-2d57-4ee4-99bc-0cb1355486ce';
     public const CALLISTO_PRIMARY_ID = '22567538-592c-4faa-9fce-51b493a09e18';
     public const CALLISTO_TERTIARY_ID = '4f05bfb7-55dd-48b3-9ce4-e9032226e611';
+    //
+    public const SPINDEL_ALWAYS_ID = 'e68de034-73c2-41b2-9b2a-68b600e707d1';
+    public const SPINDEL_PRIMARY_ID = 'aa783ea9-5fa2-47e4-bca1-921118d28b96';
+    public const SPINDEL_TERTIARY_ID = '85a5b9c4-092f-43bb-a542-bd035021407b';
+    //
+    public const VENENATIS_PRIMARY_ID = 'c93a35f8-8f95-45f3-a5fa-0cc64df30576';
+    public const VENENATIS_TERTIARY_ID = '5b505978-5f77-4a17-a90d-a201101f105b';
 
     public function data(): array
     {
@@ -421,6 +428,30 @@ class LootTables
                 ],
                 [
                     'id' => self::CALLISTO_TERTIARY_ID,
+                    'type' => LootTypeEnum::TERTIARY,
+                ],
+            ],
+            LootSources::SPINDEL_ID => [
+                [
+                    'id' => self::SPINDEL_ALWAYS_ID,
+                    'type' => LootTypeEnum::ALWAYS,
+                ],
+                [
+                    'id' => self::SPINDEL_PRIMARY_ID,
+                    'type' => LootTypeEnum::PRIMARY,
+                ],
+                [
+                    'id' => self::SPINDEL_TERTIARY_ID,
+                    'type' => LootTypeEnum::TERTIARY,
+                ],
+            ],
+            LootSources::VENENATIS_ID => [
+                [
+                    'id' => self::VENENATIS_PRIMARY_ID,
+                    'type' => LootTypeEnum::PRIMARY,
+                ],
+                [
+                    'id' => self::VENENATIS_TERTIARY_ID,
                     'type' => LootTypeEnum::TERTIARY,
                 ],
             ],
