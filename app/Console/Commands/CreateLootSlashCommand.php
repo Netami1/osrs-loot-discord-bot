@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\LootSource;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 use Nwilging\LaravelDiscordBot\Contracts\Services\DiscordApplicationCommandServiceContract;
 use Nwilging\LaravelDiscordBot\Support\Commands\Options\NumberOption;
 use Nwilging\LaravelDiscordBot\Support\Commands\Options\OptionChoice;
@@ -18,9 +19,17 @@ class CreateLootSlashCommand extends Command
 
     public function handle(DiscordApplicationCommandServiceContract $commandServiceContract): void
     {
+        // 25 is the maximum number of choices allowed for a command option
         $sourceNames = LootSource::query()
             ->select(['name'])
+            ->where('enabled', true)
             ->get();
+
+        if ($sourceNames->count() > 25) {
+            Log::warning('More than 25 loot sources enabled, only the first 25 will be used.');
+            $sourceNames = $sourceNames->take(25);
+        }
+
         $optionChoices = $sourceNames->map(function (LootSource $source) {
             return new OptionChoice($source->name, $source->name);
         });

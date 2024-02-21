@@ -91,6 +91,7 @@ class LootSources
             [
                 'id' => self::CHICKEN_ID,
                 'name' => self::CHICKEN_NAME,
+                'enabled' => false,
             ],
             [
                 'id' => self::GENERAL_GRAARDOOR_ID,
@@ -183,6 +184,7 @@ class LootSources
             [
                 'id' => self::ARTIO_ID,
                 'name' => self::ARTIO_NAME,
+                'enabled' => false,
             ],
             [
                 'id' => self::CALLISTO_ID,
@@ -191,6 +193,7 @@ class LootSources
             [
                 'id' => self::SPINDEL_ID,
                 'name' => self::SPINDEL_NAME,
+                'enabled' => false,
             ],
             [
                 'id' => self::VENENATIS_ID,

@@ -17,6 +17,7 @@ class LootSource extends Model
 
     protected $fillable = [
         'name',
+        'enabled',
     ];
 
     public function lootTables(): HasMany
