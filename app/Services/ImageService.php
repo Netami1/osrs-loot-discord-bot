@@ -119,14 +119,13 @@ class ImageService
             ->contain(self::ICON_SIZE, self::ICON_SIZE, self::TRANSPARENT_COLOR , 'bottom');
     }
 
-    public function storeImage(ImageInterface $image): string
+    public function storeImage(ImageInterface $image, string $fileName): string
     {
-        $imageName = 'loot_' . Str::random() . '.png';
-        $imagePath = storage_path('/app/public/' . $imageName);
+        $imagePath = storage_path('/app/public/' . $fileName);
 
         $image->toPng()->save($imagePath);
 
-        return config('app.url') . Storage::url($imageName);
+        return config('app.url') . Storage::url($fileName);
     }
 
     private function makeApiRequest(string $url): ?string

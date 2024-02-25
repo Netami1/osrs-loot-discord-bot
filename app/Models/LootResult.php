@@ -35,4 +35,9 @@ class LootResult extends Model
     {
         return $this->lootResultItems->sum(fn (LootResultItem $lootResultItem) => $lootResultItem->total_value);
     }
+
+    public function imageFilename(): string
+    {
+        return "loot_{$this->id}.png";
+    }
 }

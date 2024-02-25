@@ -53,6 +53,6 @@ class GenerateLootCommand extends Command
         }
 
         $outputImage = $imageService->createItemResultsImage($lootResult);
-        $imageService->storeImage($outputImage);
+        $imageService->storeImage($outputImage, $lootResult->imageFilename());
     }
 }
