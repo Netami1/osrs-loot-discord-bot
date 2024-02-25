@@ -47,7 +47,7 @@ class LookupLootJob implements ShouldQueue
         }
 
         $messageContents = "## Results of {$lootResult->quantity} {$lootResult->lootSource->name}: " . kmb($lootResult->totalValue());
-        $messageContents .= PHP_EOL . 'ID: ```' . $lootResult->id . '```';
+        $messageContents .= PHP_EOL . 'Result ID: `' . $lootResult->id . '`';
         $discordPayload = $discordService->createImageMessagePayload(
             config('app.url') . Storage::url($lootResultFilename),
             $messageContents
