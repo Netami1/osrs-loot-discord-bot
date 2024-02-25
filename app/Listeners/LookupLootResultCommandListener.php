@@ -6,6 +6,7 @@ use App\Models\LootResult;
 use App\Services\DiscordService;
 use App\Services\ImageService;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Nwilging\LaravelDiscordBot\Contracts\Listeners\ApplicationCommandInteractionEventListenerContract;
 use Nwilging\LaravelDiscordBot\Events\ApplicationCommandInteractionEvent;
@@ -42,6 +43,7 @@ class LookupLootResultCommandListener implements ApplicationCommandInteractionEv
         if ($eventData['data']['name'] !== $this->command()) {
             return;
         }
+        Log::info('Handling lookup-loot command');
 
         $lootResultId = $eventData['data']['options'][0]['value'];
         $applicationId = $eventData['application_id'];

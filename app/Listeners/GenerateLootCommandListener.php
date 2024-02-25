@@ -5,6 +5,7 @@ namespace App\Listeners;
 use App\Jobs\SimulateLootJob;
 use App\Services\LootGeneration\LootGenerationRequest;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Support\Facades\Log;
 use Nwilging\LaravelDiscordBot\Contracts\Listeners\ApplicationCommandInteractionEventListenerContract;
 use Nwilging\LaravelDiscordBot\Events\ApplicationCommandInteractionEvent;
 
@@ -31,6 +32,8 @@ class GenerateLootCommandListener implements ApplicationCommandInteractionEventL
         if ($commandRequest['data']['name'] !== $this->command()) {
             return;
         }
+
+        Log::info('Handling loot command');
 
         $lootGenerationRequest = new LootGenerationRequest($commandRequest);
 
