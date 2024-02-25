@@ -14,7 +14,7 @@ class CreateLootLookupCommand extends Command
 
     public function handle(DiscordApplicationCommandServiceContract $commandServiceContract): void
     {
-        $command = new SlashCommand('lookup loot', 'Lookup previously generated loot results from an ID');
+        $command = new SlashCommand('lookup-loot', 'Lookup previously generated loot results from an ID');
         $command->option(new StringOption('id', 'UUID of the loot result to lookup'));
 
         $result = $commandServiceContract->createGlobalCommand($command);
