@@ -10,6 +10,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class LookupLootJob implements ShouldQueue
@@ -40,13 +41,16 @@ class LookupLootJob implements ShouldQueue
         $imagePath = storage_path('/app/public/' . $lootResultFilename);
 
         if (!Storage::exists($imagePath)) {
+            Log::info('Image not found, creating new one', ['loot_result_id' => $lootResultId]);
             $image = $imageService->createItemResultsImage($lootResult);
             $imageService->storeImage($image, $lootResultFilename);
         }
 
+        $messageContents = "## Results of {$lootResult->quantity} {$lootResult->lootSource->name}: " . kmb($lootResult->totalValue());
+        $messageContents .= PHP_EOL . 'ID: ```' . $lootResult->id . '```';
         $discordPayload = $discordService->createImageMessagePayload(
             config('app.url') . Storage::url($lootResultFilename),
-            "## Results of {$lootResult->quantity} {$lootResult->lootSource->name}: " . kmb($lootResult->totalValue())
+            $messageContents
         );
         $discordService->editInteractionMessage(
             $applicationId,
