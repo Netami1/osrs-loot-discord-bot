@@ -38,7 +38,7 @@ class LookupLootJob implements ShouldQueue
 
         $lootResult = LootResult::query()->findOrFail($lootResultId);
         $lootResultFilename = $lootResult->imageFilename();
-        $imagePath = storage_path('/app/public/' . $lootResultFilename);
+        $imagePath = 'public/' . $lootResultFilename;
 
         if (!Storage::exists($imagePath)) {
             Log::info('Image not found, creating new one', ['loot_result_id' => $lootResultId]);
