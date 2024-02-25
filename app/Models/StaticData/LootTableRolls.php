@@ -269,7 +269,7 @@ class LootTableRolls
             LootTables::KRIL_TSUROTH_ALWAYS_ID => [
                 [
                     'id' => 'a849546b-586d-4ed7-93ca-42bd519fc184',
-                    'item_name' => 'Inferanl ashes',
+                    'item_name' => 'Infernal ashes',
                     'item_id' => '25778',
                 ],
             ],

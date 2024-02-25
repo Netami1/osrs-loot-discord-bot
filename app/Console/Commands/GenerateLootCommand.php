@@ -2,13 +2,11 @@
 
 namespace App\Console\Commands;
 
-use App\Models\LootSource;
+use App\Models\LootResultItem;
 use App\Services\ImageService;
+use App\Services\LootGeneration\LootGenerationRequest;
 use App\Services\LootGeneration\LootGeneratorService;
-use App\Services\LootGeneration\LootResult;
-use App\Services\LootGeneration\LootRollResult;
 use Illuminate\Console\Command;
-use Nette\Utils\Image;
 
 class GenerateLootCommand extends Command
 {
@@ -21,27 +19,37 @@ class GenerateLootCommand extends Command
         $times = $this->input->getOption('times');
 
         $inputArr = [
-            [
-                'name' => 'target',
-                'value' => $sourceName,
+            'data' => [
+                'options' => [
+                    [
+                        'name' => 'target',
+                        'value' => $sourceName,
+                    ],
+                    [
+                        'name' => 'quantity',
+                        'value' => $times,
+                    ],
+                ],
             ],
-            [
-                'name' => 'quantity',
-                'value' => $times,
+            'member' => [
+                'user' => [
+                    'global_name' => 'Console',
+                ],
             ],
         ];
+        $lootGenerationRequest = new LootGenerationRequest($inputArr);
 
         $this->info("Looting {$sourceName} {$times} times...");
 
-        $lootResult = $lootGeneratorService->generateLoot($inputArr);
-        $lootRollResults = $lootResult->getLootRollResultsByValueDesc();
+        $lootResult = $lootGeneratorService->generateLoot($lootGenerationRequest);
+        $lootResultItems = $lootResult->lootResultItems;
 
         $this->output->writeln("## Results of {$times} {$sourceName}s: " . kmb($lootResult->totalValue()));
         $this->output->writeln('### GP each: ' . kmb($lootResult->totalValue() / $times));
 
-        /** @var LootRollResult $lootResult */
-        foreach ($lootRollResults as $lootRollResult) {
-            $this->output->writeln($lootRollResult->toString());
+        /** @var LootResultItem $lootResultItem */
+        foreach ($lootResultItems as $lootResultItem) {
+            $this->output->writeln($lootResultItem->toString());
         }
 
         $outputImage = $imageService->createItemResultsImage($lootResult);

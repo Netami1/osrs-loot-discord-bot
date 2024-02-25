@@ -3,8 +3,8 @@
 namespace App\Services;
 
 use App\Models\Item;
-use App\Services\LootGeneration\LootResult;
-use App\Services\LootGeneration\LootRollResult;
+use App\Models\LootResult;
+use App\Models\LootResultItem;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
@@ -50,15 +50,15 @@ class ImageService
         $outputImage = $this->imageManager->create(self::BACKGROUND_WIDTH, self::BACKGROUND_HEIGHT);
         $outputImage->place($background);
 
-        $selectedLootResults = $lootResult->getLootRollResultsByValueDesc();
-        $neededRows = ceil($selectedLootResults->count() / self::ICONS_PER_ROW);
+        $lootResultItems = $lootResult->lootResultItems;
+        $neededRows = ceil($lootResultItems->count() / self::ICONS_PER_ROW);
         $outputHeight = (self::ICON_START_Y * 2) + ($neededRows * self::ICON_SPACE_BETWEEN_Y);
         $outputImage->resize(self::BACKGROUND_WIDTH, $outputHeight);
 
-        /** @var LootRollResult $lootRollResult */
-        foreach ($selectedLootResults as $lootRollResult) {
-            $item = $lootRollResult->getItem();
-            $quantity = $lootRollResult->getQuantity();
+        /** @var LootResultItem $lootResultItem */
+        foreach ($lootResultItems as $lootResultItem) {
+            $item = $lootResultItem->item;
+            $quantity = $lootResultItem->quantity;
             $quantityString = (string) $quantity >= 100000 ? kmb($quantity) : $quantity;
             $icon = $this->getIconImage($item);
             if (!$icon) {

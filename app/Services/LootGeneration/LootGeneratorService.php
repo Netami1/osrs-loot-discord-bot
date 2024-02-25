@@ -3,41 +3,42 @@
 namespace App\Services\LootGeneration;
 
 use App\Enum\LootTypeEnum;
+use App\Models\LootResult;
+use App\Models\LootResultItem;
 use App\Models\LootSource;
 use App\Models\LootTable;
 use App\Models\LootTableRoll;
+use App\Repos\LootResultRepo;
 use App\Services\ItemService;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class LootGeneratorService
 {
     private ItemService $itemService;
+    private LootResultRepo $lootResultRepo;
 
-    public function __construct(ItemService $itemService)
+    public function __construct(ItemService $itemService, LootResultRepo $lootResultRepo)
     {
         $this->itemService = $itemService;
+        $this->lootResultRepo = $lootResultRepo;
     }
 
-    public function generateLoot(array $commandOptions): LootResult
+    public function generateLoot(LootGenerationRequest $generationRequest): LootResult
     {
-        $commandOptions = collect($commandOptions);
+        $lootResult = $this->lootResultRepo->create(
+            $generationRequest->getLootSource(),
+            $generationRequest->getQuantity(),
+            $generationRequest->getDiscordUsername(),
+        );
 
-        $source = $this->getLootSource($commandOptions);
-        $quantity = $this->getQuantity($commandOptions);
+        $this->processLootTables($generationRequest->getLootSource(), $generationRequest->getQuantity(), $lootResult);
 
-        $loots = $this->processLootTables($source, $quantity);
-        $loots->sortByDesc(function (LootRollResult $lootRollResult) {
-            return $lootRollResult->totalValue();
-        });
-
-        return (new LootResult())
-            ->setSource($source)
-            ->setQuantity($quantity)
-            ->setLootRollResults($loots);
+        return $lootResult;
     }
 
-    public function processLootTables(LootSource $source, int $quantity): Collection
+    public function processLootTables(LootSource $source, int $quantity, LootResult $lootResult): Collection
     {
         $timesToRollTables = $quantity;
         $allTableLoots = new Collection();
@@ -60,20 +61,30 @@ class LootGeneratorService
             $allTableLoots = $allTableLoots->merge($lootResults);
         }
 
+        $lootResultItems = new Collection();
         // Group the results by item id and sum the quantities, to combine multiple rolls of the same item
-        return $allTableLoots->groupBy(function (LootRollResult $lootRollResult) {
-            return $lootRollResult->getItem()->id;
-        })->map(function (Collection $results) {
+        DB::transaction(function () use ($allTableLoots, $lootResult, &$lootResultItems) {
+            $lootResultItems = $allTableLoots->groupBy(function (LootRollResult $lootRollResult) {
+                return $lootRollResult->getItem()->id;
+            })->map(function (Collection $results) use ($lootResult) {
+                $item = $results->first()->getItem();
 
-            $totalQuantity = $results->sum(function (LootRollResult $lootRollResult) {
-                return $lootRollResult->getQuantity();
-            });
+                $totalQuantity = $results->sum(function (LootRollResult $lootRollResult) {
+                    return $lootRollResult->getQuantity();
+                });
 
-            return (new LootRollResult())
-                ->setItem($results->first()->getItem())
-                ->setQuantity($totalQuantity);
+                return LootResultItem::query()
+                    ->create([
+                        'item_id' => $results->first()->getItem()->id,
+                        'quantity' => $totalQuantity,
+                        'loot_result_id' => $lootResult->id,
+                        'total_value' => $totalQuantity * $item->price,
+                    ]);
 
-        })->values();
+            })->values();
+        });
+
+        return $lootResultItems;
     }
 
     private function processLootTableType(LootSource $source, int $quantity, LootTypeEnum $lootType): Collection
@@ -189,23 +200,6 @@ class LootGeneratorService
         }
 
         return $toReturn;
-    }
-
-    private function getLootSource(Collection $commandOptions): LootSource
-    {
-        $npcOption = $commandOptions->firstWhere('name', '=', 'target');
-
-        /** @var LootSource */
-        return LootSource::query()
-            ->where('name', $npcOption['value'])
-            ->firstOrFail();
-    }
-
-    private function getQuantity(Collection $commandOptions): int
-    {
-        $quantityOption = $commandOptions->firstWhere('name', '=', 'quantity');
-
-        return $quantityOption['value'];
     }
 
     private function shouldHitOverride(LootTypeEnum $lootTypeEnum): bool

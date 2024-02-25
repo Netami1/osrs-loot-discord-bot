@@ -3,6 +3,7 @@
 namespace App\Listeners;
 
 use App\Jobs\SimulateLootJob;
+use App\Services\LootGeneration\LootGenerationRequest;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Nwilging\LaravelDiscordBot\Contracts\Listeners\ApplicationCommandInteractionEventListenerContract;
 use Nwilging\LaravelDiscordBot\Events\ApplicationCommandInteractionEvent;
@@ -27,7 +28,8 @@ class GenerateLootCommandListener implements ApplicationCommandInteractionEventL
     public function handle(ApplicationCommandInteractionEvent $event): void
     {
         $commandRequest = $event->getInteractionRequest()->all();
+        $lootGenerationRequest = new LootGenerationRequest($commandRequest);
 
-        SimulateLootJob::dispatch($commandRequest)->onConnection('redis');
+        SimulateLootJob::dispatch($lootGenerationRequest)->onConnection('redis');
     }
 }

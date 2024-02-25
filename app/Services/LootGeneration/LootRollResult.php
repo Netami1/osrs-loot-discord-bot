@@ -55,4 +55,13 @@ class LootRollResult
     {
         return $this->quantity * $this->item->price;
     }
+
+    public function toArray(): array
+    {
+        return [
+            'item_id' => $this->item->id,
+            'quantity' => $this->quantity,
+            'total_value' => $this->totalValue(),
+        ];
+    }
 }
