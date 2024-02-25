@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Listeners\GenerateLootCommandListener;
+use App\Listeners\LookupLootResultCommandListener;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Nwilging\LaravelDiscordBot\Events\ApplicationCommandInteractionEvent;
 
@@ -16,6 +17,7 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         ApplicationCommandInteractionEvent::class => [
             GenerateLootCommandListener::class,
+            LookupLootResultCommandListener::class,
         ],
     ];
 
