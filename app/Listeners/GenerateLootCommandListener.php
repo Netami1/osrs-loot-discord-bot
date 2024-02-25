@@ -28,6 +28,10 @@ class GenerateLootCommandListener implements ApplicationCommandInteractionEventL
     public function handle(ApplicationCommandInteractionEvent $event): void
     {
         $commandRequest = $event->getInteractionRequest()->all();
+        if ($commandRequest['data']['name'] !== $this->command()) {
+            return;
+        }
+
         $lootGenerationRequest = new LootGenerationRequest($commandRequest);
 
         SimulateLootJob::dispatch($lootGenerationRequest)->onConnection('redis');

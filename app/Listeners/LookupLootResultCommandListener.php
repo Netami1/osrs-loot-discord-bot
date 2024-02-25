@@ -33,12 +33,16 @@ class LookupLootResultCommandListener implements ApplicationCommandInteractionEv
 
     public function command(): ?string
     {
-        return 'lookup loot';
+        return 'lookup-loot';
     }
 
     public function handle(ApplicationCommandInteractionEvent $event): void
     {
         $eventData = $event->getInteractionRequest()->all();
+        if ($eventData['data']['name'] !== $this->command()) {
+            return;
+        }
+
         $lootResultId = $eventData['data']['options'][0]['value'];
         $applicationId = $eventData['application_id'];
         $token = $eventData['token'];
