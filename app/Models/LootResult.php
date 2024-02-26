@@ -8,6 +8,29 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/**
+ * App\Models\LootResult
+ *
+ * @property mixed $lootResultItems
+ * @property string $id
+ * @property string $loot_source_id
+ * @property int $quantity
+ * @property string $discord_username
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read int|null $loot_result_items_count
+ * @property-read \App\Models\LootSource $lootSource
+ * @method static \Illuminate\Database\Eloquent\Builder|LootResult newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|LootResult newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|LootResult query()
+ * @method static \Illuminate\Database\Eloquent\Builder|LootResult whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|LootResult whereDiscordUsername($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|LootResult whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|LootResult whereLootSourceId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|LootResult whereQuantity($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|LootResult whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
 class LootResult extends Model
 {
     use HasFactory;

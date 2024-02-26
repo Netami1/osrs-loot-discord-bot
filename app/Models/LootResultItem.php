@@ -6,6 +6,30 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * App\Models\LootResultItem
+ *
+ * @property int $id
+ * @property string $loot_result_id
+ * @property int $item_id
+ * @property int $quantity
+ * @property int $total_value
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\Item $item
+ * @property-read \App\Models\LootResult $lootResult
+ * @method static \Illuminate\Database\Eloquent\Builder|LootResultItem newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|LootResultItem newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|LootResultItem query()
+ * @method static \Illuminate\Database\Eloquent\Builder|LootResultItem whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|LootResultItem whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|LootResultItem whereItemId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|LootResultItem whereLootResultId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|LootResultItem whereQuantity($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|LootResultItem whereTotalValue($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|LootResultItem whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
 class LootResultItem extends Model
 {
     use HasFactory;
