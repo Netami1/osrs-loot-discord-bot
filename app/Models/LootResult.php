@@ -23,6 +23,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder|LootResult newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|LootResult newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|LootResult query()
+ * @method static \Illuminate\Database\Eloquent\Builder|LootResult create($value)
  * @method static \Illuminate\Database\Eloquent\Builder|LootResult whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|LootResult whereDiscordUsername($value)
  * @method static \Illuminate\Database\Eloquent\Builder|LootResult whereId($value)

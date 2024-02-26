@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Item newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Item newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Item query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Item create($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Item whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Item whereIcon($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Item whereId($value)
