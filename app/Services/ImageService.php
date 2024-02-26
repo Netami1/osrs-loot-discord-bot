@@ -9,7 +9,6 @@ use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 use Intervention\Image\Drivers\Imagick\Decoders\FilePathImageDecoder;
 use Intervention\Image\Drivers\Imagick\Driver;
 use Intervention\Image\ImageManager;
@@ -116,7 +115,7 @@ class ImageService
         }
 
         return $this->imageManager->read($iconPath, FilePathImageDecoder::class)
-            ->contain(self::ICON_SIZE, self::ICON_SIZE, self::TRANSPARENT_COLOR , 'bottom');
+            ->contain(self::ICON_SIZE, self::ICON_SIZE, self::TRANSPARENT_COLOR, 'bottom');
     }
 
     public function storeImage(ImageInterface $image, string $fileName): string

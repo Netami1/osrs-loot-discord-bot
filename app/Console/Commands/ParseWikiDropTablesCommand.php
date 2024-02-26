@@ -7,7 +7,6 @@ use Illuminate\Console\Command;
 use duzun\hQuery;
 use Illuminate\Support\Str;
 
-
 class ParseWikiDropTablesCommand extends Command
 {
     protected $signature = 'parse-wiki-drop-tables';

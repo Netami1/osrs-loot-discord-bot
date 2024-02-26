@@ -15,7 +15,10 @@ use Illuminate\Support\Facades\Storage;
 
 class LookupLootJob implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Dispatchable;
+    use InteractsWithQueue;
+    use Queueable;
+    use SerializesModels;
 
     private array $eventData;
 

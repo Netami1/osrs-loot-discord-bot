@@ -14,7 +14,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         $schedule->command('loot:cleanup-images')->hourly();
-        $schedule->job(new UpdateItemPricesJob, 'default', 'redis')->daily();
+        $schedule->job(new UpdateItemPricesJob(), 'default', 'redis')->daily();
     }
 
     /**

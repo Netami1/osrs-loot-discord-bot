@@ -101,7 +101,7 @@ class LootGeneratorService
         $rollResults = [];
         $toReturn = new Collection();
         // Number of rolls requested by the user
-        for ($rollNumberIndex=0; $rollNumberIndex < $quantity; $rollNumberIndex++) {
+        for ($rollNumberIndex = 0; $rollNumberIndex < $quantity; $rollNumberIndex++) {
 
             /** @var LootTable $lootTable */
             foreach ($lootTables as $lootTable) {
@@ -112,7 +112,7 @@ class LootGeneratorService
                 } else {
                     $tableRollsAmount = $lootTable->rolls;
                 }
-                for ($tableRollIndex=0; $tableRollIndex < $tableRollsAmount; $tableRollIndex++) {
+                for ($tableRollIndex = 0; $tableRollIndex < $tableRollsAmount; $tableRollIndex++) {
 
                     // Check if we should continue rolling, this is to handle the case where we miss all rolls on the table
                     $shouldContinueRolling = true;
@@ -141,7 +141,7 @@ class LootGeneratorService
                         // Roll a double between 0 and 1 to check against each roll's chance weighting
                         $randRoll = rand(0, 1000000000) / 1000000000;
                         $rollsOnTableCount = count($rolls);
-                        for ($rollIndex=0; $rollIndex < $rollsOnTableCount; $rollIndex++) {
+                        for ($rollIndex = 0; $rollIndex < $rollsOnTableCount; $rollIndex++) {
                             /** @var LootTableRoll $roll */
                             $roll = $rolls[$rollIndex];
                             // Check if we succeeded on the roll
@@ -170,7 +170,7 @@ class LootGeneratorService
                                 if ($lootType !== LootTypeEnum::ALWAYS && $lootType !== LootTypeEnum::TERTIARY) {
                                     break;
                                 }
-                            } else if ($lootType === LootTypeEnum::PRIMARY || $lootType === LootTypeEnum::RAID_UNIQUE) {
+                            } elseif ($lootType === LootTypeEnum::PRIMARY || $lootType === LootTypeEnum::RAID_UNIQUE) {
                                 // Adjust the roll chance for the next roll
                                 $randRoll -= $roll->chance;
                             }

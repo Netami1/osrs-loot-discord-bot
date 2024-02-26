@@ -91,14 +91,14 @@ class WikiService
     {
         $mapping = $this->getItemMapping();
         // Search the mapping array for id matching itemId
-        return array_filter($mapping, fn($item) => $item['id'] === $itemId);
+        return array_filter($mapping, fn ($item) => $item['id'] === $itemId);
     }
 
     public function getItemMappingDetailsByName(string $itemName): ?array
     {
         $mapping = $this->getItemMapping();
         // Search the mapping array for id matching itemId
-        return array_filter($mapping, fn($item) => $item['name'] === $itemName);
+        return array_filter($mapping, fn ($item) => $item['name'] === $itemName);
     }
 
     public function getItemMapping(): array
