@@ -28,7 +28,7 @@ class UpdateItemPricesJob implements ShouldQueue
 
         $pricingStoragePath = config('wiki.storage.pricing');
         if (file_exists($pricingStoragePath)) {
-            Storage::delete($pricingStoragePath);
+            unlink($pricingStoragePath);
         }
 
         $items = Item::query()->get();
