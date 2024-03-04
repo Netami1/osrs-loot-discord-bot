@@ -132,14 +132,17 @@ class LootSources
             [
                 'id' => self::DAGANNOTH_REX_ID,
                 'name' => self::DAGANNOTH_REX_NAME,
+                'enabled' => false,
             ],
             [
                 'id' => self::DAGANNOTH_SUPREME_ID,
                 'name' => self::DAGANNOTH_SUPREME_NAME,
+                'enabled' => false,
             ],
             [
                 'id' => self::DAGANNOTH_PRIME_ID,
                 'name' => self::DAGANNOTH_PRIME_NAME,
+                'enabled' => false,
             ],
             [
                 'id' => self::BARROWS_ID,
@@ -184,7 +187,7 @@ class LootSources
             [
                 'id' => self::ARTIO_ID,
                 'name' => self::ARTIO_NAME,
-                'enabled' => false,
+                'enabled' => true,
             ],
             [
                 'id' => self::CALLISTO_ID,
@@ -193,7 +196,7 @@ class LootSources
             [
                 'id' => self::SPINDEL_ID,
                 'name' => self::SPINDEL_NAME,
-                'enabled' => false,
+                'enabled' => true,
             ],
             [
                 'id' => self::VENENATIS_ID,
