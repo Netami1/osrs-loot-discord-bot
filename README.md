@@ -40,6 +40,6 @@ I recommend using [Laravel Forge](https://forge.laravel.com/) to deploy this bot
 3. Set up the site on Forge, and then deploy the code to the server, updating the .env file with the Discord bot information
 
 ## Example Loot Generations
-![1000 Zulrah](https://i.imgur.com/ihPNyon.png)
-![100 Chambers of Xeric](https://i.imgur.com/kfgSnNn.png)
-![20 Medium Clues](https://i.imgur.com/vpNDIzk.png)
+![1000 Theatre of Blood](https://i.imgur.com/0veRIFO.png)
+![500 Kree'arra](https://i.imgur.com/rh3xFMA.png)
+![10 Artio](https://i.imgur.com/pDuo74N.png)
