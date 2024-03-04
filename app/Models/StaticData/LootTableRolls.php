@@ -12179,19 +12179,19 @@ class LootTableRolls
                     'chance' => 0.0025,
                 ],
                 [
-                    'id' => 'f82730cf-e6f5-4d7b-935b-f72f2bca480f',
+                    'id' => 'f6e2dad9-73ca-4a69-b52a-1dc90a61b6e7',
                     'item_id' => 10977,
                     'item_name' => 'Curved bone',
                     'chance' => 0.00019948134,
                 ],
                 [
-                    'id' => 'd3c63df8-d427-49e2-ae2e-8acdfad29343',
+                    'id' => 'b59971c4-a218-489f-ab85-525aa49b61b1',
                     'item_id' => 13178,
                     'item_name' => "Callisto cub",
                     'chance' => 0.00035714285,
                 ],
                 [
-                    'id' => 'ac7b50f6-8caf-4a49-9109-9158b5b59653',
+                    'id' => 'e63c95ff-d849-4064-9e84-3d094d931a8b',
                     'item_id' => 12073,
                     'item_name' => 'Clue scroll (elite)',
                     'chance' => 0.01,
